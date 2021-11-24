@@ -1,19 +1,27 @@
 .container {
     display: flex;
     flex-direction: column;
-    max-width: 497px;
+    max-width: 429px;
     justify-content: flex-start;
-    align-items: flex-start;
-    padding-top: 130px;
-    padding-bottom: 145px;
+    align-items: center;
+    padding-top: 208px;
+    padding-bottom: 208px;
     padding-right: 50px;
     padding-left: 50px;
     background-color: rgba(196, 196, 196, 1);
-    margin-top: 0px;
+    margin-left: auto;
+    margin-right: auto;
+
+    /*
+    margin-top: 273px;
+    padding-top: 32px;
+    padding-bottom: 78px;
+*/
+
 }
 
 h1 {
-    max-width: 275px;
+    max-width: 300px;
     color: rgba(0, 0, 0, 1);
     font-size: 36px;
     text-align: left;
@@ -28,6 +36,7 @@ h1 {
     border-radius: 365px;
     background-color: rgba(255, 255, 255, 1);
     margin-top: 20px;
+
 }
 
 #email {
@@ -60,12 +69,41 @@ h1 {
     background-color: rgba(255, 255, 255, 1);
     margin-top: 20px;
 }
+
 #buttonRegister {
     display: flex;
     max-width: 397px;
     height: 86px;
     width: 397px;
-    border-radius: 365px;
-    background-color: rgba(255, 255, 255, 1);
-    margin-bottom: 20px;
+    background-color: rgba(243, 243, 243, 1);
+    margin-top: 20px;
+    font-size: 30px;
+    padding-left: 20px;
+    margin-left: 12px;
+    justify-content: center;
+    align-items: center;
+}
+#buttonRegister:hover{
+background-color: blue;
+}
+
+::placeholder {
+    font-size: 30px;
+    padding-left: 20px;
+
+}
+input[type=text]
+{
+    font-size: 30px;
+    padding-left: 20px;
+}
+input[type=email]
+{
+    font-size: 30px;
+    padding-left: 20px;
+}
+input[type=password]
+{
+    font-size: 30px;
+    padding-left: 20px;
 }
