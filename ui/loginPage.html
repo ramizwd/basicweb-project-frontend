@@ -5,17 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Login Page</title>
-    <link href="styles/loginPage.css" rel="stylesheet">
+    <link href="styles/registerAndLoginPage.css" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
-    <h1>Login</h1>
-    <form id="login" method="post" action="http://10.114.32.27/auth/login"> <!-- make sure that is right address -->
-        <input id="username" type="text" placeholder="username">
-        <input id="passwd" type="password" placeholder="Password">
-        <button id="buttonLogin" type="submit">Log in</button>
-    </form>
+    <div class="item" id="first">
+        <div class="card">
+            <div class="center"></div>
+            <h1>Login</h1>
+            <form id="login" method="post" action="http://10.114.32.27/auth/login">
+                <!-- make sure that is right address -->
+                <input id="username" type="text" placeholder="username">
+                <input id="passwd" type="password" placeholder="Password">
+                <button id="buttonLogin" type="submit">Log in</button>
+            </form>
+        </div>
+    </div>
+</div>
 </div>
 </body>
 <script src="scripts/loginPage.js"></script>
