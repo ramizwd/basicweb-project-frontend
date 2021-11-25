@@ -5,19 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Register your account</title>
-    <link href="styles/registerPage.css" rel="stylesheet">
+    <link href="styles/registerAndLoginPage.css" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
-    <h1>Register account</h1>
-    <form id="register" method="post" action="http://10.114.32.27/auth/register"> <!-- CHECK ADDRESS-->
-        <input id="username" type="text" placeholder="Username" name="username">
-        <input id="email" type="email" placeholder="Email" name="email">
-        <input id="passwd" type="password" placeholder="Password" name="firstPasswd">
-        <input id="passwdAgain" type="password" placeholder="Confirm password" name="secondPasswd">
-        <button id="buttonRegister" type="submit">Register</button>
-    </form>
+    <div class="item" id="first">
+        <div class="card">
+            <div class="center"></div>
+            <h1>Register account</h1>
+            <form id="register" method="post" action="http://10.114.32.27/auth/register"> <!-- CHECK ADDRESS-->
+                <input id="username" type="text" placeholder="Username" name="username">
+                <input id="email" type="email" placeholder="Email" name="email">
+                <input id="passwd" type="password" placeholder="Password" name="firstPasswd">
+                <input id="passwdAgain" type="password" placeholder="Confirm password" name="secondPasswd">
+                <button id="buttonRegister" type="submit">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
 </div>
 </body>
 <script src="scripts/profilePage.js"></script>
