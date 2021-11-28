@@ -26,19 +26,23 @@ body {
 }
 
 .dropdown .dropbtn {
-
+height: 42px;
     font-size: 16px;
     border: none;
     outline: none;
     color: white;
-    padding: 14px 16px;
+
+    padding: 0px 16px;
     background-color: inherit;
     font-family: inherit;
     margin: 0;
 }
 
-
-.navbar a:hover, .dropdown:hover .dropbtn {
+.dropbtn{
+    border-radius: 50%;
+    padding-top: 3px;
+}
+.navbar a:hover  {
     background-color: red;
 }
 
