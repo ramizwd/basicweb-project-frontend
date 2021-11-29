@@ -1,16 +1,17 @@
+/*setting the body without any margin*/
 body {
     margin: 0;
 }
 
+/*adding a fixed navbar so when it scroll down it comes with you*/
 .navbar {
-
     background-color: #333;
     position: fixed;
     top: 0;
     width: 100%;
-
 }
 
+/*layout of the navbar*/
 .navbar a, form {
     float: left;
     font-size: 16px;
@@ -19,11 +20,18 @@ body {
     padding: 14px 16px;
     text-decoration: none;
 }
+form{
+    float: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
 .navright{
     float: right;
 }
-.dropdown {
 
+.dropdown {
     overflow: hidden;
 }
 
@@ -53,9 +61,10 @@ body {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
+
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    right: 0;
+
 }
 
 .dropdown-content a {
