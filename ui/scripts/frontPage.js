@@ -2,12 +2,14 @@
 console.log('front page');
 const url = 'http://localhost:3000';
 
+// Function to fetch data for users
 const getUserInfo = async (id) => {
   const response = await fetch(url + '/user/' + id);
   const user = await response.json();
   return user;
 };
 
+// Function to fetch data for posts
 const getPostInfo = async () => {
   try {
     const response = await fetch(url + '/post');
@@ -26,7 +28,7 @@ const nickname = document.querySelector('#nickname');
 const profileImg = document.querySelector('.profileImg');
 //profileImg.innerHTML = getUserInfo().user.image;                                // image not implemented yet
 
-// Here will be function createPosts() with fetching data and for/forEach loop
+// Function for creating post containers
 const createPosts = (posts) => {
   // clear ul
   feed.innerHTML = '';
@@ -45,9 +47,11 @@ const createPosts = (posts) => {
     //const buildPart = document.createElement('li');
     const buildText = document.createElement('p');
     buildText.innerHTML = `${post.text}`;
+    const vote = document.createElement('h7');
+    vote.innerHTML = `${post.vote}`;
 
 // Added attributes for easier use in CSS
-  //  buildList.setAttribute('class', 'buildList');
+  // buildList.setAttribute('class', 'buildList');
   // buildPart.setAttribute('class', 'buildPart');
 
 // Placing the hierarchy in the post object
@@ -62,9 +66,3 @@ const createPosts = (posts) => {
 
   });
 };
-
-/*
-const createPost = (user_post) => {
-  feed.innerHTML = '';
-};
-*/
