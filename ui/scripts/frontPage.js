@@ -35,24 +35,31 @@ const createPosts = (posts) => {
   // Creating HTML elements
   posts.forEach((post) => {
     const userPost = document.createElement('li');
-    const postImg = document.createElement('img');
-    postImg.src = url + '/' + post.picture;  // will be changes to filename
-    postImg.alt = post.title;
 
-    //const userImg = document.createElement('img');
-    //const postNickname = document.createElement('h5');
-    const postTitle = document.createElement('h3');
-    postTitle.innerHTML = `${post.title}`;
-    //const buildList = document.createElement('ul');
-    //const buildPart = document.createElement('li');
-    const buildText = document.createElement('p');
-    buildText.innerHTML = `${post.text}`;
-    const vote = document.createElement('h7');
-    vote.innerHTML = `${post.vote}`;
+    //if the there is not photo do the layout like this
+    if (post.filename == null) {
+      const postTitle = document.createElement('h3');
+      postTitle.innerHTML = `${post.title}`;
+      const buildText = document.createElement('p');
+      buildText.innerHTML = `${post.description}`;
+    } else {
+      //if not null do the layout like this
+      const postImg = document.createElement('img');
+      postImg.src = url + '/' + post.filename;  // will be changes to filename
+      postImg.alt = post.title;
+      //const userImg = document.createElement('img');
+      //const postNickname = document.createElement('h5');
+      const postTitle = document.createElement('h3');
+      postTitle.innerHTML = `${post.title}`;
+      //const buildList = document.createElement('ul');
+      //const buildPart = document.createElement('li');
+      const buildText = document.createElement('p');
+      buildText.innerHTML = `${post.description}`;
+    }
 
 // Added attributes for easier use in CSS
-  // buildList.setAttribute('class', 'buildList');
-  // buildPart.setAttribute('class', 'buildPart');
+    // buildList.setAttribute('class', 'buildList');
+    // buildPart.setAttribute('class', 'buildPart');
 
 // Placing the hierarchy in the post object
     feed.appendChild(userPost);
