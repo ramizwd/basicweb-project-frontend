@@ -31,11 +31,12 @@ form{
     float: right;
 }
 
-.dropdown {
+.dropdown, .anonymous {
     overflow: hidden;
 }
 
-.dropdown .dropbtn {
+
+.dropdown .dropbtn, .anonymous {
     height: 42px;
     font-size: 16px;
     border: none;
@@ -49,7 +50,7 @@ form{
     margin: 0;
 }
 
-.dropbtn {
+.dropbtn, .anonymous{
     border-radius: 50%;
 }
 
