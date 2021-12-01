@@ -38,9 +38,12 @@ const createPosts = (posts) => {
         buildText.innerHTML = `${post.description}`;
 
         //if not null do the layout like this
+      if (post.filename != null) {
         const postImg = document.createElement('img');
-        postImg.src = url + '/' + post.filename; // will be changes to filename
-        postImg.alt = post.title;
+        postImg.src = url + '/' + post.filename;  // will be changes to filename
+        postImg.alt = "404 image not found";
+        userPost.appendChild(postImg);
+      }
         const userImg = document.createElement('img');
         //const postNickname = document.createElement('h5');
         const postTitle = document.createElement('h3');
@@ -51,13 +54,13 @@ const createPosts = (posts) => {
         // Poster profile picture
         const posterPfp = document.createElement('img');
         posterPfp.src = url + '/' + post.profile_picture;
+      console.log(post.profile_picture);
 
         // Placing the hierarchy in the post object
         feed.appendChild(userPost);
         userPost.appendChild(posterPfp);
         userPost.appendChild(poster);
         userPost.appendChild(userImg);
-        userPost.appendChild(postImg);
         userPost.appendChild(postTitle);
         userPost.appendChild(buildText);
     });
