@@ -6,29 +6,54 @@ const url = 'http://localhost:3000';
 const getUserInfo = async (id) => {
   const response = await fetch(url + '/user/' + id);
   const user = await response.json();
-  return user;
+  createBio(user);
 };
+getUserInfo();
+
+// Function to fetch data for posts
+const getPostInfo = async () => {
+  try {
+    const response = await fetch(url + '/post');
+    const post = await response.json();
+    createPosts(post);
+  } catch (e) {
+    console.log(e.message);
+  }
+};
+getPostInfo();
 
 const bio = document.querySelector('.bio');
 const postList = document.querySelector('.postList');
 
-const userAvatar = document.createElement('img');
-userAvatar.src = url + '/' + user.profilePicture;  // will be changed to filename
-userAvatar.alt = url + '/' + user.username        // or user_id?
+const createBio = (users) => {
+  bio.innerHTML = '';
 
-const userNickname = document.createElement('h1');
-const userDescription = document.createElement('p');
-const editButton = document.createElement('button');
+  const userNickname = document.createElement('h1');
+  userNickname.innerHTML = `${users.username}`;
+  /*
+    const userAvatar = document.createElement('img');
+    userAvatar.src = url + '/' + `${users.filename}`;  // will be changed to filename
+    userAvatar.alt = url + '/' + `${users.username}`;      // or user_id?
 
-bio.appendChild(userAvatar);
-bio.appendChild(userNickname);
-bio.appendChild(userDescription);
-bio.appendChild(editButton);
-/*
+    const userNickname = document.createElement('h1');
+    userNickname.innerHTML = `${users.username}`;
+    const userDescription = document.createElement('p');
+    userDescription.innerHTML = `${users.description}`;
+    const editButton = document.createElement('button');
+    editButton.addEventListener('click')
+
+    bio.appendChild(userAvatar);
+    bio.appendChild(userDescription);
+    bio.appendChild(editButton);
+    */
+    bio.appendChild(userNickname);
+
+};
+
 // Function for creating post containers
 const createPosts = (posts) => {
   // clear ul
-  feed.innerHTML = '';
+  postList.innerHTML = '';
   // Creating HTML elements
   posts.forEach((post) => {
     const userPost = document.createElement('li');
@@ -40,7 +65,7 @@ const createPosts = (posts) => {
     if (post.filename != null) {
       const postImg = document.createElement('img');
       postImg.src = url + '/' + post.filename;  // will be changes to filename
-      postImg.alt = "404 image not found";
+      postImg.alt = '404 image not found';
       userPost.appendChild(postImg);
     }
     const userImg = document.createElement('img');
@@ -66,4 +91,4 @@ const createPosts = (posts) => {
   });
 };
 
-*/
+
