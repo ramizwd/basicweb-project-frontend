@@ -8,7 +8,28 @@
         <link href="styles/profilePage.css" rel="stylesheet" />
     </head>
     <body>
-        <p>hello i am profile page</p>
+    <div class="navbar">
+        <a href="frontPage.html">Home</a>
+        <a href="">Filter</a>
+
+        <form id="form" action="/action_page.php">
+            <input type="text" id="search" name="search">
+            <input type="submit" value="Submit">
+        </form>
+        <a id="nickname">Johnkai Cortez</a>
+        <div class="dropdown">
+            <img class="profileImg" src="placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg" width="40" height="45"></img>
+            <div class="dropdown-content">
+                <a href="profilePage.html">Profile</a>
+                <a>Log out</a>
+            </div>
+        </div>
+    </div>
+    <main>
+        <div class="bio"></div>
+        <ul class="postList"></ul>
+    </main>
+
     </body>
     <script src="scripts/profilePage.html"></script>
 </html>
