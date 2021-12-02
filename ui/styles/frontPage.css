@@ -20,14 +20,16 @@ body {
     padding: 14px 16px;
     text-decoration: none;
 }
-.navcenter{
+
+.navcenter {
     float: none;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.navright{
+
+.navright {
     float: right;
 }
 
@@ -36,7 +38,7 @@ body {
 }
 
 
-.dropdown .dropbtn, .anonymous, #plus{
+.dropdown .dropbtn, .anonymous, #plus {
     height: 42px;
     font-size: 16px;
     border: none;
@@ -49,11 +51,12 @@ body {
     font-family: inherit;
     margin: 0;
 }
-#plus:hover{
+
+#plus:hover {
     opacity: 30%;
 }
 
-.dropbtn, .anonymous{
+.dropbtn, .anonymous {
     border-radius: 50%;
 }
 
@@ -65,7 +68,6 @@ body {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     right: 0;
 
@@ -91,6 +93,7 @@ body {
 .main {
     margin-top: 50px
 }
+
 .container {
     max-width: 40em;
     margin: auto;
@@ -111,7 +114,7 @@ ul {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
-    align-content:center;
+    align-content: center;
     align-items: center;
 }
 
@@ -121,10 +124,11 @@ li {
     margin: 0.5em;
 }
 
-h3{
+h3 {
     border-bottom: 5px solid gray;
     border-top: 5px solid gray;
 }
+
 figure {
     margin: 0;
     padding: 0;
@@ -142,3 +146,24 @@ figure {
 .form-wrapper {
     width: 33%;
 }
+
+.posterDiv {
+    display: flex;
+}
+
+h1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    flex-grow: 4;
+}
+
+.dropImgBtn:hover {
+    opacity: 30%;
+    cursor: pointer;
+}
+.dropdownImg{
+    position: relative;
+    display: inline-block;
+}
+.show {display: block;}
