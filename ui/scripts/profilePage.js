@@ -25,6 +25,7 @@ getPostInfo();
 const bio = document.querySelector('.bio');
 const postList = document.querySelector('.postList');
 
+// Function for creating users bio header
 const createBio = (users) => {
   bio.innerHTML = '';
 
