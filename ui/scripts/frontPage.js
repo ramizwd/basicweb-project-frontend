@@ -1,25 +1,26 @@
 'use strict';
+
 console.log('front page');
 const url = 'http://localhost:3000';
 
-// Function to fetch data for users
-const getUserInfo = async (id) => {
-    const response = await fetch(url + '/user/' + id);
-    const user = await response.json();
-    return user;
-};
+// // Function to fetch data for users
+// const getUserInfo = async (id) => {
+//     const response = await fetch(url + '/user/' + id);
+//     const user = await response.json();
+//     return user;
+// };
 
-// Function to fetch data for posts
-const getPostInfo = async () => {
-    try {
-        const response = await fetch(url + '/post');
-        const post = await response.json();
-        createPosts(post);
-    } catch (e) {
-        console.log(e.message);
-    }
-};
-getPostInfo();
+// // Function to fetch data for posts
+// const getPostInfo = async () => {
+//     try {
+//         const response = await fetch(url + '/post');
+//         const post = await response.json();
+//         createPosts(post);
+//     } catch (e) {
+//         console.log(e.message);
+//     }
+// };
+// getPostInfo();
 
 const feed = document.querySelector('#postFeed');
 const nickname = document.querySelector('#nickname');
@@ -38,12 +39,12 @@ const createPosts = (posts) => {
         buildText.innerHTML = `${post.description}`;
 
         //if not null do the layout like this
-      if (post.filename != null) {
-        const postImg = document.createElement('img');
-        postImg.src = url + '/' + post.filename;  // will be changes to filename
-        postImg.alt = "404 image not found";
-        userPost.appendChild(postImg);
-      }
+        if (post.filename != null) {
+            const postImg = document.createElement('img');
+            postImg.src = url + '/' + post.filename; // will be changes to filename
+            postImg.alt = '404 image not found';
+            userPost.appendChild(postImg);
+        }
         const userImg = document.createElement('img');
         //const postNickname = document.createElement('h5');
         const postTitle = document.createElement('h3');
@@ -54,7 +55,7 @@ const createPosts = (posts) => {
         // Poster profile picture
         const posterPfp = document.createElement('img');
         posterPfp.src = url + '/' + post.profile_picture;
-      console.log(post.profile_picture);
+        console.log(post.profile_picture);
 
         // Placing the hierarchy in the post object
         feed.appendChild(userPost);
@@ -65,3 +66,19 @@ const createPosts = (posts) => {
         userPost.appendChild(buildText);
     });
 };
+
+const getPost = async () => {
+    try {
+        const fetchOptions = {
+            headers: {
+                Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+            },
+        };
+        const res = await fetch(url + '/post', fetchOptions);
+        const posts = await res.json();
+        createPosts(posts);
+    } catch (e) {
+        console.log(e.message);
+    }
+};
+getPost();

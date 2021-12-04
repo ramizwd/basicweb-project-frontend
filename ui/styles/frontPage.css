@@ -12,7 +12,8 @@ body {
 }
 
 /*layout of the navbar*/
-.navbar a, #fillout {
+.navbar a,
+#fillout {
     float: left;
     font-size: 16px;
     color: white;
@@ -20,23 +21,29 @@ body {
     padding: 14px 16px;
     text-decoration: none;
 }
-.navcenter{
+.navcenter {
     float: none;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.navright{
-    float: right;
-}
 
-.dropdown, .anonymous {
+.dropdown,
+.anonymous {
+    position: absolute;
     overflow: hidden;
+    right: -750px;
+}
+#loginBtn {
+    position: absolute;
+
+    right: -690px;
 }
 
-
-.dropdown .dropbtn, .anonymous, #plus{
+.dropdown .dropbtn,
+.anonymous,
+#plus {
     height: 42px;
     font-size: 16px;
     border: none;
@@ -49,11 +56,12 @@ body {
     font-family: inherit;
     margin: 0;
 }
-#plus:hover{
+#plus:hover {
     opacity: 30%;
 }
 
-.dropbtn, .anonymous{
+.dropbtn,
+.anonymous {
     border-radius: 50%;
 }
 
@@ -68,7 +76,6 @@ body {
 
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     right: 0;
-
 }
 
 .dropdown-content a {
@@ -89,7 +96,7 @@ body {
 }
 
 .main {
-    margin-top: 50px
+    margin-top: 50px;
 }
 .container {
     max-width: 40em;
@@ -111,7 +118,7 @@ ul {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
-    align-content:center;
+    align-content: center;
     align-items: center;
 }
 
@@ -121,7 +128,7 @@ li {
     margin: 0.5em;
 }
 
-h3{
+h3 {
     border-bottom: 5px solid gray;
     border-top: 5px solid gray;
 }
