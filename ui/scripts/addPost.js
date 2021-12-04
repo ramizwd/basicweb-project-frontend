@@ -31,6 +31,9 @@ addPost.addEventListener('submit', async (evt) => {
     const postBody = new FormData(addPost); // format the values for post method content
     const fetchOptions = {
         method: 'POST',
+        headers: {
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+        },
         body: postBody,
     };
     // send post method and the values to the post route.

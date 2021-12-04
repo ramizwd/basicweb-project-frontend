@@ -14,10 +14,10 @@
         <div class="card">
             <div class="center"></div>
             <h1>Login</h1>
-            <form id="login" method="post" action="http://10.114.32.27/auth/login">
+            <form id="login" method="post" action="'http://localhost:3000/auth/login">
                 <!-- make sure that is right address -->
-                <input id="username" type="text" placeholder="Username">
-                <input id="passwd" type="password" placeholder="Password">
+                <input id="username" type="text" name ="username" placeholder="Username">
+                <input id="password" type="password" name="password" placeholder="Password">
                 <button id="buttonLogin" type="submit">Log in</button>
             </form>
            <a id="link" href="registerPage.html">Create an account</a>
@@ -26,5 +26,6 @@
 </div>
 </div>
 </body>
+<script src="scripts/serialize.js"></script>
 <script src="scripts/loginPage.js"></script>
 </html>
