@@ -4,9 +4,10 @@ const url = 'http://localhost:3000';
 
 // Function to fetch data for users
 const getUserInfo = async (id) => {
-  const response = await fetch(url + '/user/' + id);
+  const response = await fetch(url + '/user/' + '1');
   const user = await response.json();
-  createBio(user);
+  console.log('user', user);
+  createBio(user[0]);
 };
 getUserInfo();
 
@@ -31,23 +32,21 @@ const createBio = (users) => {
 
   const userNickname = document.createElement('h1');
   userNickname.innerHTML = `${users.username}`;
-  /*
-    const userAvatar = document.createElement('img');
-    userAvatar.src = url + '/' + `${users.filename}`;  // will be changed to filename
-    userAvatar.alt = url + '/' + `${users.username}`;      // or user_id?
 
-    const userNickname = document.createElement('h1');
-    userNickname.innerHTML = `${users.username}`;
-    const userDescription = document.createElement('p');
-    userDescription.innerHTML = `${users.description}`;
-    const editButton = document.createElement('button');
-    editButton.addEventListener('click')
+  const userAvatar = document.createElement('img');
+  userAvatar.src = url + '/' + `${users.profile_picture}`;  // will be changed to filename
+  userAvatar.alt = url + '/' + `${users.username}`;         // or user_id?
 
-    bio.appendChild(userAvatar);
-    bio.appendChild(userDescription);
-    bio.appendChild(editButton);
-    */
-    bio.appendChild(userNickname);
+  const userDescription = document.createElement('p');
+  userDescription.innerHTML = `${users.description}`;
+
+  const editButton = document.createElement('button');
+  //editButton.addEventListener('click')
+
+  bio.appendChild(userAvatar);
+  bio.appendChild(userDescription);
+  bio.appendChild(editButton);
+  bio.appendChild(userNickname);
 
 };
 
