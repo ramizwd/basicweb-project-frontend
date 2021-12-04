@@ -6,43 +6,68 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Front Page</title>
         <link href="styles/frontPage.css" rel="stylesheet" />
+        <link href="styles/addPost.css" rel="stylesheet" />
+
     </head>
     <body>
         <div class="navbar">
             <a href="frontPage.html">Home</a>
 
-            <div class="navcenter">
+            <nav class="navcenter">
                 <a>Filter</a>
                 <form id="fillout" action="/action_page.php">
                     <input type="text" id="search" name="search" />
                     <input type="submit" value="Submit" />
                 </form>
-                <input id="plus" type="image" src="placeholder/icons8-plus-+-48.png" width="40" height="45" />
-            </div>
+                <img id="add-post-btn" src="placeholder/icons8-plus-+-48.png" width="40" height="40" />
+                <a id="loginBtn" href="loginPage.html">Log in</a>
+                <img class="anonymous" src="placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg" width="40" height="45" />
+            </nav>
             <!--Log in style-->
             <!--<div class="navright">
-        <a>Johnkai Cortez</a>
-        <div class="dropdown">
-            <img class="dropbtn" src="placeholder/frog%20challenge.PNG" width="40" height="45">
-            <div class="dropdown-content">
-                <a href="profilePage.html">Profile</a>
-                <a>Log out</a>
+                <a>Johnkai Cortez</a>
+                <div class="dropdown">
+                    <img class="dropbtn" src="placeholder/frog%20challenge.PNG" width="40" height="45">
+                    <div class="dropdown-content">
+                        <a href="profilePage.html">Profile</a>
+                        <a>Log out</a>
+                    </div>
+                </div>
+            </div>-->
+
+        </div>
+
+        <div id="modal"> 
+            <div id="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="form">
+                    <div class="form-wrapper">
+                        <form action="http://localhost/3000/post" method="post" class="form-input" enctype="multipart/form-data"
+                        id="addPost">
+                            <input class="form-input" type="text" required name="title" placeHolder="Post tittle"/>
+                            <input class="form-input" type="text" required name="description" placeHolder="Description"/>
+                            <input class="form-input" type="date" required name="date" placeHolder="YYYY-MM-DD"/>
+                            <input class="form-input" type="number" required name="poster" placeHolder="poster"/>
+                            <input class="form-input" type="file" required name="filename" accept="image/*|video/*" placeHolder="Upload file"/>
+                            <button id="submit-post-btn" type="submit">Add</button>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>-->
-            <div class="navright">
-                <a href="loginPage.html">Log in</a>
-                <img class="anonymous" src="placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg" width="40" height="45" />
-            </div>
-        </div>
+        <div id="snackbar">Post added successfully</div>
         <div class="main">
-            <h1>Fixed Top Menu</h1>
-            <h2>Scroll this page to see the effect</h2>
-            <h2>The navigation bar will stay at the top of the page while scrolling</h2>
             <ul id="postFeed">
                 <!-- JS will add list of posts -->
             </ul>
         </div>
     </body>
+
+    <script src="scripts/checkLogin.js"></script>
     <script src="scripts/frontPage.js"></script>
+    <script src="scripts/serialize.js"></script>
+    <script src="scripts/addPost.js"></script>
+
+
+
 </html>
