@@ -3,24 +3,24 @@
 console.log('front page');
 const url = 'http://localhost:3000';
 
-// Function to fetch data for users
-const getUserInfo = async (id) => {
-    const response = await fetch(url + '/user/' + id);
-    const user = await response.json();
-    return user;
-};
+// // Function to fetch data for users
+// const getUserInfo = async (id) => {
+//     const response = await fetch(url + '/user/' + id);
+//     const user = await response.json();
+//     return user;
+// };
 
-// Function to fetch data for posts
-const getPostInfo = async () => {
-    try {
-        const response = await fetch(url + '/post');
-        const post = await response.json();
-        createPosts(post);
-    } catch (e) {
-        console.log(e.message);
-    }
-};
-getPostInfo();
+// // Function to fetch data for posts
+// const getPostInfo = async () => {
+//     try {
+//         const response = await fetch(url + '/post');
+//         const post = await response.json();
+//         createPosts(post);
+//     } catch (e) {
+//         console.log(e.message);
+//     }
+// };
+// getPostInfo();
 
 const feed = document.querySelector('#postFeed');
 const nickname = document.querySelector('#nickname');
@@ -66,3 +66,19 @@ const createPosts = (posts) => {
         userPost.appendChild(buildText);
     });
 };
+
+const getPost = async () => {
+    try {
+        const fetchOptions = {
+            headers: {
+                Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+            },
+        };
+        const res = await fetch(url + '/post', fetchOptions);
+        const posts = await res.json();
+        createPosts(posts);
+    } catch (e) {
+        console.log(e.message);
+    }
+};
+getPost();
