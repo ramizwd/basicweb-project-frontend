@@ -1,7 +1,5 @@
 'use strict';
 
-const urlPost = 'http://localhost:3000';
-
 // Get html elements
 const modal = document.querySelector('#modal');
 const postBtn = document.querySelector('#add-post-btn');
