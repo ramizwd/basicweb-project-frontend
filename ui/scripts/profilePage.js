@@ -80,18 +80,14 @@ const createBio = (users) => {
   const userDescription = document.createElement('p');
   userDescription.innerHTML = `${users.description}`;
 
-  const editButton = document.createElement('button');
-  //editButton.addEventListener('click')
 
 // Placing the hierarchy in the bio header
   bio.appendChild(userAvatar);
   bio.appendChild(userNickname);
   bio.appendChild(userDescription);
-  bio.appendChild(editButton);
 
 // Setting attributes for repeating elements
   userAvatar.setAttribute('id', 'avatar');
-  editButton.setAttribute('id', 'buttonEdit');
   userDescription.setAttribute('id', 'textBio');
 };
 

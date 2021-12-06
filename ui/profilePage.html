@@ -6,22 +6,37 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Profile Page</title>
         <link href="styles/profilePage.css" rel="stylesheet" />
+        <link href="styles/editUser.css" rel="stylesheet" />
     </head>
     <body>
     <div class="navbar">
         <a href="frontPage.html">Home</a>
-        <a href="">Filter</a>
 
-        <form id="form" action="/action_page.php">
-            <input type="text" id="search" name="search">
-            <input type="submit" value="Submit">
-        </form>
-        <a id="nickname">Johnkai Cortez</a>
-        <div class="dropdown">
-            <img class="profileImg" src="placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg" width="40" height="45"></img>
-            <div class="dropdown-content">
-                <a href="profilePage.html">Profile</a>
-                <a>Log out</a>
+        <nav class="navcenter">
+            <a>Filter</a>
+            <form id="fillout" action="/action_page.php">
+                <input type="text" id="search" name="search" />
+                <input type="submit" value="Submit" />
+            </form>
+            <img id="add-post-btn" src="placeholder/icons8-plus-+-48.png" width="40" height="40" />
+            <a id="loginBtn" href="loginPage.html">Log in</a>
+            <img class="anonymous" src="placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg" width="40" height="45" />
+        </nav>
+    </div>
+    <div id="modal">
+        <div id="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="form">
+                <div class="form-wrapper">
+                    <form action="http://localhost/3000/user" method="post" class="form-input" enctype="multipart/form-data"
+                          id="editUser">
+                        <input class="form-input" type="text" placeholder="Username" name="username">
+                        <input class="form-input" type="email" placeholder="Email" name="email">
+                        <input class="form-input" type="password" placeholder="Password" name="firstPasswd">
+                        <input class="form-input" type="password" placeholder="Confirm password" name="secondPasswd">
+                        <button id="submit-edit-btn" type="submit">Edit</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
@@ -36,5 +51,6 @@
     <script src="scripts/checkLogin.js"></script>
     <script src="scripts/profilePage.js"></script>
     <script src="scripts/serialize.js"></script>
+    <script src="scripts/editUser.js"></script>
 
 </html>
