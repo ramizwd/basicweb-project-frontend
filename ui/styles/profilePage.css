@@ -87,6 +87,13 @@ body {
     padding: 1em;
     box-sizing: border-box;
 }
+#feed {
+}
+
+#postsHeader {
+    display: flex;
+    flex-direction: row;
+}
 
 ul {
     margin: 0;
@@ -94,6 +101,7 @@ ul {
     list-style-type: none;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     align-content:center;
     align-items: center;
 }
@@ -102,6 +110,7 @@ li {
     border: 5px solid gray;
     width: 30%;
     margin: 0.5em;
+
 }
 
 h3{
