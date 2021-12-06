@@ -23,10 +23,11 @@ const getPostInfo = async () => {
 };
 getPostInfo();
 
+// Selection of existing html elements
 const bio = document.querySelector('.bio');
 const postList = document.querySelector('.postList');
 
-// Function for creating users bio header
+// Function for creating users bio  in header
 const createBio = (users) => {
   bio.innerHTML = '';
 
@@ -43,51 +44,66 @@ const createBio = (users) => {
   const editButton = document.createElement('button');
   //editButton.addEventListener('click')
 
+// Placing the hierarchy in the bio header
   bio.appendChild(userAvatar);
+  bio.appendChild(userNickname);
   bio.appendChild(userDescription);
   bio.appendChild(editButton);
-  bio.appendChild(userNickname);
 
+// Setting attributes for repeating elements
+  userAvatar.setAttribute('id', 'avatar');
+  editButton.setAttribute('id', 'buttonEdit');
+  userDescription.setAttribute('id', 'textBio');
 };
 
 // Function for creating post containers
 const createPosts = (posts) => {
-  // clear ul
+  // Clear ul
   postList.innerHTML = '';
   // Creating HTML elements
   posts.forEach((post) => {
     const userPost = document.createElement('li');
+    postList.appendChild(userPost);
 
-    const buildText = document.createElement('p');
-    buildText.innerHTML = `${post.description}`;
-
-    //if not null do the layout like this
-    if (post.filename != null) {
-      const postImg = document.createElement('img');
-      postImg.src = url + '/' + post.filename;  // will be changes to filename
-      postImg.alt = '404 image not found';
-      userPost.appendChild(postImg);
-    }
-    const userImg = document.createElement('img');
-    const postNickname = document.createElement('h5');
-
-    const postTitle = document.createElement('h3');
-    postTitle.innerHTML = `${post.title}`;
-    // Poster nickname
-    const poster = document.createElement('h2');
-    poster.innerHTML = `Poster: ${post.postername}`;
     // Poster profile picture
     const posterPfp = document.createElement('img');
     posterPfp.src = url + '/' + post.profile_picture;
     console.log(post.profile_picture);
 
-    // Placing the hierarchy in the post object
-    postList.appendChild(userPost);
-    userPost.appendChild(posterPfp);
-    userPost.appendChild(poster);
-    userPost.appendChild(userImg);
+    // Poster nickname
+    const poster = document.createElement('h5');
+    poster.innerHTML = `Poster: ${post.postername}`;
+
+    const postsHeader = document.createElement('div');
+    userPost.appendChild(postsHeader)
+    postsHeader.appendChild(posterPfp);
+    postsHeader.appendChild(poster);
+
+    //Posts image (if not null do the layout like this)
+    if (post.filename != null) {
+      const postImg = document.createElement('img');
+      postImg.src = url + '/' + post.filename;  // will be changes to filename
+      postImg.alt = '404 image not found';
+      userPost.appendChild(postImg);
+      postImg.setAttribute('id', 'postImage');
+    }
+    // Title
+    const postTitle = document.createElement('h3');
+    postTitle.innerHTML = `${post.title}`;
     userPost.appendChild(postTitle);
+
+    // Build
+    const buildText = document.createElement('p');
+    buildText.innerHTML = `${post.description}`;
     userPost.appendChild(buildText);
+
+
+    // Placing the hierarchy in the post object
+
+    // Setting attributes for repeating elements
+    posterPfp.setAttribute('id', 'posterAvatar');
+    buildText.setAttribute('id', 'postText');
+    postsHeader.setAttribute('id', 'postsHeader');
   });
 };
 
