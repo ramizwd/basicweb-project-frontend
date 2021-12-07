@@ -175,3 +175,7 @@ h1 {
 text-decoration: none;
     cursor: pointer;
 }
+#add-post-btn:hover{
+    opacity: 30%;
+    cursor: pointer;
+}

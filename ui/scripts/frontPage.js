@@ -69,6 +69,7 @@ const createPosts = (posts) => {
 
         //delete the post when you click the delete button
         deleteButton.addEventListener('click', async () => {
+            console.log('delete');
             const fetchOptions = {
                 method: 'DELETE',
                 headers: {
@@ -82,7 +83,7 @@ const createPosts = (posts) => {
                 );
                 const json = await response.json();
                 console.log('delete response', json);
-                getPostInfo();
+                getPost();
             } catch (e) {
                 console.log(e.message);
             }
