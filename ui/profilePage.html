@@ -11,14 +11,13 @@
     <body>
     <div class="navbar">
         <a href="frontPage.html">Home</a>
-
         <nav class="navcenter">
             <a>Filter</a>
             <form id="fillout" action="/action_page.php">
                 <input type="text" id="search" name="search" />
                 <input type="submit" value="Submit" />
             </form>
-            <img id="add-post-btn" src="placeholder/icons8-plus-+-48.png" width="40" height="40" />
+            <img id="add-edit-btn" src="placeholder/edit.png" width="40" height="40" />
             <a id="loginBtn" href="loginPage.html">Log in</a>
             <img class="anonymous" src="placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg" width="40" height="45" />
         </nav>
@@ -34,6 +33,7 @@
                         <input class="form-input" type="email" placeholder="Email" name="email">
                         <input class="form-input" type="password" placeholder="Password" name="firstPasswd">
                         <input class="form-input" type="password" placeholder="Confirm password" name="secondPasswd">
+                        <input class="form-input" id="bio" type="text" placeholder="Bio" name="Description">
                         <button id="submit-edit-btn" type="submit">Edit</button>
                     </form>
                 </div>

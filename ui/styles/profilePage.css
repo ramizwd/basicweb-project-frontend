@@ -1,17 +1,18 @@
+/*setting the body without any margin*/
 body {
-    margin: 20px;
+    margin: 0;
 }
 
+/*adding a fixed navbar so when it scroll down it comes with you*/
 .navbar {
-
     background-color: #333;
     position: fixed;
     top: 0;
     width: 100%;
-
 }
 
-.navbar a, form {
+/*layout of the navbar*/
+.navbar a, #fillout {
     float: left;
     font-size: 16px;
     color: white;
@@ -19,43 +20,65 @@ body {
     padding: 14px 16px;
     text-decoration: none;
 }
-
-.dropdown {
-    float: left;
-    overflow: hidden;
+.navcenter{
+    float: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.navright{
+    float: right;
 }
 
-.dropdown .dropbtn {
+.dropdown,
+.anonymous {
+    position: absolute;
+    overflow: hidden;
+    right: -750px;
+}
+#loginBtn {
+    position: absolute;
+
+    right: -690px;
+}
+
+.dropdown .dropbtn, .anonymous, #plus{
     height: 42px;
     font-size: 16px;
     border: none;
     outline: none;
     color: white;
-
-    padding: 0px 16px;
+    padding-left: 16px;
+    padding-right: 16px;
+    padding-top: 3px;
     background-color: inherit;
     font-family: inherit;
     margin: 0;
 }
-
-.dropbtn{
-    border-radius: 50%;
-    padding-top: 3px;
+#plus:hover{
+    opacity: 30%;
 }
-.navbar a:hover  {
+
+.dropbtn, .anonymous{
+    border-radius: 50%;
+}
+
+.navbar a:hover {
     background-color: red;
 }
 
-.dropdown-content {
+.dropdown-content,.dropdown-content-verticalmenu {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-    min-width: 160px;
+
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-    z-index: 1;
+    right: 0;
+
 }
 
-.dropdown-content a {
+.dropdown-content a{
     float: none;
     color: black;
     padding: 12px 16px;
@@ -110,13 +133,13 @@ li {
     border: 5px solid gray;
     width: 30%;
     margin: 0.5em;
-
 }
 
 h3{
     border-bottom: 5px solid gray;
     border-top: 5px solid gray;
 }
+
 figure {
     margin: 0;
     padding: 0;
@@ -133,4 +156,33 @@ figure {
 
 .form-wrapper {
     width: 33%;
+}
+
+.posterDiv {
+    display: flex;
+}
+
+h1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    flex-grow: 4;
+}
+
+.dropImgBtn:hover {
+    opacity: 30%;
+    cursor: pointer;
+}
+.dropdownImg{
+    position: relative;
+    display: inline-block;
+}
+.show {display: block;}
+.dropdown-content-verticalmenu p{
+    text-decoration: none;
+    cursor: pointer;
+}
+#add-edit-btn:hover{
+    opacity: 30%;
+    cursor: pointer;
 }

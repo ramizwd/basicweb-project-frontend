@@ -37,6 +37,10 @@
 .form-wrapper {
     width: 20%;
 }
+#bio {
+    width: 100%;
+    height: 25px;
+}
 
 @-webkit-keyframes fadein {
     from {
