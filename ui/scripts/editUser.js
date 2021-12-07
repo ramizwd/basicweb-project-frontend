@@ -1,6 +1,5 @@
 'use strict';
 
-
 // Get html elements
 const modal = document.querySelector('#modal');
 const editBtn = document.querySelector('#add-edit-btn');
@@ -28,6 +27,10 @@ const editUser = document.querySelector('#editUser');
 editUser.addEventListener('submit', async (evt) => {
     evt.preventDefault(); // stop default action if event is not handled
     const data = serializeJson(editUser);
+    data.id = user.user_id;
+    console.log('user id', user.user_id);
+
+    console.log(data);
     // remove empty properties
     for (const [prop, value] of Object.entries(data)) {
         if (value === '') {
