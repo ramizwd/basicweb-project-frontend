@@ -37,6 +37,16 @@ const createPosts = (posts) => {
         posterPfp.src = url + '/' + post.profile_picture;
         console.log(post.profile_picture);
 
+        // Upvote button
+        const upVote = document.createElement('button');
+        upVote.innerHTML = 'Upvote';
+        // Downvote button
+        const downVote = document.createElement('button');
+        downVote.innerHTML = 'Dowvote';
+        // Total votes button
+        const votes = document.createElement('p');
+        votes.innerHTML = `${post.Votes}`;
+
         // Placing the hierarchy in the post object
         feed.appendChild(userPost);
         userPost.appendChild(posterPfp);
@@ -44,6 +54,58 @@ const createPosts = (posts) => {
         userPost.appendChild(userImg);
         userPost.appendChild(postTitle);
         userPost.appendChild(buildText);
+        userPost.appendChild(upVote);
+        userPost.appendChild(downVote);
+        userPost.appendChild(votes);
+
+        // // get users to make options
+        // const getUsers = async () => {
+        //     try {
+        //         const options = {
+        //             headers: {
+        //                 Authorization:
+        //                     'Bearer ' + sessionStorage.getItem('token'),
+        //             },
+        //         };
+        //         const response = await fetch(
+        //             url + '/user/' + sessionStorage.getItem('user'),
+        //             options
+        //         );
+        //         const users = await response.json();
+        //         console.log('userrrrrrr', sessionStorage.getItem('user'));
+        //         createUserOptions(users);
+        //     } catch (e) {
+        //         console.log(e.message);
+        //     }
+        // };
+        // getUsers();
+        // const createUserOptions = (user) => {
+        //     const user3 = user.user_id;
+        //     console.log('user idddd', user3);
+        // };
+
+        const user = JSON.parse(sessionStorage.getItem('user'));
+
+        // Send a request for upvoting
+        upVote.addEventListener('click', async () => {
+            const data = { user_id: user.user_id, vote_count: 1 };
+            console.log('upvoted post with id', post.post_id);
+
+            const fetchOptions = {
+                method: 'POST',
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            };
+            const res = await fetch(
+                url + '/vote/' + post.post_id,
+                fetchOptions
+            );
+            const vote = await res.json();
+            console.log(vote);
+        });
     });
 };
 
