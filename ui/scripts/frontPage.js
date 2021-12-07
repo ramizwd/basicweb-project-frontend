@@ -58,41 +58,64 @@ const createPosts = (posts) => {
         userPost.appendChild(downVote);
         userPost.appendChild(votes);
 
-        // // get users to make options
-        // const getUsers = async () => {
-        //     try {
-        //         const options = {
-        //             headers: {
-        //                 Authorization:
-        //                     'Bearer ' + sessionStorage.getItem('token'),
-        //             },
-        //         };
-        //         const response = await fetch(
-        //             url + '/user/' + sessionStorage.getItem('user'),
-        //             options
-        //         );
-        //         const users = await response.json();
-        //         console.log('userrrrrrr', sessionStorage.getItem('user'));
-        //         createUserOptions(users);
-        //     } catch (e) {
-        //         console.log(e.message);
-        //     }
-        // };
-        // getUsers();
-        // const createUserOptions = (user) => {
-        //     const user3 = user.user_id;
-        //     console.log('user idddd', user3);
-        // };
-
+        // Get logged in user and send a get request for vote info
         const user = JSON.parse(sessionStorage.getItem('user'));
+        let reqMethod = 'POST';
+        const getVote =
+            ('click',
+            async () => {
+                const fetchOptions = {
+                    headers: {
+                        Authorization:
+                            'Bearer ' + sessionStorage.getItem('token'),
+                        'Content-Type': 'application/json',
+                    },
+                };
+                const res = await fetch(
+                    url + '/vote/' + user.user_id + '/' + post.post_id,
+                    fetchOptions
+                );
+                const vote = await res.json();
+                console.log('voteeeeeeeeeeeeeeeeeeeeeee:', vote.vote_count);
+                if (vote.vote_count == 1 || vote.vote_count == 0) {
+                    reqMethod = 'PUT';
+                    console.log('if statment', vote.vote_count);
+                    console.log('method', reqMethod);
+                }
+            });
+        getVote();
 
         // Send a request for upvoting
         upVote.addEventListener('click', async () => {
             const data = { user_id: user.user_id, vote_count: 1 };
             console.log('upvoted post with id', post.post_id);
-
             const fetchOptions = {
-                method: 'POST',
+                method: reqMethod,
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data),
+            };
+            console.log('upvote req', reqMethod);
+            try {
+                const res = await fetch(
+                    url + '/vote/' + post.post_id,
+                    fetchOptions
+                );
+                const vote = await res.json();
+                console.log(vote);
+            } catch (e) {
+                console.error('error', e.message);
+            }
+        });
+
+        // Send a request for downvoting
+        downVote.addEventListener('click', async () => {
+            const data = { user_id: user.user_id, vote_count: 0 };
+            console.log('downvoted post with id', post.post_id);
+            const fetchOptions = {
+                method: reqMethod,
                 headers: {
                     Authorization: 'Bearer ' + sessionStorage.getItem('token'),
                     'Content-Type': 'application/json',
