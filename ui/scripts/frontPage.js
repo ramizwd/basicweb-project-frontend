@@ -39,7 +39,6 @@ const createPosts = (posts) => {
         // Poster profile picture
         const posterPfp = document.createElement('img');
         // if poster null but default
-        console.log(post.date);
         // posterPfp.src = url + '/' + post.profile_picture;
         //getting the default profile pic if not yet set
         posterPfp.src = 'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
@@ -48,31 +47,46 @@ const createPosts = (posts) => {
         //for the upper piece of the postcard
         const posterDiv = document.createElement('div');
         posterDiv.className = 'posterDiv';
+
         //for the dropdown button setting it up
+
+        //setting the division
         const dropdown = document.createElement('div');
+
+        //setting div class name
         dropdown.className = 'dropdownImg';
+
+        //creating element img
         const verticalMenu = document.createElement('img');
+        //setting up size,img and class name
         verticalMenu.src = 'placeholder/icons8-menu-vertical-48.png';
         verticalMenu.width = '20';
         verticalMenu.height = '25';
         verticalMenu.className = 'dropImgBtn';
 
+        //for the content inside of dropdown
+
+        //setting up div
         const dropdownContent = document.createElement('div');
 
-        dropdownContent.className = 'dropdown-content';
-        dropdownContent.setAttribute('id', 'myDropdown');
+        //setting div class name
+        dropdownContent.className = 'dropdown-content-verticalmenu';
 
-        const deleteButton = document.createElement('a');
-        const reportButton = document.createElement('a');
-        deleteButton.setAttribute('id', 'deleteAction');
+        //setting the word delete and report
+        const deleteButton = document.createElement('p');
+        const reportButton = document.createElement('p');
 
+        //word delete
         deleteButton.innerHTML = 'Delete';
+        //append to dropdowncontent
         dropdownContent.appendChild(deleteButton);
+
+        //when the vertical button press it will show the dropdown content
         verticalMenu.addEventListener('click', showContent => {
-            console.log(this.id);
-            document.getElementById('myDropdown').classList.toggle('show');
+            dropdownContent.classList.toggle('show');
         });
 
+        //delete the post when you click the delete button
         deleteButton.addEventListener('click', async () => {
             const fetchOptions = {
                 method: 'DELETE',
@@ -93,15 +107,17 @@ const createPosts = (posts) => {
             }
         });
 
+        //this appends to dropdown div
         dropdown.appendChild(verticalMenu);
-
         dropdown.appendChild(dropdownContent);
-
+        //this appends to userpost list
         userPost.appendChild(posterDiv);
+        //this appends to posterdiv div
         posterDiv.appendChild(posterPfp);
         posterDiv.appendChild(poster);
         posterDiv.appendChild(dropdown);
 
+        //set the description
         const buildText = document.createElement('p');
         buildText.innerHTML = `${post.description}`;
 
@@ -112,15 +128,13 @@ const createPosts = (posts) => {
             postImg.alt = '404 image not found';
             userPost.appendChild(postImg);
         }
-        const userImg = document.createElement('img');
+
         //const postNickname = document.createElement('h5');
         const postTitle = document.createElement('h3');
         postTitle.innerHTML = `${post.title}`;
 
         // Placing the hierarchy in the post object
         feed.appendChild(userPost);
-
-        userPost.appendChild(userImg);
         userPost.appendChild(postTitle);
         userPost.appendChild(buildText);
     });
@@ -129,7 +143,8 @@ const createPosts = (posts) => {
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(ev) {
     if (!ev.target.matches('.dropImgBtn')) {
-        let dropdowns = document.getElementsByClassName('dropdown-content');
+        const dropdowns = document.getElementsByClassName(
+        'dropdown-content-verticalmenu');
         let i;
         for (i = 0; i < dropdowns.length; i++) {
             let openDrown = dropdowns[i];
@@ -138,9 +153,4 @@ window.onclick = function(ev) {
             }
         }
     }
-};
-
-const showContent = () => {
-
-
 };
