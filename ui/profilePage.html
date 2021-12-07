@@ -27,13 +27,9 @@
             <span class="close-modal">&times;</span>
             <div class="form">
                 <div class="form-wrapper">
-                    <form action="http://localhost/3000/user" method="post" class="form-input" enctype="multipart/form-data"
-                          id="editUser">
+                    <form id="editUser">
                         <input class="form-input" type="text" placeholder="Username" name="username">
-                        <input class="form-input" type="email" placeholder="Email" name="email">
-                        <input class="form-input" type="password" placeholder="Password" name="firstPasswd">
-                        <input class="form-input" type="password" placeholder="Confirm password" name="secondPasswd">
-                        <input class="form-input" id="bio" type="text" placeholder="Bio" name="Description">
+                        <input class="form-input" type="text" placeholder="Description" name="description">
                         <button id="submit-edit-btn" type="submit">Edit</button>
                     </form>
                 </div>
@@ -50,7 +46,8 @@
     </body>
     <script src="scripts/checkLogin.js"></script>
     <script src="scripts/profilePage.js"></script>
-    <script src="scripts/serialize.js"></script>
     <script src="scripts/editUser.js"></script>
+    <script src="scripts/serialize.js"></script>
+
 
 </html>
