@@ -1,9 +1,5 @@
 'use strict';
 
-const urlPost = 'http://localhost:3000';
-
-// get user data for admin check
-const user = JSON.parse(sessionStorage.getItem('user'));
 
 // Get html elements
 const modal = document.querySelector('#modal');
@@ -48,7 +44,10 @@ editUser.addEventListener('submit', async (evt) => {
     };
     // send put method and the values to the put route.
     // get a json response and display it as successfully added post message as an alert
-    const response = await fetch(url + '/user'+ user.user_id, fetchOptions);
+
+    // get user data for admin check
+    //const user = JSON.parse(sessionStorage.getItem('user'));
+    const response = await fetch(url + '/user', fetchOptions);
     const json = await response.json();
     if (json.error) {
         alert(json.error.message);
