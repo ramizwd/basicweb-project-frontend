@@ -50,7 +50,7 @@ editUser.addEventListener('submit', async (evt) => {
 
     // get user data for admin check
     //const user = JSON.parse(sessionStorage.getItem('user'));
-    const response = await fetch(url + '/user', fetchOptions);
+    const response = await fetch(url + '/user/profile', fetchOptions);
     const json = await response.json();
     if (json.error) {
         alert(json.error.message);
