@@ -1,6 +1,5 @@
 'use strict';
 
-console.log('front page');
 const url = 'http://localhost:3000';
 const feed = document.querySelector('#postFeed');
 const nickname = document.querySelector('#nickname');
@@ -47,6 +46,12 @@ const createPosts = (posts) => {
         const votes = document.createElement('p');
         votes.innerHTML = `${post.Votes}`;
 
+        // Get date from db and format it
+        const date = new Date(post.date);
+        // Create element for the date
+        const dateText = document.createElement('p');
+        dateText.innerHTML = date;
+
         // Placing the hierarchy in the post object
         feed.appendChild(userPost);
         userPost.appendChild(posterPfp);
@@ -57,38 +62,39 @@ const createPosts = (posts) => {
         userPost.appendChild(upVote);
         userPost.appendChild(downVote);
         userPost.appendChild(votes);
+        userPost.appendChild(dateText);
 
         // Get logged in user and send a get request for vote info
         const user = JSON.parse(sessionStorage.getItem('user'));
         let reqMethod = 'POST';
-        const getVote =
-            ('click',
-            async () => {
-                const fetchOptions = {
-                    headers: {
-                        Authorization:
-                            'Bearer ' + sessionStorage.getItem('token'),
-                        'Content-Type': 'application/json',
-                    },
-                };
-                const res = await fetch(
-                    url + '/vote/' + user.user_id + '/' + post.post_id,
-                    fetchOptions
-                );
-                const vote = await res.json();
-                console.log('voteeeeeeeeeeeeeeeeeeeeeee:', vote.vote_count);
-                if (vote.vote_count == 1 || vote.vote_count == 0) {
-                    reqMethod = 'PUT';
-                    console.log('if statment', vote.vote_count);
-                    console.log('method', reqMethod);
-                }
-            });
+
+        const getVote = async () => {
+            const fetchOptions = {
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                },
+            };
+
+            const res = await fetch(
+                url + '/vote/' + user.user_id + '/' + post.post_id,
+                fetchOptions
+            );
+            const vote = await res.json();
+            console.log('vote:', vote.vote_count);
+
+            if (vote.vote_count == 1 || vote.vote_count == 0) {
+                reqMethod = 'PUT';
+                console.log('Change req method', reqMethod);
+            }
+        };
         getVote();
 
         // Send a request for upvoting
         upVote.addEventListener('click', async () => {
             const data = { user_id: user.user_id, vote_count: 1 };
             console.log('upvoted post with id', post.post_id);
+
             const fetchOptions = {
                 method: reqMethod,
                 headers: {
@@ -114,6 +120,7 @@ const createPosts = (posts) => {
         downVote.addEventListener('click', async () => {
             const data = { user_id: user.user_id, vote_count: 0 };
             console.log('downvoted post with id', post.post_id);
+
             const fetchOptions = {
                 method: reqMethod,
                 headers: {
