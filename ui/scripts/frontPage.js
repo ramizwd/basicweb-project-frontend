@@ -3,10 +3,13 @@ const url = 'http://localhost:3000';
 const feed = document.querySelector('#postFeed');
 const nickname = document.querySelector('#nickname');
 const profileImg = document.querySelector('.profileImg');
+const name = document.querySelector('#name');
 //profileImg.innerHTML = getUserInfo().user.image;  // image not implemented yet
-
+const user = JSON.parse(sessionStorage.getItem('user'));
+name.innerHTML=user.username
 // Function for creating post containers
 const createPosts = (posts) => {
+
     // clear ul
     feed.innerHTML = '';
     // Creating HTML elements
@@ -113,6 +116,9 @@ const createPosts = (posts) => {
                 postImg = document.createElement('img');
                 //source where to get it
                 postImg.src = url + '/thumbnails/' + post.filename;  // will be changes to filename
+                postImg.style.width="100%"
+                //if no img alternative
+                postImg.alt = '404 image not found';
             } else if (post.file_type === 'video/mp4') {
                 //create video element
                 postImg = document.createElement('video');
@@ -121,9 +127,11 @@ const createPosts = (posts) => {
                 //source where to get video
                 postImg.src = url + '/' + post.filename;
                 //postImg.src = url + '/thumbnails/' + post.filename+'/'+post.filename+'-thumbnail-200x200-0010.png';  // will be changes to filename
+                postImg.style.width="100%"
+                //if no img alternative
+                postImg.alt = '404 image not found';
             }
-            //if no img alternative
-            postImg.alt = '404 image not found';
+
             //append postIMG
             userPost.appendChild(postImg);
         }
@@ -139,12 +147,11 @@ const createPosts = (posts) => {
 };
 
 // Close the dropdown if the user clicks outside of it
-window.onclick = function(ev) {
+feed.onclick = function(ev) {
     if (!ev.target.matches('.dropImgBtn')) {
         const dropdowns = document.getElementsByClassName(
         'dropdown-content-verticalmenu');
-        let i;
-        for (i = 0; i < dropdowns.length; i++) {
+        for (let i = 0; i < dropdowns.length; i++) {
             let openDrown = dropdowns[i];
             if (openDrown.classList.contains('show')) {
                 openDrown.classList.remove('show');
