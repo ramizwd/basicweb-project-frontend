@@ -105,12 +105,28 @@ const createPosts = (posts) => {
 
         //if not null do the layout like this
         if (post.filename != null) {
-            const postImg = document.createElement('img');
-            postImg.src = url + '/' + post.filename;  // will be changes to filename
+            let postImg;
+            //if image on se pistää create element
+            if (post.file_type === 'image/png' || post.file_type ===
+            'image/jpg' || post.file_type === 'image/webp') {
+                //create img elements
+                postImg = document.createElement('img');
+                //source where to get it
+                postImg.src = url + '/thumbnails/' + post.filename;  // will be changes to filename
+            } else if (post.file_type === 'video/mp4') {
+                //create video element
+                postImg = document.createElement('video');
+                //set so can control
+                postImg.controls = true;
+                //source where to get video
+                postImg.src = url + '/' + post.filename;
+                //postImg.src = url + '/thumbnails/' + post.filename+'/'+post.filename+'-thumbnail-200x200-0010.png';  // will be changes to filename
+            }
+            //if no img alternative
             postImg.alt = '404 image not found';
+            //append postIMG
             userPost.appendChild(postImg);
         }
-
         //const postNickname = document.createElement('h5');
         const postTitle = document.createElement('h3');
         postTitle.innerHTML = `${post.title}`;
