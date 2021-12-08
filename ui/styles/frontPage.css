@@ -42,7 +42,6 @@ body {
 
 #loginBtn {
     position: absolute;
-
     right: -690px;
 }
 
@@ -72,13 +71,24 @@ body {
     background-color: red;
 }
 
-.dropdown-content, .dropdown-content-verticalmenu {
+.dropdown-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
 
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     right: 0;
+
+}
+
+.dropdown-content-verticalmenu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+
+    z-index: 1;
 
 }
 
@@ -182,11 +192,20 @@ h1 {
 }
 
 .dropdown-content-verticalmenu p {
+    color: black;
+    padding: 12px 16px;
     text-decoration: none;
+    display: block;
     cursor: pointer;
 }
 
 #add-post-btn:hover {
     opacity: 30%;
     cursor: pointer;
+}
+#add-post-btn{
+    margin-top: 4px;
+}
+.dropdown-content-verticalmenu:hover .dropdown-content-verticalmenu {
+    display: block;
 }
