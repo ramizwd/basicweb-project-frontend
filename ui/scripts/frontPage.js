@@ -68,6 +68,7 @@ const createPosts = (posts) => {
         const user = JSON.parse(sessionStorage.getItem('user'));
         let reqMethod = 'POST';
 
+        let voteInfo = 0;
         const getVote = async () => {
             const fetchOptions = {
                 headers: {
@@ -87,6 +88,8 @@ const createPosts = (posts) => {
                 reqMethod = 'PUT';
                 console.log('Change req method', reqMethod);
             }
+            voteInfo = vote;
+            console.log('variable test:', vote.vote_count);
         };
         getVote();
 
@@ -94,7 +97,11 @@ const createPosts = (posts) => {
         upVote.addEventListener('click', async () => {
             const data = { user_id: user.user_id, vote_count: 1 };
             console.log('upvoted post with id', post.post_id);
+            console.log('variable test upvote:', voteInfo.vote_count);
 
+            if (voteInfo.vote_count == 1) {
+                reqMethod = 'DELETE';
+            }
             const fetchOptions = {
                 method: reqMethod,
                 headers: {
@@ -120,6 +127,9 @@ const createPosts = (posts) => {
         downVote.addEventListener('click', async () => {
             const data = { user_id: user.user_id, vote_count: 0 };
             console.log('downvoted post with id', post.post_id);
+            if (voteInfo.vote_count == 0) {
+                reqMethod = 'DELETE';
+            }
 
             const fetchOptions = {
                 method: reqMethod,
