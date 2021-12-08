@@ -18,12 +18,12 @@ const createPosts = (posts) => {
         buildText.innerHTML = `${post.description}`;
 
         //if not null do the layout like this
-        if (post.filename != null) {
-            const postImg = document.createElement('img');
-            postImg.src = url + '/' + post.filename; // will be changes to filename
-            postImg.alt = '404 image not found';
-            userPost.appendChild(postImg);
-        }
+        // if (post.filename != null) {
+        //     const postImg = document.createElement('img');
+        //     postImg.src = url + '/' + post.filename; // will be changes to filename
+        //     postImg.alt = '404 image not found';
+        //     userPost.appendChild(postImg);
+        // }
         const userImg = document.createElement('img');
         //const postNickname = document.createElement('h5');
         const postTitle = document.createElement('h3');
@@ -66,9 +66,11 @@ const createPosts = (posts) => {
 
         // Get logged in user and send a get request for vote info
         const user = JSON.parse(sessionStorage.getItem('user'));
+        // Default request method is POST
         let reqMethod = 'POST';
-
         let voteInfo = 0;
+
+        // Get vote info
         const getVote = async () => {
             const fetchOptions = {
                 headers: {
@@ -88,6 +90,7 @@ const createPosts = (posts) => {
                 reqMethod = 'PUT';
                 console.log('Change req method', reqMethod);
             }
+
             voteInfo = vote;
             console.log('variable test:', vote.vote_count);
         };
@@ -99,9 +102,23 @@ const createPosts = (posts) => {
             console.log('upvoted post with id', post.post_id);
             console.log('variable test upvote:', voteInfo.vote_count);
 
-            if (voteInfo.vote_count == 1) {
-                reqMethod = 'DELETE';
-            }
+            // If vote already exist, delete it
+            if (voteInfo.vote_count == 1) reqMethod = 'DELETE';
+            // Send the req body to reqFunction
+            reqFunction(data);
+        });
+
+        // Send a request for downvoting
+        downVote.addEventListener('click', async () => {
+            const data = { user_id: user.user_id, vote_count: 0 };
+            console.log('downvoted post with id', post.post_id);
+
+            // If vote already exist, delete it
+            if (voteInfo.vote_count == 0) reqMethod = 'DELETE';
+            reqFunction(data);
+        });
+        // Request function
+        const reqFunction = async (data) => {
             const fetchOptions = {
                 method: reqMethod,
                 headers: {
@@ -110,7 +127,8 @@ const createPosts = (posts) => {
                 },
                 body: JSON.stringify(data),
             };
-            console.log('upvote req', reqMethod);
+            console.log('req method:', reqMethod);
+
             try {
                 const res = await fetch(
                     url + '/vote/' + post.post_id,
@@ -121,31 +139,8 @@ const createPosts = (posts) => {
             } catch (e) {
                 console.error('error', e.message);
             }
-        });
-
-        // Send a request for downvoting
-        downVote.addEventListener('click', async () => {
-            const data = { user_id: user.user_id, vote_count: 0 };
-            console.log('downvoted post with id', post.post_id);
-            if (voteInfo.vote_count == 0) {
-                reqMethod = 'DELETE';
-            }
-
-            const fetchOptions = {
-                method: reqMethod,
-                headers: {
-                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(data),
-            };
-            const res = await fetch(
-                url + '/vote/' + post.post_id,
-                fetchOptions
-            );
-            const vote = await res.json();
-            console.log(vote);
-        });
+            getPost();
+        };
     });
 };
 
