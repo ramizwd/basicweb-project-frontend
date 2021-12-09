@@ -1,6 +1,6 @@
 'use strict';
 
-const url = 'http://localhost:3000';
+const url = 'https://10.114.32.27/app';
 const registration = document.querySelector('#register');
 
 // registration
@@ -27,5 +27,4 @@ registration.addEventListener('submit', async (evt) => {
         evt.preventDefault();
         alert('Password does not match');
     }
-
 });
