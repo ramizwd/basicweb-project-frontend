@@ -4,6 +4,7 @@ const feed = document.querySelector('#postFeed');
 const nickname = document.querySelector('#nickname');
 const profileImg = document.querySelector('.profileImg');
 //profileImg.innerHTML = getUserInfo().user.image;  // image not implemented yet
+const test = document.querySelector('.list');
 
 // Function for creating post containers
 const createPosts = (posts) => {
@@ -12,7 +13,6 @@ const createPosts = (posts) => {
     // Creating HTML elements
     posts.forEach((post) => {
         const userPost = document.createElement('li');
-
         // Poster nickname
         const poster = document.createElement('h1');
         poster.innerHTML = `${post.postername}`;
@@ -128,8 +128,19 @@ const createPosts = (posts) => {
             userPost.appendChild(postImg);
         }
         //const postNickname = document.createElement('h5');
-        const postTitle = document.createElement('h3');
+        const postTitle = document.createElement('a');
         postTitle.innerHTML = `${post.title}`;
+        postTitle.addEventListener('click',() => {
+            //userPost.location.href='postPage.html/post/' + post.post_id;
+            //postTitle.setAttribute('href', 'postPage.html');
+            const fetchOptions = {
+                method: 'GET',
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                },
+            };
+            console.log('get postId', post.post_id);
+        });
 
         // Placing the hierarchy in the post object
         feed.appendChild(userPost);
@@ -137,6 +148,7 @@ const createPosts = (posts) => {
         userPost.appendChild(buildText);
     });
 };
+
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(ev) {
