@@ -120,7 +120,7 @@ const createPosts = (posts) => {
             if (
                 post.file_type === 'image/png' ||
                 post.file_type === 'image/jpg' ||
-                post.file_type === 'image/webp'
+                post.file_type === 'image/webp' ||post.file_type === 'image/jpeg'
             ) {
                 //create img elements
                 postImg = document.createElement('img');
