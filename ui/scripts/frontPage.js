@@ -119,6 +119,8 @@ const createPosts = (posts) => {
                 postImg.style.width="100%"
                 //if no img alternative
                 postImg.alt = '404 image not found';
+                //append postIMG
+                userPost.appendChild(postImg);
             } else if (post.file_type === 'video/mp4') {
                 //create video element
                 postImg = document.createElement('video');
@@ -130,10 +132,11 @@ const createPosts = (posts) => {
                 postImg.style.width="100%"
                 //if no img alternative
                 postImg.alt = '404 image not found';
+                //append postIMG
+                userPost.appendChild(postImg);
             }
 
-            //append postIMG
-            userPost.appendChild(postImg);
+
         }
         //const postNickname = document.createElement('h5');
         const postTitle = document.createElement('h3');
