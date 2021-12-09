@@ -1,5 +1,5 @@
 'use strict';
-console.log('profile page');
+
 const url = 'https://10.114.32.27/app';
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
@@ -56,7 +56,6 @@ const createBio = (users) => {
 
     const userAvatar = document.createElement('img');
     userAvatar.src = url + '/' + `${users.profile_picture}`; // will be changed to filename
-    userAvatar.alt = url + '/' + `${users.username}`; // or user_id?
 
     const userDescription = document.createElement('p');
     userDescription.innerHTML = `${users.description}`;
