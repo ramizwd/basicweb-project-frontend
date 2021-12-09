@@ -13,6 +13,8 @@ const createPosts = (posts) => {
     feed.innerHTML = '';
     // Creating HTML elements
     posts.forEach((post) => {
+        // Get logged in user and send a get request for vote info
+        const user = JSON.parse(sessionStorage.getItem('user'));
         const userPost = document.createElement('li');
 
         // Poster nickname
@@ -47,7 +49,10 @@ const createPosts = (posts) => {
         verticalMenu.width = '20';
         verticalMenu.height = '25';
         verticalMenu.className = 'dropImgBtn';
-
+        //when the vertical button press it will show the dropdown content
+        verticalMenu.addEventListener('click', () => {
+            dropdownContent.classList.toggle('show');
+        });
         //for the content inside of dropdown
 
         //setting up div
@@ -60,16 +65,18 @@ const createPosts = (posts) => {
         const deleteButton = document.createElement('p');
         const reportButton = document.createElement('p');
 
-        //word delete
-        deleteButton.innerHTML = 'Delete';
-        //append to dropdowncontent
-        dropdownContent.appendChild(deleteButton);
+        reportButton.innerHTML = 'Report';
+        dropdownContent.appendChild(reportButton);
 
-        //when the vertical button press it will show the dropdown content
-        verticalMenu.addEventListener('click', (showContent) => {
-            dropdownContent.classList.toggle('show');
-        });
-
+        // Check if user is a moderator if not append delete button to drop list only for
+        // logged in user's post
+        if (user.role === 0) {
+            deleteButton.innerHTML = 'Delete';
+            dropdownContent.appendChild(deleteButton);
+        } else if (user.user_id === post.poster) {
+            deleteButton.innerHTML = 'Delete';
+            dropdownContent.appendChild(deleteButton);
+        }
         //delete the post when you click the delete button
         deleteButton.addEventListener('click', async () => {
             console.log('delete');
@@ -168,8 +175,6 @@ const createPosts = (posts) => {
         userPost.appendChild(votes);
         userPost.appendChild(dateText);
 
-        // Get logged in user and send a get request for vote info
-        const user = JSON.parse(sessionStorage.getItem('user'));
         // Default request method is POST
         let reqMethod = 'POST';
         let voteInfo = 0;
