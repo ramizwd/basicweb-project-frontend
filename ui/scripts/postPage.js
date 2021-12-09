@@ -6,77 +6,58 @@ const main = document.querySelector('main');
 //const user = JSON.parse(sessionStorage.getItem('user'));
 //const post = JSON.parse(sessionStorage.getItem('post'));
 
-// Function to fetch data for post
-const getPost = async () => {
-    try {
-        const fetchOptions = {
-            headers: {
-                Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-            },
-        };
-        const res = await fetch(url + '/post/' + post.post_id, fetchOptions);
-        const post = await res.json();
-        console.log(post);
-        createPost(post);
-    } catch (e) {
-        console.log(e.message);
-    }
-};
-getPost();
-
 /*
 const getPost = async (id) => {
-    const response = await fetch(url + '/post/' + '12');
+    const response = await fetch(url + '/post/' + id);
     const post = await response.json();
     console.log('post', post)
     return post;
 };
- */
+*/
 
-const createPost = (post) => {
-    //Creating html elements for post
-    const postContainer = document.createElement('div');
-    postContainer.setAttribute('id', 'postContainer');
-    postContainer.setAttribute('class', 'left');
-    postContainer.innerHTML = '';
+const createPost = (posts) => {
+    posts.forEach((post) => {
+        //Creating html elements for post
+        const postContainer = document.createElement('div');
+        postContainer.setAttribute('id', 'postContainer');
+        postContainer.setAttribute('class', 'left');
+        postContainer.innerHTML = '';
 
-    const userAvatar = document.createElement('img');
-    userAvatar.setAttribute('id', 'avatar');
-    const userNickname = document.createElement('h2');
+        const userAvatar = document.createElement('img');
+        userAvatar.setAttribute('id', 'avatar');
+        const userNickname = document.createElement('h2');
 
+        if (posts.filename != null) {
+            const postImg = document.createElement('img');
+            postImg.src = url + '/' + post.filename; // will be changes to filename
+            postImg.alt = '404 image not found';
+            postImg.setAttribute('id', 'postImg');
+        }
 
-    if (posts.filename != null) {
-        const postImg = document.createElement('img');
-        postImg.src = url + '/' + post.filename; // will be changes to filename
-        postImg.alt = '404 image not found';
-        postImg.setAttribute('id', 'postImg');    }
+        const postTitle = document.createElement('h1');
+        postTitle.innerHTML = `${post.title}`;
 
-    const postTitle = document.createElement('h1');
-    postTitle.innerHTML = `${post.title}`;
+        const postText = document.createElement('p');
+        postText.setAttribute('id', 'description');
+        postText.innerHTML = `${post.description}`;
 
-    const postText = document.createElement('p');
-    postText.setAttribute('id', 'description');
-    postText.innerHTML = `${post.description}`;
+        const postBuild = document.createElement('p');
+        postText.setAttribute('id', 'builtList');
 
-    const postBuild = document.createElement('p');
-    postText.setAttribute('id', 'builtList');
-
-    const builtListTitle = document.createElement('h3');
-    builtListTitle.innerHTML = 'PC hardware list';
+        const builtListTitle = document.createElement('h3');
+        builtListTitle.innerHTML = 'PC hardware list';
 
 // Placing the hierarchy in the post container part
-    main.appendChild(postContainer);
-    postContainer.appendChild(userAvatar);
-    postContainer.appendChild(userNickname);
-    postContainer.appendChild(postImg);
-    postContainer.appendChild(postTitle);
-    postContainer.appendChild(postText);
-    postContainer.appendChild(postBuild);
-    postContainer.appendChild(builtListTitle);
+        main.appendChild(postContainer);
+        postContainer.appendChild(userAvatar);
+        postContainer.appendChild(userNickname);
+        postContainer.appendChild(postImg);
+        postContainer.appendChild(postTitle);
+        postContainer.appendChild(postText);
+        postContainer.appendChild(postBuild);
+        postContainer.appendChild(builtListTitle);
+    });
 };
-
-
-
 
 //Creating html elements for comments
 const commentContainer = document.createElement('div');
@@ -100,9 +81,8 @@ btnPost.setAttribute('placeholder', 'POST');
 const commentList = document.createElement('ul');
 const comment = document.createElement('li');
 const commentNickname = document.createElement('h5');
-const commentText = document.createElement('p')
+const commentText = document.createElement('p');
 commentText.setAttribute('id', 'commentText');
-
 
 // Placing the hierarchy in the post comment part
 main.appendChild(commentContainer);
@@ -115,4 +95,19 @@ commentList.appendChild(comment);
 comment.appendChild(commentNickname);
 comment.appendChild(commentText);
 
-
+// Function to fetch data for post
+const getPost = async () => {
+    try {
+        const fetchOptions = {
+            headers: {
+                Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+            },
+        };
+        const res = await fetch(url + '/post/' + post.post_id, fetchOptions);
+        const posts = await res.json();
+        createPost(posts);
+    } catch (e) {
+        console.log(e.message);
+    }
+};
+getPost();
