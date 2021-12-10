@@ -1,12 +1,11 @@
 'use strict';
-const url = 'https://10.114.32.27/app';
+const url = 'https://localhost:8000';
 const feed = document.querySelector('#postFeed');
 const nickname = document.querySelector('#nickname');
 const profileImg = document.querySelector('.profileImg');
 const name = document.querySelector('#name');
 //profileImg.innerHTML = getUserInfo().user.image;  // image not implemented yet
 const user = JSON.parse(sessionStorage.getItem('user'));
-
 
 // Function to fetch data for users
 const getUserInfo = async () => {
@@ -25,7 +24,6 @@ const getUserInfo = async () => {
     }
 };
 getUserInfo();
-
 
 // Function for creating post containers
 const createPosts = (posts) => {
