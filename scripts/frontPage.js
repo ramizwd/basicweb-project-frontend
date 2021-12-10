@@ -6,7 +6,27 @@ const profileImg = document.querySelector('.profileImg');
 const name = document.querySelector('#name');
 //profileImg.innerHTML = getUserInfo().user.image;  // image not implemented yet
 const user = JSON.parse(sessionStorage.getItem('user'));
-name.innerHTML = user.username;
+
+
+// Function to fetch data for users
+const getUserInfo = async () => {
+    try {
+        const fetchOptions = {
+            headers: {
+                Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+            },
+        };
+        const res = await fetch(url + '/user/' + user.user_id, fetchOptions);
+        const users = await res.json();
+        console.log('user', users);
+        name.innerHTML = users.username;
+    } catch (e) {
+        console.log(e.message);
+    }
+};
+getUserInfo();
+
+
 // Function for creating post containers
 const createPosts = (posts) => {
     // clear ul
