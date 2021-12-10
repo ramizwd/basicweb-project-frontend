@@ -176,7 +176,7 @@ const createPosts = (posts) => {
             date.getMinutes();
         // Create element for the date
         const dateText = document.createElement('p');
-        dateText.innerHTML = formattedDate;
+        dateText.innerHTML = 'Uploaded: ' + formattedDate;
 
         // Placing the hierarchy in the post object
         feed.appendChild(userPost);
