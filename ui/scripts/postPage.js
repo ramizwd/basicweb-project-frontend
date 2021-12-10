@@ -17,45 +17,78 @@ const getPost = async (id) => {
 
 const createPost = (posts) => {
 
-        //Creating html elements for post
-        const postContainer = document.createElement('div');
-        postContainer.setAttribute('id', 'postContainer');
-        postContainer.setAttribute('class', 'item');
-        postContainer.innerHTML = '';
+    //Creating html elements for post
+    const postContainer = document.createElement('div');
+    postContainer.setAttribute('id', 'postContainer');
+    postContainer.setAttribute('class', 'item');
+    postContainer.innerHTML = '';
 
-        const userAvatar = document.createElement('img');
-        userAvatar.setAttribute('id', 'avatar');
-        const userNickname = document.createElement('h2');
+    const userAvatar = document.createElement('img');
+    userAvatar.setAttribute('id', 'avatar');
+    //getting the default profile pic if not yet set
+    userAvatar.src =
+    'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+    userAvatar.width = '45';
+    userAvatar.height = '45';
+    const userNickname = document.createElement('h2');
 
-        if (posts.filename === null) {
-            const postImg = document.createElement('img');
-            postImg.src = url + '/thumbnails/' + posts.filename; // will be changes to filename
-            postImg.alt = '404 image not found';
-            postImg.setAttribute('id', 'postImg');
-        }
+    const postTitle = document.createElement('h1');
+    postTitle.innerHTML = `${posts.title}`;
 
-        const postTitle = document.createElement('h1');
-        postTitle.innerHTML = `${posts.title}`;
+    const postText = document.createElement('p');
+    postText.setAttribute('id', 'description');
+    postText.innerHTML = `${posts.description}`;
 
-        const postText = document.createElement('p');
-        postText.setAttribute('id', 'description');
-        postText.innerHTML = `${posts.description}`;
+    const postBuild = document.createElement('p');
+    postText.setAttribute('id', 'builtList');
 
-        const postBuild = document.createElement('p');
-        postText.setAttribute('id', 'builtList');
-
-        const builtListTitle = document.createElement('h3');
-        builtListTitle.innerHTML = 'PC hardware list';
+    const builtListTitle = document.createElement('h3');
+    builtListTitle.innerHTML = 'PC hardware list';
 
 // Placing the hierarchy in the post container part
-        main.appendChild(postContainer);
-        postContainer.appendChild(userAvatar);
-        postContainer.appendChild(userNickname);
+    main.appendChild(postContainer);
+    postContainer.appendChild(userAvatar);
+    postContainer.appendChild(userNickname);
 
-        postContainer.appendChild(postTitle);
-        postContainer.appendChild(postText);
-        postContainer.appendChild(postBuild);
-        postContainer.appendChild(builtListTitle);
+    postContainer.appendChild(postTitle);
+    postContainer.appendChild(postText);
+    postContainer.appendChild(postBuild);
+    postContainer.appendChild(builtListTitle);
+
+    //if not null do the layout like this
+    if (posts.filename != null) {
+        let postImg;
+        //if image on se pistää create element
+        if (
+        posts.file_type === 'image/png' ||
+        posts.file_type === 'image/jpg' ||
+        posts.file_type === 'image/webp' ||
+        posts.file_type === 'image/jpeg'
+        ) {
+            //create img elements
+            postImg = document.createElement('img');
+            //source where to get it
+            postImg.src = url + '/thumbnails/' + posts.filename; // will be changes to filename
+            postImg.style.width = '100%';
+            //if no img alternative
+            postImg.alt = '404 image not found';
+            //append postIMG
+            postContainer.appendChild(postImg);
+        } else if (posts.file_type === 'video/mp4') {
+            //create video element
+            postImg = document.createElement('video');
+            //set so can control
+            postImg.controls = true;
+            //source where to get video
+            postImg.src = url + '/' + posts.filename;
+            //postImg.src = url + '/thumbnails/' + post.filename+'/'+post.filename+'-thumbnail-200x200-0010.png';  // will be changes to filename
+            postImg.style.width = '100%';
+            //if no img alternative
+            postImg.alt = '404 image not found';
+            //append postIMG
+            postContainer.appendChild(postImg);
+        }
+    }
 
 };
 
@@ -102,9 +135,10 @@ const getPost = async () => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        console.log(sessionStorage.getItem("id"));
+        console.log(sessionStorage.getItem('id'));
         // Getting post id from session storage and placing it into route
-        const res = await fetch(url + '/post/' +sessionStorage.getItem("id") , fetchOptions);
+        const res = await fetch(url + '/post/' + sessionStorage.getItem('id'),
+        fetchOptions);
         const posts = await res.json();
         createPost(posts);
     } catch (e) {
