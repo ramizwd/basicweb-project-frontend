@@ -7,21 +7,31 @@
         <title>Profile Page</title>
         <link href="styles/profilePage.css" rel="stylesheet" />
         <link href="styles/editUser.css" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Open+Sans:wght@300;400;500&family=Yuji+Syuku&display=swap" rel="stylesheet">
     </head>
     <body>
-    <div class="navbar">
-        <a href="frontPage.html">Home</a>
-        <nav class="navcenter">
-            <a>Filter</a>
-            <form id="fillout" action="/action_page.php">
-                <input type="text" id="search" name="search" />
-                <input type="submit" value="Submit" />
-            </form>
-            <img id="add-edit-btn" src="placeholder/edit.png" width="40" height="40" />
-            <a id="loginBtn" href="loginPage.html">Log in</a>
-            <img class="anonymous" src="placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg" width="40" height="45" />
-        </nav>
-    </div>
+        <nav class="navbar">
+            <a href="frontPage.html">Home</a>
+                <a>Filter</a>
+                <form id="search-field">
+                    <input type="text" id="search" name="search" />
+                    <input type="submit" value="Search" />
+                </form>
+                <img id="add-post-btn" src="placeholder/icons8-plus-+-48.png" width="40" height="40" />
+                <div class="user-info">
+                    
+                    <div class="dropdown">
+                        <a id="name"></a>
+                        <img class="dropbtn" src="placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg" width="40" height="45">
+                        <div class="dropdown-content">
+                            <a href="profilePage.html">Profile</a>
+                            <a href="logout.html">Log out</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
     <div id="modal">
         <div id="modal-content">
             <span class="close-modal">&times;</span>
@@ -38,8 +48,9 @@
     </div>
     <main>
         <div class="bio"></div>
-        <div id="feed">
-            <ul class="postList"></ul>
+            <img id="add-edit-btn" src="placeholder/edit.png" width="20" height="20" />
+            <div id="feed">
+                <ul class="postList"></ul>
         </div>
     </main>
 

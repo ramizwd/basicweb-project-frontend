@@ -9,7 +9,6 @@ const url = 'https://10.114.32.27/app'; // change url when uploading to server
         // remove token
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('user');
-        alert('You have logged out');
         location.href = 'loginPage.html';
     } catch (e) {
         console.log(e.message);

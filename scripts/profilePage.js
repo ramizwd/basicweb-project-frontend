@@ -3,6 +3,8 @@
 const url = 'https://10.114.32.27/app';
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
+const name = document.querySelector('#name');
+name.innerHTML = user.username;
 
 // Function to fetch data for users
 const getUserInfo = async () => {
@@ -55,7 +57,7 @@ const createBio = (users) => {
     userNickname.innerHTML = `${users.username}`;
 
     const userAvatar = document.createElement('img');
-    userAvatar.src = url + '/' + `${users.profile_picture}`; // will be changed to filename
+    userAvatar.src = url + '/' + `${users.userpfp}`; // will be changed to filename
 
     const userDescription = document.createElement('p');
     userDescription.innerHTML = `${users.description}`;
