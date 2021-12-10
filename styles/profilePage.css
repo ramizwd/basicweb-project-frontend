@@ -4,9 +4,10 @@
 /*setting the body without any margin*/
 body {
     margin: 0;
+    background-color: rgb(240, 240, 240);
 }
 main {
-    margin-top: 5em;
+    margin-top: 40px;
 }
 /*adding a fixed navbar so when it scroll down it comes with you*/
 .navbar {
@@ -148,14 +149,16 @@ ul {
 }
 
 li {
-    border: 5px solid gray;
-    width: 30%;
+    padding: 5px;
+    border: 5px;
+    width: 35%;
     margin: 0.5em;
+    border-radius: 0.5em;
+    background-color: rgb(255, 255, 255);
 }
 
 h3 {
-    border-bottom: 5px solid gray;
-    border-top: 5px solid gray;
+    border-bottom: 2px solid gray;
 }
 
 figure {
