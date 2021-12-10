@@ -101,6 +101,7 @@ const createPosts = (posts) => {
 
         //set the description
         const buildText = document.createElement('p');
+        buildText.setAttribute('id', 'buildText');
         buildText.innerHTML = `${post.description}`;
 
         //if not null do the layout like this
@@ -131,17 +132,12 @@ const createPosts = (posts) => {
         const postTitle = document.createElement('a');
         postTitle.innerHTML = `${post.title}`;
         postTitle.addEventListener('click',() => {
-            //userPost.location.href='postPage.html/post/' + post.post_id;
-            //postTitle.setAttribute('href', 'postPage.html');
-            const fetchOptions = {
-                method: 'GET',
-                headers: {
-                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-                },
-            };
+            // Saving id of the post into session storage
+            sessionStorage.setItem("id",post.post_id)
+            // Hyperlink to postPage
+            postTitle.setAttribute('href', 'postPage.html');
             console.log('get postId', post.post_id);
         });
-
         // Placing the hierarchy in the post object
         feed.appendChild(userPost);
         userPost.appendChild(postTitle);

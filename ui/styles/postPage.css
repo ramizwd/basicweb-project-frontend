@@ -3,23 +3,38 @@ body {
     margin: 0;
 }
 
-* {
-    box-sizing: border-box;
-}
-
-.main {
+main {
     display: flex;
     flex-direction: row;
-    position: relative;
     align-items: stretch;
+    margin-top: 60px;
+    height: 100vh;
+}
+
+.item {
+    flex: 2;
 }
 
 #postContainer {
-
+    order: 1;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
 }
 
 #commentContainer {
+    order: 2;
+}
 
+#btnPost {
+    width: 40px;
+    height: 25px;
+    margin-left: 5px
 }
 
 /*adding a fixed navbar so when it scroll down it comes with you*/

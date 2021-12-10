@@ -16,30 +16,30 @@ const getPost = async (id) => {
 */
 
 const createPost = (posts) => {
-    posts.forEach((post) => {
+
         //Creating html elements for post
         const postContainer = document.createElement('div');
         postContainer.setAttribute('id', 'postContainer');
-        postContainer.setAttribute('class', 'left');
+        postContainer.setAttribute('class', 'item');
         postContainer.innerHTML = '';
 
         const userAvatar = document.createElement('img');
         userAvatar.setAttribute('id', 'avatar');
         const userNickname = document.createElement('h2');
 
-        if (posts.filename != null) {
+        if (posts.filename === null) {
             const postImg = document.createElement('img');
-            postImg.src = url + '/' + post.filename; // will be changes to filename
+            postImg.src = url + '/thumbnails/' + posts.filename; // will be changes to filename
             postImg.alt = '404 image not found';
             postImg.setAttribute('id', 'postImg');
         }
 
         const postTitle = document.createElement('h1');
-        postTitle.innerHTML = `${post.title}`;
+        postTitle.innerHTML = `${posts.title}`;
 
         const postText = document.createElement('p');
         postText.setAttribute('id', 'description');
-        postText.innerHTML = `${post.description}`;
+        postText.innerHTML = `${posts.description}`;
 
         const postBuild = document.createElement('p');
         postText.setAttribute('id', 'builtList');
@@ -51,18 +51,18 @@ const createPost = (posts) => {
         main.appendChild(postContainer);
         postContainer.appendChild(userAvatar);
         postContainer.appendChild(userNickname);
-        postContainer.appendChild(postImg);
+
         postContainer.appendChild(postTitle);
         postContainer.appendChild(postText);
         postContainer.appendChild(postBuild);
         postContainer.appendChild(builtListTitle);
-    });
+
 };
 
 //Creating html elements for comments
 const commentContainer = document.createElement('div');
 commentContainer.setAttribute('id', 'commentContainer');
-commentContainer.setAttribute('class', 'right');
+commentContainer.setAttribute('class', 'item');
 const containerTitle = document.createElement('h3');
 commentContainer.innerHTML = 'Write a comment';
 
@@ -75,8 +75,7 @@ commentField.setAttribute('placeholder', 'Comment..');
 const btnPost = document.createElement('button');
 btnPost.setAttribute('type', 'submit');
 btnPost.setAttribute('id', 'btnPost');
-btnPost.setAttribute('placeholder', 'POST');
-
+btnPost.innerHTML = 'Post';
 //Comments
 const commentList = document.createElement('ul');
 const comment = document.createElement('li');
@@ -103,7 +102,9 @@ const getPost = async () => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        const res = await fetch(url + '/post/' + post.post_id, fetchOptions);
+        console.log(sessionStorage.getItem("id"));
+        // Getting post id from session storage and placing it into route
+        const res = await fetch(url + '/post/' +sessionStorage.getItem("id") , fetchOptions);
         const posts = await res.json();
         createPost(posts);
     } catch (e) {
