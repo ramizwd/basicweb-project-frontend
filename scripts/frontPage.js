@@ -1,11 +1,12 @@
 'use strict';
-const url = 'https://10.114.32.27/app';
+const url = 'https://localhost:8000';
 const feed = document.querySelector('#postFeed');
 const nickname = document.querySelector('#nickname');
-const profileImg = document.querySelector('.profileImg');
+const profileImg = document.querySelector('.dropbtn');
 const name = document.querySelector('#name');
 //profileImg.innerHTML = getUserInfo().user.image;  // image not implemented yet
 const user = JSON.parse(sessionStorage.getItem('user'));
+
 
 
 // Function to fetch data for users
@@ -19,6 +20,9 @@ const getUserInfo = async () => {
         const res = await fetch(url + '/user/' + user.user_id, fetchOptions);
         const users = await res.json();
         console.log('user', users);
+        if(users.profile_picture){
+            profileImg.src= url+'/'+users.profile_picture
+        }
         name.innerHTML = users.username;
     } catch (e) {
         console.log(e.message);
@@ -46,8 +50,12 @@ const createPosts = (posts) => {
         // if poster null but default
         // posterPfp.src = url + '/' + post.profile_picture;
         //getting the default profile pic if not yet set
-        posterPfp.src =
+        if(post.userpfp){
+            posterPfp.src= url+'/'+post.userpfp
+        }else {
+            posterPfp.src =
             'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+        }
         posterPfp.width = '45';
         posterPfp.height = '45';
         //for the upper piece of the postcard
