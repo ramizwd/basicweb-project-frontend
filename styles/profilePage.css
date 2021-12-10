@@ -116,6 +116,7 @@ main {
     background-color: #ddd;
 }
 
+
 .dropdown:hover .dropdown-content {
     display: block;
 }
@@ -142,10 +143,9 @@ ul {
     padding: 0;
     list-style-type: none;
     display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
+    flex-wrap: wrap;
+
+    justify-content: center;
 }
 
 li {
@@ -221,4 +221,8 @@ h1 {
 }
 .dropdown-content-verticalmenu:hover .dropdown-content-verticalmenu {
     display: block;
+}
+#add-edit-btn:hover{
+    opacity: 30%;
+    cursor: pointer;
 }
