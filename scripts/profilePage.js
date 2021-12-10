@@ -5,7 +5,6 @@ const url = 'https://10.114.32.27/app';
 const user = JSON.parse(sessionStorage.getItem('user'));
 const name = document.querySelector('#name');
 
-
 // Function to fetch data for users
 const getUserInfo = async () => {
     try {
@@ -55,7 +54,7 @@ const createBio = (users) => {
 
     const userNickname = document.createElement('h1');
     userNickname.innerHTML = `${users.username}`;
-    name.innerHTML=users.username
+    name.innerHTML = users.username;
     const userAvatar = document.createElement('img');
     userAvatar.src = url + '/' + `${users.userpfp}`; // will be changed to filename
 
@@ -92,7 +91,7 @@ const createPosts = (posts) => {
         // posterPfp.src = url + '/' + post.profile_picture;
         //getting the default profile pic if not yet set
         posterPfp.src =
-        'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
         posterPfp.width = '45';
         posterPfp.height = '45';
         //for the upper piece of the postcard
@@ -153,8 +152,8 @@ const createPosts = (posts) => {
             };
             try {
                 const response = await fetch(
-                url + '/post/' + post.post_id,
-                fetchOptions
+                    url + '/post/' + post.post_id,
+                    fetchOptions
                 );
                 const json = await response.json();
                 console.log('delete response', json);
@@ -183,10 +182,10 @@ const createPosts = (posts) => {
             let postImg;
             //if image on se pistää create element
             if (
-            post.file_type === 'image/png' ||
-            post.file_type === 'image/jpg' ||
-            post.file_type === 'image/webp' ||
-            post.file_type === 'image/jpeg'
+                post.file_type === 'image/png' ||
+                post.file_type === 'image/jpg' ||
+                post.file_type === 'image/webp' ||
+                post.file_type === 'image/jpeg'
             ) {
                 //create img elements
                 postImg = document.createElement('img');
@@ -221,24 +220,24 @@ const createPosts = (posts) => {
         upVote.innerHTML = 'Upvote';
         // Downvote button
         const downVote = document.createElement('button');
-        downVote.innerHTML = 'Dowvote';
+        downVote.innerHTML = 'Downvote';
         // Total votes button
         const votes = document.createElement('p');
-        votes.innerHTML = `${post.Votes}`;
+        votes.innerHTML = `${post.votes}`;
 
         // Get date from db and format it
-        const date = new Date(post.DATE);
+        const date = new Date(post.date);
         // Format date
         const formattedDate =
-        date.getDate() +
-        '-' +
-        (date.getMonth() + 1) +
-        '-' +
-        date.getFullYear() +
-        ' ' +
-        date.getHours() +
-        ':' +
-        date.getMinutes();
+            date.getDate() +
+            '-' +
+            (date.getMonth() + 1) +
+            '-' +
+            date.getFullYear() +
+            ' ' +
+            date.getHours() +
+            ':' +
+            date.getMinutes();
         // Create element for the date
         const dateText = document.createElement('p');
         dateText.innerHTML = 'Uploaded: ' + formattedDate;
@@ -266,8 +265,8 @@ const createPosts = (posts) => {
             };
 
             const res = await fetch(
-            url + '/vote/' + user.user_id + '/' + post.post_id,
-            fetchOptions
+                url + '/vote/' + user.user_id + '/' + post.post_id,
+                fetchOptions
             );
             const vote = await res.json();
             console.log('vote:', vote.vote_count);
@@ -317,8 +316,8 @@ const createPosts = (posts) => {
 
             try {
                 const res = await fetch(
-                url + '/vote/' + post.post_id,
-                fetchOptions
+                    url + '/vote/' + post.post_id,
+                    fetchOptions
                 );
                 const vote = await res.json();
                 console.log(vote);
@@ -334,7 +333,7 @@ const createPosts = (posts) => {
 postList.onclick = function (ev) {
     if (!ev.target.matches('.dropImgBtn')) {
         const dropdowns = document.getElementsByClassName(
-        'dropdown-content-verticalmenu'
+            'dropdown-content-verticalmenu'
         );
         for (let i = 0; i < dropdowns.length; i++) {
             let openDrown = dropdowns[i];
