@@ -23,8 +23,9 @@ main {
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
-    align-content: center;
-    align-items: center;
+    border: 5px solid gray;
+    width: 30%;
+    margin: 0.5em;
 }
 
 #commentContainer {
