@@ -120,7 +120,8 @@ const createPosts = (posts) => {
             if (
                 post.file_type === 'image/png' ||
                 post.file_type === 'image/jpg' ||
-                post.file_type === 'image/webp' ||post.file_type === 'image/jpeg'
+                post.file_type === 'image/webp' ||
+                post.file_type === 'image/jpeg'
             ) {
                 //create img elements
                 postImg = document.createElement('img');
@@ -162,9 +163,20 @@ const createPosts = (posts) => {
 
         // Get date from db and format it
         const date = new Date(post.date);
+        // Format date
+        const formattedDate =
+            date.getDate() +
+            '-' +
+            (date.getMonth() + 1) +
+            '-' +
+            date.getFullYear() +
+            ' ' +
+            date.getHours() +
+            ':' +
+            date.getMinutes();
         // Create element for the date
         const dateText = document.createElement('p');
-        dateText.innerHTML = date;
+        dateText.innerHTML = formattedDate;
 
         // Placing the hierarchy in the post object
         feed.appendChild(userPost);
