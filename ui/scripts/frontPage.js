@@ -1,5 +1,5 @@
 'use strict';
-const url = 'http://localhost:3000';
+const url = 'https://10.114.32.27/app';
 const feed = document.querySelector('#postFeed');
 const nickname = document.querySelector('#nickname');
 const profileImg = document.querySelector('.profileImg');
