@@ -220,13 +220,13 @@ const createPosts = (posts) => {
         upVote.innerHTML = 'Upvote';
         // Downvote button
         const downVote = document.createElement('button');
-        downVote.innerHTML = 'Dowvote';
+        downVote.innerHTML = 'Downvote';
         // Total votes button
         const votes = document.createElement('p');
-        votes.innerHTML = `${post.Votes}`;
+        votes.innerHTML = `${post.votes}`;
 
         // Get date from db and format it
-        const date = new Date(post.DATE);
+        const date = new Date(post.date);
         // Format date
         const formattedDate =
             date.getDate() +

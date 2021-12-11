@@ -27,7 +27,6 @@ const editUser = document.querySelector('#editUser');
 editUser.addEventListener('submit', async (evt) => {
     evt.preventDefault(); // stop default action if event is not handled
     const data = serializeJson(editUser);
-    data.id = user.user_id;
     console.log('user id', user.user_id);
 
     console.log(data);
@@ -50,7 +49,10 @@ editUser.addEventListener('submit', async (evt) => {
 
     // get user data for admin check
     //const user = JSON.parse(sessionStorage.getItem('user'));
-    const response = await fetch(url + '/user/profile', fetchOptions);
+    const response = await fetch(
+        url + '/user/profile/' + user.user_id,
+        fetchOptions
+    );
     const json = await response.json();
     if (json.error) {
         alert(json.error.message);
