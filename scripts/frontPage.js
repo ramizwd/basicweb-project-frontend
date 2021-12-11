@@ -313,3 +313,33 @@ const getPost = async () => {
     }
 };
 getPost();
+
+// Get search button element
+const search = document.getElementById('go');
+
+// Event listener for search button, get input value, if the value is empty do nothing
+// else end the word/letter to searchPosts function
+search.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    const word = document.getElementById('key-word').value;
+    if (word == '') {
+        return;
+    }
+    searchPosts(word);
+});
+
+// Send GET request with the word/letter as a parameter. catch any errors
+const searchPosts = async (word) => {
+    try {
+        const fetchOptions = {
+            headers: {
+                Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+            },
+        };
+        const res = await fetch(url + '/post/search/' + word, fetchOptions);
+        const posts = await res.json();
+        createPosts(posts);
+    } catch (e) {
+        console.log(e.message);
+    }
+};
