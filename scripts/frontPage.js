@@ -38,6 +38,16 @@ const createPosts = (posts) => {
         // Poster nickname
         const poster = document.createElement('h1');
         poster.innerHTML = `${post.postername}`;
+        const poster = document.createElement('a');
+        poster.innerHTML = `${post.postername}`;
+        poster.addEventListener('click',() => {
+            // Saving id of the poster into session storage
+            sessionStorage.setItem("poster_id", post.poster)
+            // Hyperlink to profilePage
+            poster.setAttribute('href', 'profilePage.html');
+            poster.setAttribute('id', 'poster');
+            console.log('get posterId', post.poster);
+        });
 
         // Poster profile picture
         const posterPfp = document.createElement('img');
@@ -129,6 +139,7 @@ const createPosts = (posts) => {
 
         //set the description
         const buildText = document.createElement('p');
+        buildText.setAttribute('id', 'buildText');
         buildText.innerHTML = `${post.description}`;
 
         //if not null do the layout like this
@@ -168,6 +179,16 @@ const createPosts = (posts) => {
         //const postNickname = document.createElement('h5');
         const postTitle = document.createElement('h3');
         postTitle.innerHTML = `${post.title}`;
+        const postTitle = document.createElement('a');
+        postTitle.innerHTML = `${post.title}`;
+        postTitle.addEventListener('click',() => {
+            // Saving id of the post into session storage
+            sessionStorage.setItem("id",post.post_id)
+            // Hyperlink to postPage
+            postTitle.setAttribute('href', 'postPage.html');
+            postTitle.setAttribute('id', 'postTitle');
+            console.log('get postId', post.post_id);
+        });
 
         // Upvote button
         const upVote = document.createElement('button');

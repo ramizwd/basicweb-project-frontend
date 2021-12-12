@@ -13,9 +13,13 @@ const getUserInfo = async () => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        const res = await fetch(url + '/user/' + user.user_id, fetchOptions);
-        const users = await res.json();
         console.log('user', users);
+        const res = await fetch(url + '/user/' + sessionStorage.getItem('poster_id'), fetchOptions);
+        const resLog = await fetch(url + '/user/' + user.user_id, fetchOptions);
+        const users = await res.json();
+        const usersLog = await resLog.json();
+        console.log('user', users);
+        loggedUser(usersLog);
         createBio(users);
     } catch (e) {
         console.log(e.message);
@@ -35,6 +39,7 @@ const getPostInfo = async () => {
             url + '/post/user/' + user.user_id,
             fetchOptions
         );
+            url + '/post/user/' + sessionStorage.getItem('poster_id'), fetchOptions);
         const posts = await res.json();
         createPosts(posts);
     } catch (e) {
@@ -49,6 +54,14 @@ const bio = document.querySelector('.bio');
 const postList = document.querySelector('.postList');
 
 // Function for creating users bio  in header
+
+// Function for users info in login window (dropdown)
+const loggedUser = (usersLog) => {
+    bio.innerHTML = '';
+    name.innerHTML = usersLog.username;
+    //Also should add inner for avatar
+}
+// Function for creating users bio in header
 const createBio = (users) => {
     bio.innerHTML = '';
 
@@ -57,6 +70,10 @@ const createBio = (users) => {
     name.innerHTML = users.username;
     const userAvatar = document.createElement('img');
     userAvatar.src = url + '/' + `${users.userpfp}`; // will be changed to filename
+    //name.innerHTML = users.username;
+    const userAvatar = document.createElement('img');
+    userAvatar.src = url + '/' + `${users.userpfp}`; // will be changed to filename
+    userAvatar.alt = url + '/' + `${users.username}`; // or user_id?
 
     const userDescription = document.createElement('p');
     userDescription.innerHTML = `${users.description}`;
@@ -73,7 +90,7 @@ const createBio = (users) => {
 
 // Function for creating post containers
 const createPosts = (posts) => {
-    // clear ul
+    // Clear ul
     postList.innerHTML = '';
     // Creating HTML elements
     posts.forEach((post) => {
