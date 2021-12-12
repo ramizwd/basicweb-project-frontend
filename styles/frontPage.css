@@ -1,6 +1,10 @@
+* {
+    font-family: 'Open Sans', sans-serif;
+}
 /*setting the body without any margin*/
 body {
     margin: 0;
+    background-color: rgb(240, 240, 240);
 }
 
 /*adding a fixed navbar so when it scroll down it comes with you*/
@@ -9,10 +13,23 @@ body {
     position: fixed;
     top: 0;
     width: 100%;
+    height: 60px;
+    z-index: 2;
 }
-
+#name {
+    pointer-events: none;
+}
+#search-field {
+    text-align: center;
+    position: fixed;
+    overflow: hidden;
+    width: 100%;
+    margin: 0 auto;
+    z-index: -2;
+}
 /*layout of the navbar*/
-.navbar a, #fillout {
+.navbar a,
+#search-field {
     float: left;
     font-size: 16px;
     color: white;
@@ -20,30 +37,26 @@ body {
     padding: 14px 16px;
     text-decoration: none;
 }
-.navcenter{
+#search-field input {
+    padding: 5px;
+    font-size: 18px;
+    background-color: rgba(151, 151, 151, 0.658);
+    color: white;
+    border: none;
+}
+.navcenter {
     float: none;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
-.navright{
+
+.user-info {
     float: right;
 }
 
-.dropdown,
-.anonymous {
-    position: absolute;
-    overflow: hidden;
-    right: -750px;
-}
-#loginBtn {
-    position: absolute;
-
-    right: -690px;
-}
-
-.dropdown .dropbtn, .anonymous, #plus{
+.dropdown .dropbtn {
     height: 42px;
     font-size: 16px;
     border: none;
@@ -51,34 +64,44 @@ body {
     color: white;
     padding-left: 16px;
     padding-right: 16px;
-    padding-top: 3px;
+    padding-top: 8px;
     background-color: inherit;
     font-family: inherit;
     margin: 0;
 }
-#plus:hover{
+
+#plus:hover {
     opacity: 30%;
 }
 
-.dropbtn, .anonymous{
+.dropbtn {
     border-radius: 50%;
 }
 
 .navbar a:hover {
-    background-color: red;
+    background-color: rgb(0, 69, 134);
 }
 
-.dropdown-content,.dropdown-content-verticalmenu {
+.dropdown-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
 
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     right: 0;
-
 }
 
-.dropdown-content a{
+.dropdown-content-verticalmenu {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+
+    z-index: 1;
+}
+
+.dropdown-content a {
     float: none;
     color: black;
     padding: 12px 16px;
@@ -98,39 +121,31 @@ body {
 .main {
     margin-top: 50px;
 }
-.container {
-    max-width: 40em;
-    margin: auto;
-    padding: 1em;
-}
 
-.light-border {
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    padding: 1em;
-    box-sizing: border-box;
-}
+
 
 ul {
-    margin: 0;
+    margin-top: 5em;
     padding: 0;
     list-style-type: none;
     display: flex;
     flex-wrap: nowrap;
     flex-direction: column;
-    align-content:center;
+    align-content: center;
     align-items: center;
 }
 
 li {
-    border: 5px solid gray;
-    width: 30%;
+    padding: 5px;
+    border: 5px;
+    width: 35%;
     margin: 0.5em;
+    border-radius: 0.5em;
+    background-color: rgb(255, 255, 255);
 }
 
-h3{
-    border-bottom: 5px solid gray;
-    border-top: 5px solid gray;
+h3 {
+    border-bottom: 2px solid gray;
 }
 
 figure {
@@ -166,16 +181,31 @@ h1 {
     opacity: 30%;
     cursor: pointer;
 }
-.dropdownImg{
+
+.dropdownImg {
     position: relative;
     display: inline-block;
 }
-.show {display: block;}
-.dropdown-content-verticalmenu p{
-text-decoration: none;
+
+.show {
+    display: block;
+}
+
+.dropdown-content-verticalmenu p {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
     cursor: pointer;
 }
-#add-post-btn:hover{
+
+#add-post-btn:hover {
     opacity: 30%;
     cursor: pointer;
+}
+#add-post-btn {
+    margin-top: 4px;
+}
+.dropdown-content-verticalmenu:hover .dropdown-content-verticalmenu {
+    display: block;
 }
