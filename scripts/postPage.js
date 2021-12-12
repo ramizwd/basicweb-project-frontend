@@ -1,19 +1,10 @@
 'use strict';
 
 const url = 'https://10.114.32.27/app';
-const main = document.querySelector('main');
+const main = document.querySelector('.container');
 // get user and post data for admin check
 //const user = JSON.parse(sessionStorage.getItem('user'));
 //const post = JSON.parse(sessionStorage.getItem('post'));
-
-/*
-const getPost = async (id) => {
-    const response = await fetch(url + '/post/' + id);
-    const post = await response.json();
-    console.log('post', post)
-    return post;
-};
-*/
 
 const createPost = (posts) => {
 
@@ -60,7 +51,7 @@ const createPost = (posts) => {
     upVote.innerHTML = 'Upvote';
     // Downvote button
     const downVote = document.createElement('button');
-    downVote.innerHTML = 'Dowvote';
+    downVote.innerHTML = 'Downvote';
     // Total votes button
     const votes = document.createElement('p');
     votes.innerHTML = `${posts.votes}`;
@@ -145,6 +136,7 @@ btnPost.innerHTML = 'Post';
 //Comments
 const commentList = document.createElement('ul');
 const comment = document.createElement('li');
+comment.setAttribute('id', 'comment');
 const commentNickname = document.createElement('h5');
 commentNickname.innerHTML = 'Username';     // Will be added after backend
 const commentText = document.createElement('p');

@@ -3,15 +3,20 @@ body {
     margin: 0;
     background-color: rgb(240, 240, 240);
 }
+main{
+    display: flex;
+    justify-content: center;
+}
 
-main {
-    width: 65%;
+.container {
+    width: 55%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    margin-top: 60px;
-    height: 100vh;
+    align-items: flex-start;
+    margin-top: 5em;
 }
+
 
 .item {
     flex: 2;
@@ -32,7 +37,16 @@ main {
 
 #commentContainer {
     order: 2;
-    width: 40%;
+    padding: 5px;
+    border: 5px;
+    border-radius: 0.5em;
+    background-color: rgb(255, 255, 255);
+}
+#comment {
+    padding-left: 10px;
+    border: 5px;
+    border-radius: 0.5em;
+    background-color: rgba(114, 110, 110, 0.54);
 }
 #postHeader {
     display: flex;
@@ -54,10 +68,10 @@ figure {
     align-items: center;
 }
 button {
-    width: 12%;
+    width: 13%;
     height: 50%;
-    margin-right: 5px;
-    text-align: center;
+    margin-right: 0.5em;
+    align-items: center;
 }
 
 
