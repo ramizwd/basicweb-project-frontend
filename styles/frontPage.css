@@ -177,6 +177,26 @@ h1 {
     flex-grow: 4;
 }
 
+/* unvisited link */
+a:link {
+    color: darkblue;
+}
+
+/* visited link */
+a:visited {
+    color: darkgreen;
+}
+
+/* mouse over link */
+a:hover {
+    color: darkred;
+}
+
+/* selected link */
+a:active {
+    color: darkviolet;
+}
+
 .dropImgBtn:hover {
     opacity: 30%;
     cursor: pointer;
