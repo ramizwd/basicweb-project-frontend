@@ -3,8 +3,6 @@
 const url = 'https://localhost:8000';
 const main = document.querySelector('.container');
 // get user and post data for admin check
-//const user = JSON.parse(sessionStorage.getItem('user'));
-//const post = JSON.parse(sessionStorage.getItem('post'));
 const user = JSON.parse(sessionStorage.getItem('user'));
 
 // Create comments list
@@ -33,54 +31,100 @@ const createComments = (comments) => {
     commentContainer.appendChild(commentField);
     commentContainer.appendChild(btnPost);
     // Send a request for commenting
+
+    // Click event listener for posting comments that sends the user id and comment to reqFunction
+    // alone with a request method
     btnPost.addEventListener('click', async () => {
         const data = { user_id: user.user_id, comment: commentField.value };
         console.log('data to be send', data);
         if (commentField.value == '') return;
-        reqFunction(data);
+        reqFunction(data, 'POST');
         location.href = 'postPage.html';
     });
-    // Request function
-    const reqFunction = async (data) => {
-        const fetchOptions = {
-            method: 'POST',
-            headers: {
-                Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data),
-        };
 
-        try {
-            const res = await fetch(
-                url + '/comment/' + sessionStorage.getItem('id'),
-                fetchOptions
-            );
-            const vote = await res.json();
-            console.log(vote);
-        } catch (e) {
-            console.error('error', e.message);
-        }
-    };
     comments.forEach((commentInfo) => {
         //Comments
         const commentList = document.createElement('ul');
         const comment = document.createElement('li');
         comment.setAttribute('id', 'comment');
         const commentNickname = document.createElement('h5');
-        commentNickname.innerHTML = commentInfo.user_id; // Will be added after backend
         const commentText = document.createElement('p');
-        commentText.innerHTML = commentInfo.comment; // Will be added after backend
+        commentText.innerHTML = commentInfo.comment;
         commentText.setAttribute('id', 'commentText');
         console.log('create comment', commentInfo);
+        const commentDelete = document.createElement('button');
 
         // Placing the hierarchy in the post comment part
-
         commentContainer.appendChild(commentList);
         commentList.appendChild(comment);
         comment.appendChild(commentNickname);
         comment.appendChild(commentText);
+
+        // Show delete button only for comment's author or user with admin role
+        if (user.role === 0) {
+            commentDelete.innerHTML = 'Delete';
+            comment.appendChild(commentDelete);
+        } else if (user.user_id === commentInfo.user_id) {
+            commentDelete.innerHTML = 'Delete';
+            comment.appendChild(commentDelete);
+        }
+
+        // Click event listener for deleting comments that sends the user id and comment id to reqFunction
+        // alone with a request method
+        commentDelete.addEventListener('click', async () => {
+            const data = {
+                user_id: user.user_id,
+                comments_id: commentInfo.comments_id,
+            };
+            console.log('data to be send', data);
+            reqFunction(data, 'DELETE');
+            location.href = 'postPage.html';
+        });
+
+        // Get user info
+        const getUser = async () => {
+            try {
+                const fetchOptions = {
+                    headers: {
+                        Authorization:
+                            'Bearer ' + sessionStorage.getItem('token'),
+                    },
+                };
+                const res = await fetch(
+                    url + '/user/' + commentInfo.user_id,
+                    fetchOptions
+                );
+                const users = await res.json();
+                commentNickname.innerHTML = users.username;
+            } catch (e) {
+                console.log(e.message);
+            }
+        };
+        getUser();
     });
+};
+
+// async function for deleting or posting comments
+const reqFunction = async (data, reqMethod) => {
+    const fetchOptions = {
+        method: reqMethod,
+        headers: {
+            Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    };
+
+    try {
+        const res = await fetch(
+            url + '/comment/' + sessionStorage.getItem('id'),
+            fetchOptions
+        );
+        const vote = await res.json();
+        console.log(vote);
+    } catch (e) {
+        console.error('error', e.message);
+    }
 };
 
 const createPost = (posts) => {
@@ -214,6 +258,7 @@ const getPost = async () => {
 };
 getPost();
 
+// Get comments from DB
 const getComments = async () => {
     try {
         const fetchOptions = {

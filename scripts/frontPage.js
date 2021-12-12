@@ -125,12 +125,10 @@ const createPosts = (posts) => {
             }
         });
 
-        //this appends to dropdown div
+        // Append elements
         dropdown.appendChild(verticalMenu);
         dropdown.appendChild(dropdownContent);
-        //this appends to userpost list
         userPost.appendChild(posterDiv);
-        //this appends to posterdiv div
         posterDiv.appendChild(posterPfp);
         posterDiv.appendChild(poster);
         posterDiv.appendChild(dropdown);
