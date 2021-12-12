@@ -181,6 +181,7 @@ const createPosts = (posts) => {
             sessionStorage.setItem("id",post.post_id)
             // Hyperlink to postPage
             postTitle.setAttribute('href', 'postPage.html');
+            postTitle.setAttribute('id', 'postTitle');
             console.log('get postId', post.post_id);
         });
 

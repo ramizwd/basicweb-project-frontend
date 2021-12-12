@@ -178,22 +178,22 @@ h1 {
 }
 
 /* unvisited link */
-a:link {
+#postTitle:link {
     color: darkblue;
 }
 
 /* visited link */
-a:visited {
+#postTitle:visited {
     color: darkgreen;
 }
 
 /* mouse over link */
-a:hover {
+#postTitle:hover {
     color: darkred;
 }
 
 /* selected link */
-a:active {
+#postTitle:active {
     color: darkviolet;
 }
 
