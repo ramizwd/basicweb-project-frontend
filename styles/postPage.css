@@ -1,11 +1,86 @@
-* {
-    font-family: 'Open Sans', sans-serif;
-}
 /*setting the body without any margin*/
 body {
     margin: 0;
     background-color: rgb(240, 240, 240);
 }
+main{
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 55%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: flex-start;
+    margin-top: 5em;
+}
+
+
+.item {
+    flex: 2;
+}
+
+#postContainer {
+    order: 1;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    padding: 5px;
+    border: 5px;
+    margin: 0.5em;
+    border-radius: 0.5em;
+    background-color: rgb(255, 255, 255);
+}
+
+#commentContainer {
+    order: 2;
+    padding: 5px;
+    border: 5px;
+    border-radius: 0.5em;
+    background-color: rgb(255, 255, 255);
+}
+#comment {
+    padding-left: 10px;
+    border: 5px;
+    border-radius: 0.5em;
+    background-color: rgba(114, 110, 110, 0.54);
+}
+#postHeader {
+    display: flex;
+}
+h2{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 10px;
+    flex-grow: 4;
+}
+figure {
+    width: 98%;
+    margin: 5px;
+}
+#votesContainer {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 5px;
+    align-items: center;
+}
+button {
+    width: 13%;
+    height: 50%;
+    margin-right: 0.5em;
+    align-items: center;
+}
+
+
+#btnPost {
+    width: 40px;
+    height: 25px;
+    margin-left: 5px
+}
+
 
 /*adding a fixed navbar so when it scroll down it comes with you*/
 .navbar {
@@ -115,117 +190,5 @@ body {
 }
 
 .dropdown:hover .dropdown-content {
-    display: block;
-}
-
-.main {
-    margin-top: 50px;
-}
-
-
-
-ul {
-    margin-top: 5em;
-    padding: 0;
-    list-style-type: none;
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
-}
-
-li {
-    padding: 5px;
-    border: 5px;
-    width: 35%;
-    margin: 0.5em;
-    border-radius: 0.5em;
-    background-color: rgb(255, 255, 255);
-}
-
-h3 {
-    border-bottom: 2px solid gray;
-}
-
-figure {
-    margin: 0;
-    padding: 0;
-}
-
-.resp {
-    width: 100%;
-}
-
-.forms {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.form-wrapper {
-    width: 33%;
-}
-
-.posterDiv {
-    display: flex;
-}
-
-h1 {
-    margin-top: 0px;
-    margin-bottom: 0px;
-    margin-left: 10px;
-    flex-grow: 4;
-}
-
-/* unvisited link */
-#postTitle:link {
-    color: darkblue;
-}
-
-/* visited link */
-#postTitle:visited {
-    color: darkgreen;
-}
-
-/* mouse over link */
-#postTitle:hover {
-    color: darkred;
-}
-
-/* selected link */
-#postTitle:active {
-    color: darkviolet;
-}
-
-.dropImgBtn:hover {
-    opacity: 30%;
-    cursor: pointer;
-}
-
-.dropdownImg {
-    position: relative;
-    display: inline-block;
-}
-
-.show {
-    display: block;
-}
-
-.dropdown-content-verticalmenu p {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    cursor: pointer;
-}
-
-#add-post-btn:hover {
-    opacity: 30%;
-    cursor: pointer;
-}
-#add-post-btn {
-    margin-top: 4px;
-}
-.dropdown-content-verticalmenu:hover .dropdown-content-verticalmenu {
     display: block;
 }
