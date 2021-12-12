@@ -39,8 +39,16 @@ const createPosts = (posts) => {
         const userPost = document.createElement('li');
 
         // Poster nickname
-        const poster = document.createElement('h1');
+        const poster = document.createElement('a');
         poster.innerHTML = `${post.postername}`;
+        poster.addEventListener('click',() => {
+            // Saving id of the poster into session storage
+            sessionStorage.setItem("poster_id", post.poster)
+            // Hyperlink to profilePage
+            poster.setAttribute('href', 'profilePage.html');
+            poster.setAttribute('id', 'poster');
+            console.log('get posterId', post.poster);
+        });
 
         // Poster profile picture
         const posterPfp = document.createElement('img');
