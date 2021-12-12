@@ -39,7 +39,7 @@ const getPostInfo = async () => {
             url + '/post/user/' + user.user_id,
             fetchOptions
         );
-            url + '/post/user/' + sessionStorage.getItem('poster_id'), fetchOptions);
+            url + '/post/user/' + sessionStorage.getItem('poster_id'), fetchOptions;
         const posts = await res.json();
         createPosts(posts);
     } catch (e) {
@@ -67,9 +67,6 @@ const createBio = (users) => {
 
     const userNickname = document.createElement('h1');
     userNickname.innerHTML = `${users.username}`;
-    name.innerHTML = users.username;
-    const userAvatar = document.createElement('img');
-    userAvatar.src = url + '/' + `${users.userpfp}`; // will be changed to filename
     //name.innerHTML = users.username;
     const userAvatar = document.createElement('img');
     userAvatar.src = url + '/' + `${users.userpfp}`; // will be changed to filename
@@ -141,6 +138,15 @@ const createPosts = (posts) => {
 
         //setting div class name
         dropdownContent.className = 'dropdown-content-verticalmenu';
+
+        const profileBtn = document.querySelector('#profileBtn');
+        profileBtn.addEventListener('click',() => {
+            // Resetting user id in session storage to get logged user profile
+            sessionStorage.setItem("poster_id", user.user_id);
+            // Hyperlink to profilePage
+            profileBtn.setAttribute('href', 'profilePage.html');
+            console.log('get posterId', post.poster);
+        });
 
         //setting the word delete and report
         const deleteButton = document.createElement('p');

@@ -36,8 +36,6 @@ const createPosts = (posts) => {
         const userPost = document.createElement('li');
 
         // Poster nickname
-        const poster = document.createElement('h1');
-        poster.innerHTML = `${post.postername}`;
         const poster = document.createElement('a');
         poster.innerHTML = `${post.postername}`;
         poster.addEventListener('click',() => {
@@ -177,8 +175,6 @@ const createPosts = (posts) => {
             }
         }
         //const postNickname = document.createElement('h5');
-        const postTitle = document.createElement('h3');
-        postTitle.innerHTML = `${post.title}`;
         const postTitle = document.createElement('a');
         postTitle.innerHTML = `${post.title}`;
         postTitle.addEventListener('click',() => {
