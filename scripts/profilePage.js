@@ -13,7 +13,6 @@ const getUserInfo = async () => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        console.log('user', users);
         const res = await fetch(url + '/user/' + sessionStorage.getItem('poster_id'), fetchOptions);
         const resLog = await fetch(url + '/user/' + user.user_id, fetchOptions);
         const users = await res.json();
@@ -36,10 +35,7 @@ const getPostInfo = async () => {
             },
         };
         const res = await fetch(
-            url + '/post/user/' + user.user_id,
-            fetchOptions
-        );
-            url + '/post/user/' + sessionStorage.getItem('poster_id'), fetchOptions;
+        url + '/post/user/' + sessionStorage.getItem('poster_id'), fetchOptions);
         const posts = await res.json();
         createPosts(posts);
     } catch (e) {
