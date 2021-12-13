@@ -38,9 +38,9 @@ const createPosts = (posts) => {
         // Poster nickname
         const poster = document.createElement('a');
         poster.innerHTML = `${post.postername}`;
-        poster.addEventListener('click',() => {
+        poster.addEventListener('click', () => {
             // Saving id of the poster into session storage
-            sessionStorage.setItem("poster_id", post.poster)
+            sessionStorage.setItem('poster_id', post.poster);
             // Hyperlink to profilePage
             poster.setAttribute('href', 'profilePage.html');
             poster.setAttribute('id', 'poster');
@@ -125,12 +125,10 @@ const createPosts = (posts) => {
             }
         });
 
-        //this appends to dropdown div
+        // Append elements
         dropdown.appendChild(verticalMenu);
         dropdown.appendChild(dropdownContent);
-        //this appends to userpost list
         userPost.appendChild(posterDiv);
-        //this appends to posterdiv div
         posterDiv.appendChild(posterPfp);
         posterDiv.appendChild(poster);
         posterDiv.appendChild(dropdown);
@@ -177,9 +175,9 @@ const createPosts = (posts) => {
         //const postNickname = document.createElement('h5');
         const postTitle = document.createElement('a');
         postTitle.innerHTML = `${post.title}`;
-        postTitle.addEventListener('click',() => {
+        postTitle.addEventListener('click', () => {
             // Saving id of the post into session storage
-            sessionStorage.setItem("id",post.post_id)
+            sessionStorage.setItem('id', post.post_id);
             // Hyperlink to postPage
             postTitle.setAttribute('href', 'postPage.html');
             postTitle.setAttribute('id', 'postTitle');
