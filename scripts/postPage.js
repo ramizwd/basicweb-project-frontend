@@ -239,7 +239,7 @@ const createPost = (posts) => {
             postImg = document.createElement('img');
             postImg.setAttribute('id', 'postImg');
             //source where to get it
-            postImg.src = url + '/thumbnails/' + posts.filename; // will be changes to filename
+            postImg.src = url + '/' + posts.filename;
             postImg.style.width = '100%';
             //if no img alternative
             postImg.alt = '404 image not found';
