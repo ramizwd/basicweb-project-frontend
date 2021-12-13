@@ -20,7 +20,7 @@ const getUserInfo = async () => {
         console.log('user', users);
         if (!users.profile_picture) {
             profileImg.src =
-            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+                'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
             console.log(1);
         } else {
             //getting the default profile pic if not yet set
@@ -59,11 +59,10 @@ const createPosts = (posts) => {
 
         // Poster profile picture
         const posterPfp = document.createElement('img');
-
         // if poster null but default
         if (!post.userpfp) {
             posterPfp.src =
-            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+                'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
             posterPfp.width = '45';
             posterPfp.height = '45';
         } else {
@@ -123,12 +122,14 @@ const createPosts = (posts) => {
 
         // Check if user is a moderator if not append delete button to drop list only for
         // logged in user's post
-        if (user.role === 0) {
-            deleteButton.innerHTML = 'Delete';
-            dropdownContent.appendChild(deleteButton);
-        } else if (user.user_id === post.poster) {
-            deleteButton.innerHTML = 'Delete';
-            dropdownContent.appendChild(deleteButton);
+        if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
+            if (user.role === 0) {
+                deleteButton.innerHTML = 'Delete';
+                dropdownContent.appendChild(deleteButton);
+            } else if (user.user_id === post.poster) {
+                deleteButton.innerHTML = 'Delete';
+                dropdownContent.appendChild(deleteButton);
+            }
         }
         //delete the post when you click the delete button
         deleteButton.addEventListener('click', async () => {
@@ -141,8 +142,8 @@ const createPosts = (posts) => {
             };
             try {
                 const response = await fetch(
-                url + '/post/' + post.post_id,
-                fetchOptions,
+                    url + '/post/' + post.post_id,
+                    fetchOptions
                 );
                 const json = await response.json();
                 console.log('delete response', json);
@@ -170,10 +171,10 @@ const createPosts = (posts) => {
             let postImg;
             //if image on se pistää create element
             if (
-            post.file_type === 'image/png' ||
-            post.file_type === 'image/jpg' ||
-            post.file_type === 'image/webp' ||
-            post.file_type === 'image/jpeg'
+                post.file_type === 'image/png' ||
+                post.file_type === 'image/jpg' ||
+                post.file_type === 'image/webp' ||
+                post.file_type === 'image/jpeg'
             ) {
                 //create img elements
                 postImg = document.createElement('img');
@@ -225,15 +226,15 @@ const createPosts = (posts) => {
         const date = new Date(post.date);
         // Format date
         const formattedDate =
-        date.getDate() +
-        '-' +
-        (date.getMonth() + 1) +
-        '-' +
-        date.getFullYear() +
-        ' ' +
-        date.getHours() +
-        ':' +
-        date.getMinutes();
+            date.getDate() +
+            '-' +
+            (date.getMonth() + 1) +
+            '-' +
+            date.getFullYear() +
+            ' ' +
+            date.getHours() +
+            ':' +
+            date.getMinutes();
         // Create element for the date
         const dateText = document.createElement('p');
         dateText.innerHTML = 'Uploaded: ' + formattedDate;
@@ -261,8 +262,8 @@ const createPosts = (posts) => {
             };
 
             const res = await fetch(
-            url + '/vote/' + user.user_id + '/' + post.post_id,
-            fetchOptions,
+                url + '/vote/' + user.user_id + '/' + post.post_id,
+                fetchOptions
             );
             const vote = await res.json();
             console.log('vote:', vote.vote_count);
@@ -279,7 +280,7 @@ const createPosts = (posts) => {
 
         // Send a request for upvoting
         upVote.addEventListener('click', async () => {
-            const data = {user_id: user.user_id, vote_count: 1};
+            const data = { user_id: user.user_id, vote_count: 1 };
             console.log('upvoted post with id', post.post_id);
             console.log('variable test upvote:', voteInfo.vote_count);
 
@@ -291,7 +292,7 @@ const createPosts = (posts) => {
 
         // Send a request for downvoting
         downVote.addEventListener('click', async () => {
-            const data = {user_id: user.user_id, vote_count: 0};
+            const data = { user_id: user.user_id, vote_count: 0 };
             console.log('downvoted post with id', post.post_id);
 
             // If vote already exist, delete it
@@ -312,8 +313,8 @@ const createPosts = (posts) => {
 
             try {
                 const res = await fetch(
-                url + '/vote/' + post.post_id,
-                fetchOptions,
+                    url + '/vote/' + post.post_id,
+                    fetchOptions
                 );
                 const vote = await res.json();
                 console.log(vote);
@@ -326,10 +327,10 @@ const createPosts = (posts) => {
 };
 
 // Close the dropdown if the user clicks outside of it
-feed.onclick = function(ev) {
+feed.onclick = function (ev) {
     if (!ev.target.matches('.dropImgBtn')) {
         const dropdowns = document.getElementsByClassName(
-        'dropdown-content-verticalmenu',
+            'dropdown-content-verticalmenu'
         );
         for (let i = 0; i < dropdowns.length; i++) {
             let openDrown = dropdowns[i];
@@ -347,9 +348,17 @@ const getPost = async () => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        const res = await fetch(url + '/post', fetchOptions);
-        const posts = await res.json();
-        createPosts(posts);
+        if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
+            const res = await fetch(url + '/post', fetchOptions);
+            const posts = await res.json();
+            createPosts(posts);
+            console.log('USING LOGGED IN ROUTE FOR POSTS');
+        } else {
+            const res = await fetch(url + '/post/anon', fetchOptions);
+            console.log('USING ANONYMOUS ROUTE FOR POSTS');
+            const posts = await res.json();
+            createPosts(posts);
+        }
     } catch (e) {
         console.log(e.message);
     }
