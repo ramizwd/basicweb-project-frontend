@@ -20,6 +20,8 @@ const createComments = (comments) => {
     commentField.setAttribute('type', 'text');
     commentField.setAttribute('name', 'comment');
     commentField.setAttribute('placeholder', 'Comment..');
+    const postEdit = document.createElement('button');
+    const editComment = document.createElement('input');
 
     const btnPost = document.createElement('button');
     btnPost.setAttribute('type', 'submit');
@@ -53,6 +55,7 @@ const createComments = (comments) => {
         commentText.setAttribute('id', 'commentText');
         console.log('create comment', commentInfo);
         const commentDelete = document.createElement('button');
+        const editBtn = document.createElement('button');
 
         // Placing the hierarchy in the post comment part
         commentContainer.appendChild(commentList);
@@ -64,10 +67,45 @@ const createComments = (comments) => {
         if (user.role === 0) {
             commentDelete.innerHTML = 'Delete';
             comment.appendChild(commentDelete);
+
+            editBtn.innerHTML = 'Edit';
+            comment.appendChild(editBtn);
         } else if (user.user_id === commentInfo.user_id) {
             commentDelete.innerHTML = 'Delete';
             comment.appendChild(commentDelete);
+
+            editBtn.innerHTML = 'Edit';
+            comment.appendChild(editBtn);
         }
+
+        // Edit comment, on click editBtn new input field and button appears for editing the post.
+        // then on post edited comment if the field is not empty then send a PUT request
+        editBtn.addEventListener('click', async () => {
+            // Form for comment input
+            editComment.setAttribute('type', 'text');
+            editComment.setAttribute('name', 'comment');
+            editComment.setAttribute('placeholder', 'Comment..');
+            commentContainer.appendChild(editComment);
+
+            postEdit.setAttribute('type', 'submit');
+            postEdit.setAttribute('id', 'btnPostEdit');
+            postEdit.innerHTML = 'Edit';
+            commentContainer.appendChild(postEdit);
+
+            postEdit.addEventListener('click', async () => {
+                if (editComment.value == '') return;
+
+                console.log('hello posted');
+                const data = {
+                    user_id: user.user_id,
+                    comments_id: commentInfo.comments_id,
+                    comment: editComment.value,
+                };
+                console.log('data to be send', data);
+                reqFunction(data, 'PUT');
+                location.href = 'postPage.html';
+            });
+        });
 
         // Click event listener for deleting comments that sends the user id and comment id to reqFunction
         // alone with a request method
