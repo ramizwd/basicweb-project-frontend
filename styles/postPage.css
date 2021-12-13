@@ -3,7 +3,7 @@ body {
     margin: 0;
     background-color: rgb(240, 240, 240);
 }
-main{
+main {
     display: flex;
     justify-content: center;
 }
@@ -16,7 +16,6 @@ main{
     align-items: flex-start;
     margin-top: 5em;
 }
-
 
 .item {
     flex: 2;
@@ -41,6 +40,9 @@ main{
     border: 5px;
     border-radius: 0.5em;
     background-color: rgb(255, 255, 255);
+    overflow: scroll;
+    max-height: 50em;
+    min-height: 50em;
 }
 #comment {
     padding-left: 10px;
@@ -51,7 +53,7 @@ main{
 #postHeader {
     display: flex;
 }
-h2{
+h2 {
     margin-top: 0px;
     margin-bottom: 0px;
     margin-left: 10px;
@@ -74,13 +76,11 @@ button {
     align-items: center;
 }
 
-
 #btnPost {
     width: 40px;
     height: 25px;
-    margin-left: 5px
+    margin-left: 5px;
 }
-
 
 /*adding a fixed navbar so when it scroll down it comes with you*/
 .navbar {
