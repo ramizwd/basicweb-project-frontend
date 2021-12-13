@@ -171,6 +171,7 @@ const createPosts = (posts) => {
         //setting div class name
         dropdownContent.className = 'dropdown-content-verticalmenu';
 
+        // Clear old poster id from session
         const profileBtn = document.querySelector('#profileBtn');
         profileBtn.addEventListener('click', () => {
             // Resetting user id in session storage to get logged user profile
