@@ -18,18 +18,18 @@
             <a href="frontPage.html">Home</a>
                 <a>Filter</a>
                 <form id="search-field">
-                    <input id="key-word" type="text" name="search" />
+                    <input  id="key-word" type="text" required name="search" />
                     <input id="go" type="submit" value="Search" />
                 </form>
                 <img id="add-post-btn" src="placeholder/icons8-plus-+-48.png" width="40" height="40" />
                 <div class="user-info">
-                    
+
                     <div class="dropdown">
                         <a id="name"></a>
-                        <img class="dropbtn" src="placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg" width="40" height="45">
+                        <img class="dropbtn" src="" width="40" height="45">
 
                         <div class="dropdown-content">
-                            <a href="profilePage.html">Profile</a>
+                            <a id="profileBtn" href="profilePage.html">Profile</a>
                             <a href="logout.html">Log out</a>
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                         id="addPost">
                             <input class="form-input" type="text" required name="title" placeHolder="Post tittle"/>
                             <input class="form-input" type="text" required name="description" placeHolder="Description"/>
-                            <input class="form-input" type="file" required name="filename" accept="image/*|video/*" placeHolder="Upload file"/>
+                            <input class="form-input" type="file"  name="filename" accept="image/*|video/*" placeHolder="Upload file"/>
                             <button id="submit-post-btn" type="submit">Add</button>
                         </form>
                     </div>

@@ -8,7 +8,7 @@ const span = document.getElementsByClassName('close-modal')[0];
 // display modal when the add new post button clicked
 editBtn.onclick = () => {
     modal.style.display = 'block';
-}
+};
 // Hide modal when the span is clicked
 span.onclick = () => {
     modal.style.display = 'none';
@@ -26,23 +26,18 @@ const editUser = document.querySelector('#editUser');
 // Edit user info
 editUser.addEventListener('submit', async (evt) => {
     evt.preventDefault(); // stop default action if event is not handled
-    const data = serializeJson(editUser);
+    const data = new FormData(editUser);
     console.log('user id', user.user_id);
+    data.append('id', user.user_id);
+    console.log(data.entries());
 
     console.log(data);
-    // remove empty properties
-    for (const [prop, value] of Object.entries(data)) {
-        if (value === '') {
-            delete data[prop];
-        }
-    }
     const fetchOptions = {
         method: 'PUT',
         headers: {
-            'Content-Type': 'application/json',
             Authorization: 'Bearer ' + sessionStorage.getItem('token'),
         },
-        body: JSON.stringify(data), // body data type must match "Content-Type" header
+        body: data, // body data type must match "Content-Type" header
     };
     // send put method and the values to the put route.
     // get a json response and display it as successfully added post message as an alert
@@ -58,6 +53,7 @@ editUser.addEventListener('submit', async (evt) => {
         alert(json.error.message);
     } else {
         alert(json.message);
+        getUserInfo();
     }
     location.href = 'profilePage.html';
 });
