@@ -230,21 +230,20 @@ const createPosts = (posts) => {
 
         // Downvote button
         const downVote = document.createElement('img');
-        downVote.src = './placeholder/downvote.png';
+        downVote.src = './placeholder/down-arrow.png';
         downVote.innerHTML = 'Dowvote';
         downVote.setAttribute('id', 'downVote');
-
-        // Upvote button
-        const upVote = document.createElement('img');
-        upVote.src = './placeholder/upvote.png';
-        upVote.innerHTML = 'Upvote';
-        upVote.setAttribute('id', 'upVote');
 
         // Total votes button
         const votes = document.createElement('p');
         votes.setAttribute('id', 'voteCount');
-
         votes.innerHTML = `${post.votes}`;
+
+        // Upvote button
+        const upVote = document.createElement('img');
+        upVote.src = './placeholder/up-arrow.png';
+        upVote.innerHTML = 'Upvote';
+        upVote.setAttribute('id', 'upVote');
 
         // Get date from db and format it
         const date = new Date(post.date);
@@ -262,16 +261,18 @@ const createPosts = (posts) => {
         // Create element for the date
         const dateText = document.createElement('p');
         dateText.innerHTML = 'Uploaded: ' + formattedDate;
-
+        dateText.setAttribute('id', 'postDate');
+        const postTextContent = document.createElement('div');
+        postTextContent.className = 'postTextContent';
+        userPost.appendChild(postTextContent);
         // Placing the hierarchy in the post object
         feed.appendChild(userPost);
-        userPost.appendChild(postTitle);
-        userPost.appendChild(buildText);
-        userPost.appendChild(upVote);
-        userPost.appendChild(downVote);
-        userPost.appendChild(votes);
-        userPost.appendChild(dateText);
-
+        postTextContent.appendChild(postTitle);
+        postTextContent.appendChild(buildText);
+        postTextContent.appendChild(downVote);
+        postTextContent.appendChild(votes);
+        postTextContent.appendChild(upVote);
+        postTextContent.appendChild(dateText);
         // Default request method is POST
         let reqMethod = 'POST';
         let voteInfo = 0;
@@ -284,7 +285,6 @@ const createPosts = (posts) => {
                     'Content-Type': 'application/json',
                 },
             };
-
             const res = await fetch(
                 url + '/vote/' + user.user_id + '/' + post.post_id,
                 fetchOptions
@@ -295,6 +295,13 @@ const createPosts = (posts) => {
             if (vote.vote_count == 1 || vote.vote_count == 0) {
                 reqMethod = 'PUT';
                 console.log('Change req method', reqMethod);
+                if (vote.vote_count == 1) {
+                    upVote.style.backgroundColor = 'rgb(255, 145, 0)';
+                    upVote.style.borderRadius = '50%';
+                } else {
+                    downVote.style.backgroundColor = 'rgb(67, 70, 201)';
+                    downVote.style.borderRadius = '50%';
+                }
             }
 
             voteInfo = vote;
