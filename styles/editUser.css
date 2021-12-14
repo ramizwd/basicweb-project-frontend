@@ -88,3 +88,6 @@
         opacity: 0;
     }
 }
+#setting-btn:hover{
+    opacity: 30%;
+}
