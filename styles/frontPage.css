@@ -1,13 +1,12 @@
 * {
     font-family: 'Open Sans', sans-serif;
 }
-/*setting the body without any margin*/
 body {
     margin: 0;
     background-color: rgb(240, 240, 240);
 }
 
-/*adding a fixed navbar so when it scroll down it comes with you*/
+/* navigation bar */
 .navbar {
     background-color: #333;
     position: fixed;
@@ -20,6 +19,7 @@ body {
     pointer-events: none;
 }
 #search-field {
+    padding: 15px;
     text-align: center;
     position: fixed;
     overflow: hidden;
@@ -28,8 +28,7 @@ body {
     z-index: -2;
 }
 /*layout of the navbar*/
-.navbar a,
-#search-field {
+.navbar a {
     float: left;
     font-size: 16px;
     color: white;
@@ -39,6 +38,9 @@ body {
 }
 a {
     cursor: pointer;
+}
+.navbar a:hover {
+    background-color: #3b5c88;
 }
 #search-field input {
     padding: 5px;
@@ -73,9 +75,9 @@ a {
 }
 
 .dropdown-anon .dropbtn {
-    padding: 10px;
+    padding: 8px;
+    margin-right: 10px;
 }
-
 .dropdown .dropbtn {
     height: 42px;
     font-size: 16px;
@@ -95,28 +97,52 @@ a {
 .dropbtn {
     border-radius: 50%;
 }
-
-.navbar a:hover {
-    background-color: rgb(0, 69, 134);
-}
-
 .dropdown-content {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
-
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     right: 0;
     width: 180px;
 }
 
+/* post card */
+ul {
+    margin-top: 5em;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+}
+li {
+    width: 35%;
+    margin: 0.5em;
+    border-radius: 0.5em;
+    background-color: rgb(255, 255, 255);
+}
+li img:first-child {
+    border-radius: 50%;
+    padding: 5px;
+}
+h3 {
+    border-bottom: 2px solid gray;
+}
+
+figure {
+    margin: 0;
+    padding: 0;
+}
+
+/* post drop down menu*/
 .dropdown-content-verticalmenu {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
-    margin-left: 510px;
     padding: 5px;
 }
 
@@ -135,55 +161,54 @@ a {
 .dropdown:hover .dropdown-content {
     display: block;
 }
-
+.dropImgBtn:hover {
+    opacity: 30%;
+    cursor: pointer;
+}
+.dropdown-content-verticalmenu p {
+    padding: 12px 13px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+.dropdownImg {
+    float: right;
+}
+.dropdown-content-verticalmenu:hover .dropdown-content-verticalmenu {
+    display: block;
+}
+.postTextContent {
+    padding: 12px;
+}
 .main {
     margin-top: 50px;
 }
 
-ul {
-    margin-top: 5em;
-    padding: 0;
-    list-style-type: none;
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    align-content: center;
-    align-items: center;
-}
-/* #voteCount, */
+/* voting system */
 #downVote,
-#upVote {
+#upVote,
+#voteCount {
     float: right;
-    size: 10px;
-    width: 35px;
-    height: 35px;
-    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
     padding: 5px;
+    text-align: center;
+    transition-duration: 0.2s;
+}
+#voteCount {
+    font-size: 19px;
+    margin-top: 5px;
 }
 
-li {
-    width: 35%;
-    margin: 0.5em;
-    border-radius: 0.5em;
-    background-color: rgb(255, 255, 255);
-}
-li p,
-button,
-a {
-    padding: 5px;
-    margin-left: 10px;
-}
-li img:first-child {
+#upVote:hover {
+    background-color: rgb(255, 145, 0);
     border-radius: 50%;
-    padding: 5px;
+    cursor: pointer;
 }
-h3 {
-    border-bottom: 2px solid gray;
-}
-
-figure {
-    margin: 0;
-    padding: 0;
+#downVote:hover {
+    background-color: rgb(67, 70, 201);
+    border-radius: 50%;
+    cursor: pointer;
 }
 
 .forms {
@@ -195,10 +220,11 @@ figure {
     width: 33%;
 }
 
-.posterDiv {
-    display: flex;
-}
-
+/* .posterDiv a {
+    margin-bottom: 100px;
+    padding: 300px;
+    margin-top: 0;
+} */
 h1 {
     margin-top: 0px;
     margin-bottom: 0px;
@@ -221,25 +247,8 @@ h1 {
     color: darkviolet;
 }
 
-.dropImgBtn:hover {
-    opacity: 30%;
-    cursor: pointer;
-}
-
-.dropdownImg {
-    position: relative;
-    display: inline-block;
-}
-
 .show {
     display: block;
-}
-
-.dropdown-content-verticalmenu p {
-    padding: 12px 13px;
-    text-decoration: none;
-    display: block;
-    cursor: pointer;
 }
 
 #add-post-btn:hover {
@@ -247,9 +256,9 @@ h1 {
     cursor: pointer;
 }
 #add-post-btn {
-    margin-top: 10px;
+    margin-top: 12px;
     margin-left: 3em;
-}
-.dropdown-content-verticalmenu:hover .dropdown-content-verticalmenu {
-    display: block;
+    filter: brightness(0) invert(1);
+    width: 35px;
+    height: 35px;
 }
