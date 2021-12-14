@@ -4,7 +4,6 @@ const feed = document.querySelector('#postFeed');
 const nickname = document.querySelector('#nickname');
 const profileImg = document.querySelector('.dropbtn');
 const name = document.querySelector('#name');
-//profileImg.innerHTML = getUserInfo().user.image;  // image not implemented yet
 const user = JSON.parse(sessionStorage.getItem('user'));
 
 // Function to fetch data for users
@@ -34,6 +33,16 @@ const getUserInfo = async () => {
 };
 getUserInfo();
 
+const userInfo = document.querySelector('.dropdown');
+const anonUserInfo = document.querySelector('.dropdown-anon');
+
+if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
+    userInfo.style.display = 'none';
+    anonUserInfo.style.display = 'block';
+} else {
+    userInfo.style.display = 'block';
+    anonUserInfo.style.display = 'none';
+}
 // Function for creating post containers
 const createPosts = (posts) => {
     // clear ul
@@ -48,6 +57,13 @@ const createPosts = (posts) => {
         const poster = document.createElement('a');
         poster.innerHTML = `${post.postername}`;
         poster.addEventListener('click', () => {
+            if (
+                !sessionStorage.getItem('token') ||
+                !sessionStorage.getItem('user')
+            ) {
+                alert('Login/register to view profiles');
+                return;
+            }
             // Saving id of the poster into session storage
 
             sessionStorage.setItem('poster_id', post.poster);
@@ -212,14 +228,22 @@ const createPosts = (posts) => {
             console.log('get postId', post.post_id);
         });
 
-        // Upvote button
-        const upVote = document.createElement('button');
-        upVote.innerHTML = 'Upvote';
         // Downvote button
-        const downVote = document.createElement('button');
+        const downVote = document.createElement('img');
+        downVote.src = './placeholder/downvote.png';
         downVote.innerHTML = 'Dowvote';
+        downVote.setAttribute('id', 'downVote');
+
+        // Upvote button
+        const upVote = document.createElement('img');
+        upVote.src = './placeholder/upvote.png';
+        upVote.innerHTML = 'Upvote';
+        upVote.setAttribute('id', 'upVote');
+
         // Total votes button
         const votes = document.createElement('p');
+        votes.setAttribute('id', 'voteCount');
+
         votes.innerHTML = `${post.votes}`;
 
         // Get date from db and format it
@@ -280,6 +304,13 @@ const createPosts = (posts) => {
 
         // Send a request for upvoting
         upVote.addEventListener('click', async () => {
+            if (
+                !sessionStorage.getItem('token') ||
+                !sessionStorage.getItem('user')
+            ) {
+                alert('Login/register to give feedback');
+                return;
+            }
             const data = { user_id: user.user_id, vote_count: 1 };
             console.log('upvoted post with id', post.post_id);
             console.log('variable test upvote:', voteInfo.vote_count);
@@ -292,6 +323,13 @@ const createPosts = (posts) => {
 
         // Send a request for downvoting
         downVote.addEventListener('click', async () => {
+            if (
+                !sessionStorage.getItem('token') ||
+                !sessionStorage.getItem('user')
+            ) {
+                alert('Login/register to give feedback');
+                return;
+            }
             const data = { user_id: user.user_id, vote_count: 0 };
             console.log('downvoted post with id', post.post_id);
 
@@ -387,7 +425,10 @@ const searchPosts = async (word) => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        const res = await fetch(url + '/post/search/' + word, fetchOptions);
+        const res = await fetch(
+            url + '/post/anon/search/' + word,
+            fetchOptions
+        );
         const posts = await res.json();
         createPosts(posts);
     } catch (e) {

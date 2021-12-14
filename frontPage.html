@@ -19,20 +19,27 @@
                 <a>Filter</a>
                 <form id="search-field">
                     <input  id="key-word" type="text" required name="search" />
-                    <input id="go" type="submit" value="Search" />
+                    <button id="go" type="submit" value="Search" >SEARCH</button>
                 </form>
                 <img id="add-post-btn" src="placeholder/icons8-plus-+-48.png" width="40" height="40" />
                 <div class="user-info">
 
-                    <div class="dropdown">
+                    <div class="dropdown" >
                         <a id="name"></a>
-                        <img class="dropbtn" src="" width="40" height="45">
+                        <img class="dropbtn" width="40" height="45">
 
                         <div class="dropdown-content">
                             <a id="profileBtn" href="profilePage.html">Profile</a>
                             <a href="logout.html">Log out</a>
                         </div>
                     </div>
+
+                    <div class="dropdown-anon">
+                        <a href="loginPage.html" >LOG IN</a>
+                        <img class="dropbtn" src="placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg" width="40" height="45">
+                    </div>
+
+
                 </div>
             </nav>
 
@@ -60,7 +67,6 @@
         </div>
     </body>
 
-    <!-- <script src="scripts/checkLogin.js"></script> -->
     <script src="scripts/frontPage.js"></script>
     <script src="scripts/addPost.js"></script>
     <script src="scripts/serialize.js"></script>
