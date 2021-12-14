@@ -5,7 +5,6 @@ const modal = document.querySelector('#modal');
 const postBtn = document.querySelector('#add-post-btn');
 const span = document.getElementsByClassName('close-modal')[0];
 
-
 // display modal when the add new post button clicked
 postBtn.onclick = () => {
     modal.style.display = 'block';

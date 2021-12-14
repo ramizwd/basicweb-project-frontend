@@ -109,7 +109,7 @@ const createBio = (users) => {
         console.log('vis', visitingUser);
         console.log(currentUser.user_id == visitingUser);
         document.getElementById('add-edit-btn').remove();
-        settingbtn.remove()
+        settingbtn.remove();
     }
 };
 

@@ -5,8 +5,8 @@ const modalSetting = document.querySelector('#modalSetting');
 const setting = document.querySelector('#setting');
 const settingbtn = document.querySelector('#setting-btn');
 const spanSetting = document.getElementsByClassName('close-modal-setting')[0];
-
 let pro;
+
 // display modal when the add new post button clicked
 setting.onclick = () => {
     pro = usersLog;
@@ -41,7 +41,7 @@ const x = () => {
             roleBar.type = 'number';
             roleBar.min = '0';
             roleBar.max = '1';
-            roleBar.required=true
+            roleBar.required = true;
             role.append(roleBar);
 
         }
