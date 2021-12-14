@@ -2,7 +2,7 @@
 const url = 'https://localhost:8000';
 const feed = document.querySelector('#postFeed');
 const nickname = document.querySelector('#nickname');
-const profileImg = document.querySelector('.profileImg');
+const profileImg = document.querySelector('.dropbtn');
 const name = document.querySelector('#name');
 //profileImg.innerHTML = getUserInfo().user.image;  // image not implemented yet
 const user = JSON.parse(sessionStorage.getItem('user'));
@@ -18,6 +18,15 @@ const getUserInfo = async () => {
         const res = await fetch(url + '/user/' + user.user_id, fetchOptions);
         const users = await res.json();
         console.log('user', users);
+        if (!users.profile_picture) {
+            profileImg.src =
+            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            console.log(1);
+        } else {
+            //getting the default profile pic if not yet set
+            console.log(url + '/' + users.profile_picture);
+            profileImg.src = url + '/' + users.profile_picture;
+        }
         name.innerHTML = users.username;
     } catch (e) {
         console.log(e.message);
@@ -36,18 +45,34 @@ const createPosts = (posts) => {
         const userPost = document.createElement('li');
 
         // Poster nickname
-        const poster = document.createElement('h1');
+        const poster = document.createElement('a');
         poster.innerHTML = `${post.postername}`;
+        poster.addEventListener('click', () => {
+            // Saving id of the poster into session storage
+
+            sessionStorage.setItem('poster_id', post.poster);
+            // Hyperlink to profilePage
+            poster.setAttribute('href', 'profilePage.html');
+            poster.setAttribute('id', 'poster');
+            console.log('get posterId', post.poster);
+        });
 
         // Poster profile picture
         const posterPfp = document.createElement('img');
+
         // if poster null but default
-        // posterPfp.src = url + '/' + post.profile_picture;
-        //getting the default profile pic if not yet set
-        posterPfp.src =
+        if (!post.userpfp) {
+            posterPfp.src =
             'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
-        posterPfp.width = '45';
-        posterPfp.height = '45';
+            posterPfp.width = '45';
+            posterPfp.height = '45';
+        } else {
+            //getting the default profile pic if not yet set
+            posterPfp.src = url + '/' + post.userpfp;
+            posterPfp.width = '45';
+            posterPfp.height = '45';
+        }
+
         //for the upper piece of the postcard
         const posterDiv = document.createElement('div');
         posterDiv.className = 'posterDiv';
@@ -79,6 +104,16 @@ const createPosts = (posts) => {
         //setting div class name
         dropdownContent.className = 'dropdown-content-verticalmenu';
 
+        // Clear old poster id from session
+        const profileBtn = document.querySelector('#profileBtn');
+        profileBtn.addEventListener('click', () => {
+            // Resetting user id in session storage to get logged user profile
+            sessionStorage.setItem('poster_id', user.user_id);
+            // Hyperlink to profilePage
+            profileBtn.setAttribute('href', 'profilePage.html');
+            console.log('get posterId', post.poster);
+        });
+
         //setting the word delete and report
         const deleteButton = document.createElement('p');
         const reportButton = document.createElement('p');
@@ -106,8 +141,8 @@ const createPosts = (posts) => {
             };
             try {
                 const response = await fetch(
-                    url + '/post/' + post.post_id,
-                    fetchOptions
+                url + '/post/' + post.post_id,
+                fetchOptions,
                 );
                 const json = await response.json();
                 console.log('delete response', json);
@@ -117,18 +152,17 @@ const createPosts = (posts) => {
             }
         });
 
-        //this appends to dropdown div
+        // Append elements
         dropdown.appendChild(verticalMenu);
         dropdown.appendChild(dropdownContent);
-        //this appends to userpost list
         userPost.appendChild(posterDiv);
-        //this appends to posterdiv div
         posterDiv.appendChild(posterPfp);
         posterDiv.appendChild(poster);
         posterDiv.appendChild(dropdown);
 
         //set the description
         const buildText = document.createElement('p');
+        buildText.setAttribute('id', 'buildText');
         buildText.innerHTML = `${post.description}`;
 
         //if not null do the layout like this
@@ -136,10 +170,10 @@ const createPosts = (posts) => {
             let postImg;
             //if image on se pistää create element
             if (
-                post.file_type === 'image/png' ||
-                post.file_type === 'image/jpg' ||
-                post.file_type === 'image/webp' ||
-                post.file_type === 'image/jpeg'
+            post.file_type === 'image/png' ||
+            post.file_type === 'image/jpg' ||
+            post.file_type === 'image/webp' ||
+            post.file_type === 'image/jpeg'
             ) {
                 //create img elements
                 postImg = document.createElement('img');
@@ -166,8 +200,16 @@ const createPosts = (posts) => {
             }
         }
         //const postNickname = document.createElement('h5');
-        const postTitle = document.createElement('h3');
+        const postTitle = document.createElement('a');
         postTitle.innerHTML = `${post.title}`;
+        postTitle.addEventListener('click', () => {
+            // Saving id of the post into session storage
+            sessionStorage.setItem('id', post.post_id);
+            // Hyperlink to postPage
+            postTitle.setAttribute('href', 'postPage.html');
+            postTitle.setAttribute('id', 'postTitle');
+            console.log('get postId', post.post_id);
+        });
 
         // Upvote button
         const upVote = document.createElement('button');
@@ -183,15 +225,15 @@ const createPosts = (posts) => {
         const date = new Date(post.date);
         // Format date
         const formattedDate =
-            date.getDate() +
-            '-' +
-            (date.getMonth() + 1) +
-            '-' +
-            date.getFullYear() +
-            ' ' +
-            date.getHours() +
-            ':' +
-            date.getMinutes();
+        date.getDate() +
+        '-' +
+        (date.getMonth() + 1) +
+        '-' +
+        date.getFullYear() +
+        ' ' +
+        date.getHours() +
+        ':' +
+        date.getMinutes();
         // Create element for the date
         const dateText = document.createElement('p');
         dateText.innerHTML = 'Uploaded: ' + formattedDate;
@@ -219,8 +261,8 @@ const createPosts = (posts) => {
             };
 
             const res = await fetch(
-                url + '/vote/' + user.user_id + '/' + post.post_id,
-                fetchOptions
+            url + '/vote/' + user.user_id + '/' + post.post_id,
+            fetchOptions,
             );
             const vote = await res.json();
             console.log('vote:', vote.vote_count);
@@ -237,7 +279,7 @@ const createPosts = (posts) => {
 
         // Send a request for upvoting
         upVote.addEventListener('click', async () => {
-            const data = { user_id: user.user_id, vote_count: 1 };
+            const data = {user_id: user.user_id, vote_count: 1};
             console.log('upvoted post with id', post.post_id);
             console.log('variable test upvote:', voteInfo.vote_count);
 
@@ -249,7 +291,7 @@ const createPosts = (posts) => {
 
         // Send a request for downvoting
         downVote.addEventListener('click', async () => {
-            const data = { user_id: user.user_id, vote_count: 0 };
+            const data = {user_id: user.user_id, vote_count: 0};
             console.log('downvoted post with id', post.post_id);
 
             // If vote already exist, delete it
@@ -270,8 +312,8 @@ const createPosts = (posts) => {
 
             try {
                 const res = await fetch(
-                    url + '/vote/' + post.post_id,
-                    fetchOptions
+                url + '/vote/' + post.post_id,
+                fetchOptions,
                 );
                 const vote = await res.json();
                 console.log(vote);
@@ -284,10 +326,10 @@ const createPosts = (posts) => {
 };
 
 // Close the dropdown if the user clicks outside of it
-feed.onclick = function (ev) {
+feed.onclick = function(ev) {
     if (!ev.target.matches('.dropImgBtn')) {
         const dropdowns = document.getElementsByClassName(
-            'dropdown-content-verticalmenu'
+        'dropdown-content-verticalmenu',
         );
         for (let i = 0; i < dropdowns.length; i++) {
             let openDrown = dropdowns[i];
