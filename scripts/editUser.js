@@ -8,7 +8,7 @@ const span = document.getElementsByClassName('close-modal')[0];
 // display modal when the add new post button clicked
 editBtn.onclick = () => {
     modal.style.display = 'block';
-};
+}
 // Hide modal when the span is clicked
 span.onclick = () => {
     modal.style.display = 'none';
