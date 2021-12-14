@@ -8,7 +8,7 @@ const span = document.getElementsByClassName('close-modal')[0];
 // display modal when the add new post button clicked
 postBtn.onclick = () => {
     if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
-        location.href = 'loginPage.html';
+        alert('Login/register to post');
         return;
     }
     modal.style.display = 'block';

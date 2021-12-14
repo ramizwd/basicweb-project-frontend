@@ -63,19 +63,21 @@ const createComments = (comments) => {
         comment.appendChild(commentNickname);
         comment.appendChild(commentText);
 
-        // Show delete button only for comment's author or user with admin role
-        if (user.role === 0) {
-            commentDelete.innerHTML = 'Delete';
-            comment.appendChild(commentDelete);
+        if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
+            // Show delete button only for comment's author or user with admin role
+            if (user.role === 0) {
+                commentDelete.innerHTML = 'Delete';
+                comment.appendChild(commentDelete);
 
-            editBtn.innerHTML = 'Edit';
-            comment.appendChild(editBtn);
-        } else if (user.user_id === commentInfo.user_id) {
-            commentDelete.innerHTML = 'Delete';
-            comment.appendChild(commentDelete);
+                editBtn.innerHTML = 'Edit';
+                comment.appendChild(editBtn);
+            } else if (user.user_id === commentInfo.user_id) {
+                commentDelete.innerHTML = 'Delete';
+                comment.appendChild(commentDelete);
 
-            editBtn.innerHTML = 'Edit';
-            comment.appendChild(editBtn);
+                editBtn.innerHTML = 'Edit';
+                comment.appendChild(editBtn);
+            }
         }
 
         // Edit comment, on click editBtn new input field and button appears for editing the post.
@@ -128,12 +130,24 @@ const createComments = (comments) => {
                             'Bearer ' + sessionStorage.getItem('token'),
                     },
                 };
-                const res = await fetch(
-                    url + '/user/' + commentInfo.user_id,
-                    fetchOptions
-                );
-                const users = await res.json();
-                commentNickname.innerHTML = users.username;
+                if (
+                    sessionStorage.getItem('token') ||
+                    sessionStorage.getItem('user')
+                ) {
+                    const res = await fetch(
+                        url + '/user/' + commentInfo.user_id,
+                        fetchOptions
+                    );
+                    const users = await res.json();
+                    commentNickname.innerHTML = users.username;
+                } else {
+                    const res = await fetch(
+                        url + '/user/anon/' + commentInfo.user_id,
+                        fetchOptions
+                    );
+                    const users = await res.json();
+                    commentNickname.innerHTML = users.username;
+                }
             } catch (e) {
                 console.log(e.message);
             }
@@ -282,14 +296,25 @@ const getPost = async () => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        console.log(sessionStorage.getItem('id'));
-        // Getting post id from session storage and placing it into route
-        const res = await fetch(
-            url + '/post/' + sessionStorage.getItem('id'),
-            fetchOptions
-        );
-        const posts = await res.json();
-        createPost(posts);
+        if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
+            console.log(sessionStorage.getItem('id'));
+            // Getting post id from session storage and placing it into route
+            const res = await fetch(
+                url + '/post/' + sessionStorage.getItem('id'),
+                fetchOptions
+            );
+            const posts = await res.json();
+            createPost(posts);
+        } else {
+            console.log(sessionStorage.getItem('id'));
+            // Getting post id from session storage and placing it into route
+            const res = await fetch(
+                url + '/post/anon/' + sessionStorage.getItem('id'),
+                fetchOptions
+            );
+            const posts = await res.json();
+            createPost(posts);
+        }
     } catch (e) {
         console.log(e.message);
     }
