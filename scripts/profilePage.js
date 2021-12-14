@@ -5,7 +5,8 @@ const url = 'https://localhost:8000';
 const user = JSON.parse(sessionStorage.getItem('user'));
 const name = document.querySelector('#name');
 const profileImg = document.querySelector('.dropbtn');
-
+let users;
+let usersLog;
 // Function to fetch data for users
 const getUserInfo = async () => {
     try {
@@ -17,8 +18,8 @@ const getUserInfo = async () => {
         const res = await fetch(
         url + '/user/' + sessionStorage.getItem('poster_id'), fetchOptions);
         const resLog = await fetch(url + '/user/' + user.user_id, fetchOptions);
-        const users = await res.json();
-        const usersLog = await resLog.json();
+        users = await res.json();
+        usersLog = await resLog.json();
         console.log('user', users);
         loggedUser(usersLog);
         createBio(users);
@@ -73,7 +74,7 @@ const loggedUser = (usersLog) => {
 // Function for creating users bio in header
 const createBio = (users) => {
     bio.innerHTML = '';
-    console.log("jojo",users);
+    console.log('jojo', users);
     const userNickname = document.createElement('h1');
     userNickname.innerHTML = `${users.username}`;
     //name.innerHTML = users.username;
@@ -101,13 +102,14 @@ const createBio = (users) => {
     // Setting attributes for repeating elements
     userAvatar.setAttribute('id', 'avatar');
     userDescription.setAttribute('id', 'textBio');
-    let currentUser = JSON.parse(sessionStorage.getItem('user'))
+    let currentUser = usersLog;
     let visitingUser = sessionStorage.getItem('poster_id');
-    if (!(currentUser.user_id == visitingUser)) {
-        console.log("cur",currentUser.user_id );
-        console.log("vis",visitingUser);
+    if (!(currentUser.user_id == visitingUser) && currentUser.role == 1) {
+        console.log('cur', currentUser.user_id);
+        console.log('vis', visitingUser);
         console.log(currentUser.user_id == visitingUser);
-        document.getElementById("add-edit-btn").remove()
+        document.getElementById('add-edit-btn').remove();
+        settingbtn.remove()
     }
 };
 
