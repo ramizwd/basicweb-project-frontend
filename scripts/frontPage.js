@@ -181,15 +181,13 @@ const createPosts = (posts) => {
                 userPost.appendChild(postImg);
             }
         }
-        //const postNickname = document.createElement('h5');
-        const postTitle = document.createElement('a');
+        const postTitle = document.createElement('h3');
         postTitle.innerHTML = `${post.title}`;
         postTitle.addEventListener('click',() => {
             // Saving id of the post into session storage
             sessionStorage.setItem("id",post.post_id)
             // Hyperlink to postPage
-            postTitle.setAttribute('href', 'postPage.html');
-            postTitle.setAttribute('id', 'postTitle');
+            window.location.href = "postPage.html";
             console.log('get postId', post.post_id);
         });
 
