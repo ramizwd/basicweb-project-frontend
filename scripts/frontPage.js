@@ -1,5 +1,5 @@
 'use strict';
-const url = 'https://10.114.32.27/app';
+const url = 'https://localhost:8000'; // change url when uploading to server
 const feed = document.querySelector('#postFeed');
 const nickname = document.querySelector('#nickname');
 const profileImg = document.querySelector('.dropbtn');
