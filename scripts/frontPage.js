@@ -170,9 +170,9 @@ const createPosts = (posts) => {
         posterDiv.appendChild(dropdown);
 
         //set the description
-        const buildText = document.createElement('p');
-        buildText.setAttribute('id', 'buildText');
-        buildText.innerHTML = `${post.description}`;
+        const descriptionText = document.createElement('p');
+        descriptionText.setAttribute('id', 'descriptionText');
+        descriptionText.innerHTML = `${post.description}`;
 
         //if not null do the layout like this
         if (post.filename != null) {
@@ -209,20 +209,37 @@ const createPosts = (posts) => {
             }
         }
         //const postNickname = document.createElement('h5');
-        const postTitle = document.createElement('a');
+        const postTitle = document.createElement('h2');
         postTitle.innerHTML = `${post.title}`;
         postTitle.addEventListener('click', () => {
             // Saving id of the post into session storage
             sessionStorage.setItem('id', post.post_id);
             // Hyperlink to postPage
-            postTitle.setAttribute('href', 'postPage.html');
             postTitle.setAttribute('id', 'postTitle');
             console.log('get postId', post.post_id);
+            location.href = 'postPage.html';
         });
         // Total comment
         const commentCount = document.createElement('p');
-        commentCount.innerHTML = `${post.commentCount} Comments`;
-        commentCount.setAttribute('id', 'commentCount');
+        // Get comments from DB
+        const getCommentsCount = async () => {
+            try {
+                const fetchOptions = {
+                    headers: {
+                        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                    },
+                };
+                console.log(sessionStorage.getItem('id'));
+                // Getting post id from session storage and placing it into route
+                const res = await fetch(url + '/comment/count/' + post.post_id, fetchOptions);
+                const commentsCount = await res.json();
+                commentCount.innerHTML = `${commentsCount.commentCount} Comments`;
+                commentCount.setAttribute('id', 'commentCount');
+                console.log(commentsCount);
+            } catch (e) {
+                console.log(e.message);
+            }
+        };
 
         // Downvote button
         const downVote = document.createElement('img');
@@ -264,12 +281,14 @@ const createPosts = (posts) => {
         // Placing the hierarchy in the post object
         feed.appendChild(userPost);
         postTextContent.appendChild(postTitle);
-        postTextContent.appendChild(buildText);
+        postTextContent.appendChild(descriptionText);
         postTextContent.appendChild(dateText);
         postTextContent.appendChild(downVote);
         postTextContent.appendChild(votes);
         postTextContent.appendChild(upVote);
         postTextContent.appendChild(commentCount);
+
+        getCommentsCount();
 
         // Default request method is POST
         let reqMethod = 'POST';
