@@ -52,7 +52,7 @@ const createComments = (comments) => {
         const commentList = document.createElement('ul');
         const comment = document.createElement('li');
         comment.setAttribute('id', 'comment');
-        const commentNickname = document.createElement('h5');
+        const commentNickname = document.createElement('h4');
         const commentText = document.createElement('p');
         commentText.innerHTML = commentInfo.comment;
         commentText.setAttribute('id', 'commentText');
