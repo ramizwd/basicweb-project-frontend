@@ -7,11 +7,11 @@ const spanEdit = document.getElementsByClassName('close-modal-edit')[0];
 
 // display modal when the add new post button clicked
 editBtn.onclick = () => {
+    //add the value to the form
     document.getElementById('editUser').
     getElementsByClassName('form-input')[0].value = users.username;
     document.getElementById('editUser').
     getElementsByClassName('form-input')[1].value = users.description;
-
     modalEdit.style.display = 'block';
 };
 // Hide modal when the span is clicked
@@ -41,7 +41,6 @@ editUser.addEventListener('submit', async (evt) => {
     // get a json response and display it as successfully added post message as an alert
 
     // get user data for admin check
-    //const user = JSON.parse(sessionStorage.getItem('user'));
     const response = await fetch(
     url + '/user/profile/' + users.user_id,
     fetchOptions,
