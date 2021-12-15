@@ -195,6 +195,19 @@ const createPosts = (posts) => {
         const reportButton = document.createElement('p');
 
         reportButton.innerHTML = 'Report';
+        const informer = () => {
+            let answer = confirm('You are being send to email is this ok?');
+            if (answer) {
+                document.location = reportButton.href = `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
+                'Reported post information:%0d%0a' +
+                `Post ID: ${post.post_id}%0d%0a` +
+                `Post title: ${post.title}%0d%0a` +
+                `Poster ID: ${post.poster}%0d%0a` +
+                `Poster username: ${post.postername}`;
+            }
+        };
+        reportButton.onclick = informer;
+
         dropdownContent.appendChild(reportButton);
 
         // Check if user is a moderator if not append delete button to drop list only for
