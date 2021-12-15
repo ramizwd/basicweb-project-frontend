@@ -15,7 +15,6 @@ votes.setAttribute('id', 'CommentVoteCount');
 // Create comments list
 const createComments = (comments) => {
     commentContainer.innerHTML = '';
-    votes.innerHTML = '';
 
     //Creating html elements for comments
 
@@ -150,25 +149,15 @@ const createComments = (comments) => {
             try {
                 const fetchOptions = {
                     headers: {
-                        Authorization:
-                            'Bearer ' + sessionStorage.getItem('token'),
+                        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
                     },
                 };
-                if (
-                    sessionStorage.getItem('token') ||
-                    sessionStorage.getItem('user')
-                ) {
-                    const res = await fetch(
-                        url + '/user/' + commentInfo.user_id,
-                        fetchOptions
-                    );
+                if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
+                    const res = await fetch(url + '/user/' + commentInfo.user_id, fetchOptions);
                     const users = await res.json();
                     commentNickname.innerHTML = users.username;
                 } else {
-                    const res = await fetch(
-                        url + '/user/anon/' + commentInfo.user_id,
-                        fetchOptions
-                    );
+                    const res = await fetch(url + '/user/anon/' + commentInfo.user_id, fetchOptions);
                     const users = await res.json();
                     commentNickname.innerHTML = users.username;
                 }
@@ -189,14 +178,7 @@ const createComments = (comments) => {
                     'Content-Type': 'application/json',
                 },
             };
-            const res = await fetch(
-                url +
-                    '/commentvote/' +
-                    user.user_id +
-                    '/' +
-                    commentInfo.comments_id,
-                fetchOptions
-            );
+            const res = await fetch(url + '/commentvote/' + user.user_id + '/' + commentInfo.comments_id, fetchOptions);
             const vote = await res.json();
             console.log('vote:', vote.vote_count);
             // If vote exist change request method to PUT
@@ -218,12 +200,9 @@ const createComments = (comments) => {
         };
         getCommentVote();
 
-        // check if user logged in if not give alert message lese send a request for upvoting
+        // check if user logged in if not give alert message else send a request for upvoting
         upVote.addEventListener('click', async () => {
-            if (
-                !sessionStorage.getItem('token') ||
-                !sessionStorage.getItem('user')
-            ) {
+            if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
                 alert('Login/register to give feedback');
                 return;
             }
@@ -237,12 +216,9 @@ const createComments = (comments) => {
             reqFunctionVoting(votingData);
         });
 
-        // check if user logged in if not give alert message lese send a request for downvoting
+        // check if user logged in if not give alert message else send a request for downvoting
         downVote.addEventListener('click', async () => {
-            if (
-                !sessionStorage.getItem('token') ||
-                !sessionStorage.getItem('user')
-            ) {
+            if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
                 alert('Login/register to give feedback');
                 return;
             }
@@ -269,10 +245,7 @@ const createComments = (comments) => {
             };
 
             try {
-                const res = await fetch(
-                    url + '/commentvote/' + commentInfo.comments_id,
-                    fetchOptions
-                );
+                const res = await fetch(url + '/commentvote/' + commentInfo.comments_id, fetchOptions);
                 const vote = await res.json();
                 console.log(vote);
             } catch (e) {
@@ -295,10 +268,7 @@ const reqFunction = async (data, reqMethod) => {
     };
 
     try {
-        const res = await fetch(
-            url + '/comment/' + sessionStorage.getItem('id'),
-            fetchOptions
-        );
+        const res = await fetch(url + '/comment/' + sessionStorage.getItem('id'), fetchOptions);
         const vote = await res.json();
         console.log(vote);
     } catch (e) {
@@ -317,8 +287,7 @@ const createPost = (posts) => {
     const userAvatar = document.createElement('img');
     userAvatar.setAttribute('id', 'avatar');
     //getting the default profile pic if not yet set
-    userAvatar.src =
-        'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+    userAvatar.src = 'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
     userAvatar.width = '45';
     userAvatar.height = '45';
     // Username of poster
@@ -426,19 +395,13 @@ const getPost = async () => {
         if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
             console.log(sessionStorage.getItem('id'));
             // Getting post id from session storage and placing it into route
-            const res = await fetch(
-                url + '/post/' + sessionStorage.getItem('id'),
-                fetchOptions
-            );
+            const res = await fetch(url + '/post/' + sessionStorage.getItem('id'), fetchOptions);
             const posts = await res.json();
             createPost(posts);
         } else {
             console.log(sessionStorage.getItem('id'));
             // Getting post id from session storage and placing it into route
-            const res = await fetch(
-                url + '/post/anon/' + sessionStorage.getItem('id'),
-                fetchOptions
-            );
+            const res = await fetch(url + '/post/anon/' + sessionStorage.getItem('id'), fetchOptions);
             const posts = await res.json();
             createPost(posts);
         }
@@ -458,10 +421,7 @@ const getComments = async () => {
         };
         console.log(sessionStorage.getItem('id'));
         // Getting post id from session storage and placing it into route
-        const res = await fetch(
-            url + '/comment/' + sessionStorage.getItem('id'),
-            fetchOptions
-        );
+        const res = await fetch(url + '/comment/' + sessionStorage.getItem('id'), fetchOptions);
         const comments = await res.json();
         console.log(comments);
         createComments(comments);

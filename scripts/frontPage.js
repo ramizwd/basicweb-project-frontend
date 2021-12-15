@@ -5,7 +5,7 @@ const nickname = document.querySelector('#nickname');
 const profileImg = document.querySelector('.dropbtn');
 const name = document.querySelector('#name');
 const user = JSON.parse(sessionStorage.getItem('user'));
-let usersLog
+let usersLog;
 // Function to fetch data for users
 const getUserInfo = async () => {
     try {
@@ -18,8 +18,7 @@ const getUserInfo = async () => {
         usersLog = await res.json();
         console.log('user', usersLog);
         if (!usersLog.profile_picture) {
-            profileImg.src =
-                'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            profileImg.src = 'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
             console.log(1);
         } else {
             //getting the default profile pic if not yet set
@@ -57,10 +56,7 @@ const createPosts = (posts) => {
         const poster = document.createElement('a');
         poster.innerHTML = `${post.postername}`;
         poster.addEventListener('click', () => {
-            if (
-                !sessionStorage.getItem('token') ||
-                !sessionStorage.getItem('user')
-            ) {
+            if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
                 alert('Login/register to view profiles');
                 return;
             }
@@ -77,8 +73,7 @@ const createPosts = (posts) => {
         const posterPfp = document.createElement('img');
         // if poster null but default
         if (!post.userpfp) {
-            posterPfp.src =
-                'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            posterPfp.src = 'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
             posterPfp.width = '45';
             posterPfp.height = '45';
         } else {
@@ -157,10 +152,7 @@ const createPosts = (posts) => {
                 },
             };
             try {
-                const response = await fetch(
-                    url + '/post/' + post.post_id,
-                    fetchOptions
-                );
+                const response = await fetch(url + '/post/' + post.post_id, fetchOptions);
                 const json = await response.json();
                 console.log('delete response', json);
                 getPost();
@@ -227,6 +219,10 @@ const createPosts = (posts) => {
             postTitle.setAttribute('id', 'postTitle');
             console.log('get postId', post.post_id);
         });
+        // Total comment
+        const commentCount = document.createElement('p');
+        commentCount.innerHTML = `${post.commentCount} Comments`;
+        commentCount.setAttribute('id', 'commentCount');
 
         // Downvote button
         const downVote = document.createElement('img');
@@ -269,10 +265,12 @@ const createPosts = (posts) => {
         feed.appendChild(userPost);
         postTextContent.appendChild(postTitle);
         postTextContent.appendChild(buildText);
+        postTextContent.appendChild(dateText);
         postTextContent.appendChild(downVote);
         postTextContent.appendChild(votes);
         postTextContent.appendChild(upVote);
-        postTextContent.appendChild(dateText);
+        postTextContent.appendChild(commentCount);
+
         // Default request method is POST
         let reqMethod = 'POST';
         let voteInfo = 0;
@@ -285,16 +283,14 @@ const createPosts = (posts) => {
                     'Content-Type': 'application/json',
                 },
             };
-            const res = await fetch(
-                url + '/vote/' + user.user_id + '/' + post.post_id,
-                fetchOptions
-            );
+            const res = await fetch(url + '/vote/' + user.user_id + '/' + post.post_id, fetchOptions);
             const vote = await res.json();
             console.log('vote:', vote.vote_count);
-
+            // If vote exist change request method to PUT
             if (vote.vote_count == 1 || vote.vote_count == 0) {
                 reqMethod = 'PUT';
                 console.log('Change req method', reqMethod);
+                // Change img color depending on the vote type
                 if (vote.vote_count == 1) {
                     upVote.style.backgroundColor = 'rgb(255, 145, 0)';
                     upVote.style.borderRadius = '50%';
@@ -309,12 +305,9 @@ const createPosts = (posts) => {
         };
         getVote();
 
-        // Send a request for upvoting
+        // check if user logged in if not give alert message else send a request for upvoting
         upVote.addEventListener('click', async () => {
-            if (
-                !sessionStorage.getItem('token') ||
-                !sessionStorage.getItem('user')
-            ) {
+            if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
                 alert('Login/register to give feedback');
                 return;
             }
@@ -328,12 +321,9 @@ const createPosts = (posts) => {
             reqFunction(data);
         });
 
-        // Send a request for downvoting
+        // check if user logged in if not give alert message else send a request for downvoting
         downVote.addEventListener('click', async () => {
-            if (
-                !sessionStorage.getItem('token') ||
-                !sessionStorage.getItem('user')
-            ) {
+            if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
                 alert('Login/register to give feedback');
                 return;
             }
@@ -344,7 +334,8 @@ const createPosts = (posts) => {
             if (voteInfo.vote_count == 0) reqMethod = 'DELETE';
             reqFunction(data);
         });
-        // Request function
+
+        // async function for deleting, posting or updating post votes
         const reqFunction = async (data) => {
             const fetchOptions = {
                 method: reqMethod,
@@ -357,10 +348,7 @@ const createPosts = (posts) => {
             console.log('req method:', reqMethod);
 
             try {
-                const res = await fetch(
-                    url + '/vote/' + post.post_id,
-                    fetchOptions
-                );
+                const res = await fetch(url + '/vote/' + post.post_id, fetchOptions);
                 const vote = await res.json();
                 console.log(vote);
             } catch (e) {
@@ -374,9 +362,7 @@ const createPosts = (posts) => {
 // Close the dropdown if the user clicks outside of it
 feed.onclick = function (ev) {
     if (!ev.target.matches('.dropImgBtn')) {
-        const dropdowns = document.getElementsByClassName(
-            'dropdown-content-verticalmenu'
-        );
+        const dropdowns = document.getElementsByClassName('dropdown-content-verticalmenu');
         for (let i = 0; i < dropdowns.length; i++) {
             let openDrown = dropdowns[i];
             if (openDrown.classList.contains('show')) {
@@ -432,10 +418,7 @@ const searchPosts = async (word) => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        const res = await fetch(
-            url + '/post/anon/search/' + word,
-            fetchOptions
-        );
+        const res = await fetch(url + '/post/anon/search/' + word, fetchOptions);
         const posts = await res.json();
         createPosts(posts);
     } catch (e) {
