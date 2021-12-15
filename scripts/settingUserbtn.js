@@ -8,7 +8,7 @@ settingbtn.onclick = () => {
     //set the redirection
     if (user.role === 0) {
         if (user.user_id === users.user_id) {
-            locationpl = "loginPage.html";
+            locationpl = 'loginPage.html';
         } else {
             locationpl = 'frontPage.html';
         }

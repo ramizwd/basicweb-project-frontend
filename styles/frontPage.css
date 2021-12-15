@@ -37,6 +37,8 @@ body {
     text-decoration: none;
 }
 a {
+    padding: 12px 13px;
+    text-decoration: none;
     cursor: pointer;
 }
 .navbar a:hover {

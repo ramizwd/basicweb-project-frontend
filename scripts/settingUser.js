@@ -5,13 +5,13 @@ const modalSetting = document.querySelector('#modalSetting');
 const setting = document.querySelector('#setting');
 const spanSetting = document.getElementsByClassName('close-modal-setting')[0];
 let current;
-let locationpl
+let locationpl;
 // display modal when the add new post button clicked
 setting.onclick = () => {
     //set the current log in info
     current = usersLog;
     //where it will relocate after delete
-    locationpl = "loginPage.html";
+    locationpl = 'loginPage.html';
 
     settingFun();
     deleteFun();
@@ -25,7 +25,7 @@ spanSetting.onclick = () => {
 const settingFun = () => {
 //if the role is 1 it removes the role form
     console.log(current);
-    if (current.role === 0||usersLog.role===1) {
+    if (current.role === 0 || usersLog.role === 1) {
         if (!!document.getElementById('settingUser').
         getElementsByClassName('form-input')[3]) {
             document.getElementById('settingUser').

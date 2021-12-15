@@ -3,15 +3,15 @@
 const deletebtn = document.getElementById('delete-btn');
 const deleteFun = () => {
     //when button click
-  deletebtn.addEventListener('click', async() => {
+    deletebtn.addEventListener('click', async () => {
         const fetchOptions = {
             method: 'DELETE',
             headers: {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-      // send delete method
-      // get a json response and then redirect to login-page
+        // send delete method
+        // get a json response and then redirect to login-page
         try {
             const response = await fetch(
             url + '/user/' + current.user_id,
@@ -24,4 +24,4 @@ const deleteFun = () => {
             console.log(e.message);
         }
     });
-}
+};
