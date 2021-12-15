@@ -7,6 +7,7 @@
     <title>Post Page</title>
     <link href="styles/postPage.css" rel="stylesheet" />
     <link href="styles/addPost.css" rel="stylesheet" />
+    <link href="styles/settingUser.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar">
@@ -57,6 +58,25 @@
     </div>
 </div>
 <main>
+    <div id="modalSetting">
+        <div id="modal-content-setting">
+            <span class="close-modal-setting">&times;</span>
+            <div class="form">
+                <div class="form-wrapper">
+                    <form id="settingUser">
+                        <input class="form-input" required type="text" placeholder="Username" name="username">
+                        <input class="form-input" required type="email" placeholder="Email" name="email">
+                        <input class="form-input" required type="password" placeholder="Password" name="password">
+                        <div id="role"><input class="form-input" required type="number" min="0" max="1" placeholder="Role"
+                                              name="role"></div>
+                        <button id="submit-btn" type="submit">Submit</button>
+
+                    </form>
+                    <button id="delete-btn">DELETE</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="container">
 
     </div>
@@ -64,7 +84,9 @@
 </main>
 
 </body>
-
+<script src="scripts/addPost.js"></script>
 <script src="scripts/postPage.js"></script>
-
+<script src="scripts/settingUser.js"></script>
+<script src="scripts/deleteUser.js"></script>
+<script src="scripts/serialize.js"></script>
 </html>

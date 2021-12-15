@@ -65,3 +65,4 @@ addPost.addEventListener('submit', async (evt) => {
 //         snack.className.replace('show', '');
 //     }, 10000);
 // };
+
