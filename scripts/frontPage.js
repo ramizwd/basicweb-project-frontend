@@ -137,7 +137,7 @@ const createPosts = (posts) => {
         if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
             reportButton.innerHTML = 'Report';
             const informer = () => {
-                let answer = confirm('You are being send to email is this ok?');
+                let answer = confirm('You are being redirected to a mail application for sending a report. Is it ok?');
                 if (answer) {
                     document.location = reportButton.href = `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
                     'Reported post information:%0d%0a' +

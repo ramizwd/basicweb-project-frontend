@@ -88,6 +88,6 @@
         opacity: 0;
     }
 }
-#setting-btn:hover{
+#setting-btn:hover, #report-btn:hover{
     opacity: 30%;
 }
