@@ -25,8 +25,6 @@ const createComments = (comments) => {
     commentField.setAttribute('type', 'text');
     commentField.setAttribute('name', 'comment');
     commentField.setAttribute('placeholder', 'Comment..');
-    const postEdit = document.createElement('button');
-    const editComment = document.createElement('input');
 
     const btnPost = document.createElement('button');
     btnPost.setAttribute('type', 'submit');
@@ -60,6 +58,7 @@ const createComments = (comments) => {
         commentText.setAttribute('id', 'commentText');
         console.log('create comment', commentInfo);
         const commentDelete = document.createElement('button');
+
         const editBtn = document.createElement('button');
 
         // Downvote button
@@ -102,20 +101,31 @@ const createComments = (comments) => {
                 comment.appendChild(editBtn);
             }
         }
+        const editComment = document.createElement('input');
+        const postEdit = document.createElement('button');
+        const editBtnCancel = document.createElement('button');
 
         // Edit comment, on click editBtn new input field and button appears for editing the post.
         // then on post edited comment if the field is not empty then send a PUT request
         editBtn.addEventListener('click', async () => {
-            // Form for comment input
+            console.log(!!document.getElementsByClassName('edit-comment-field') == true);
+
             editComment.setAttribute('type', 'text');
             editComment.setAttribute('name', 'comment');
-            editComment.setAttribute('placeholder', 'Comment..');
-            commentContainer.appendChild(editComment);
+            editComment.setAttribute('placeholder', 'Edit comment..');
+            editComment.setAttribute('class', 'edit-comment-field');
 
+            commentContainer.appendChild(editComment);
             postEdit.setAttribute('type', 'submit');
             postEdit.setAttribute('id', 'btnPostEdit');
             postEdit.innerHTML = 'Edit';
+
             commentContainer.appendChild(postEdit);
+
+            editBtnCancel.setAttribute('type', 'submit');
+            editBtnCancel.setAttribute('id', 'btnCancelEdit');
+            editBtnCancel.innerHTML = 'Cancel';
+            commentContainer.appendChild(editBtnCancel);
 
             postEdit.addEventListener('click', async () => {
                 if (editComment.value == '') return;
@@ -131,7 +141,12 @@ const createComments = (comments) => {
                 location.href = 'postPage.html';
             });
         });
-
+        // remove edit fields
+        editBtnCancel.addEventListener('click', async () => {
+            editBtnCancel.remove();
+            postEdit.remove();
+            editComment.remove();
+        });
         // Click event listener for deleting comments that sends the user id and comment id to reqFunction
         // alone with a request method
         commentDelete.addEventListener('click', async () => {
