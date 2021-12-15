@@ -108,10 +108,9 @@ const createPosts = (posts) => {
         verticalMenu.height = '25';
         verticalMenu.className = 'dropImgBtn';
         //when the vertical button press it will show the dropdown content
-            verticalMenu.addEventListener('click', () => {
-                dropdownContent.classList.toggle('show');
-            });
-
+        verticalMenu.addEventListener('click', () => {
+            dropdownContent.classList.toggle('show');
+        });
 
         //for the content inside of dropdown
 
@@ -133,23 +132,30 @@ const createPosts = (posts) => {
 
         //setting the word delete and report
         const deleteButton = document.createElement('p');
-        const reportButton = document.createElement('a');
+        const reportButton = document.createElement('p');
         //sets the link to send report
         if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
-            reportButton.href = `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
-            'Reported post information:%0d%0a' +
-            `Post ID: ${post.post_id}%0d%0a` +
-            `Post title: ${post.title}%0d%0a` +
-            `Poster ID: ${post.poster}%0d%0a` +
-            `Poster username: ${post.postername}`;
             reportButton.innerHTML = 'Report';
+            const informer = () => {
+                let answer = confirm('You are being send to email is this ok?');
+                if (answer) {
+                    document.location = reportButton.href = `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
+                    'Reported post information:%0d%0a' +
+                    `Post ID: ${post.post_id}%0d%0a` +
+                    `Post title: ${post.title}%0d%0a` +
+                    `Poster ID: ${post.poster}%0d%0a` +
+                    `Poster username: ${post.postername}`;
+                }
+            };
+            reportButton.onclick = informer;
 
             dropdownContent.appendChild(reportButton);
-        }
+        };
 
         // Check if user is a moderator if not append delete button to drop list only for
         // logged in user's post
-        if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
+        if (sessionStorage.getItem('token') ||
+        sessionStorage.getItem('user')) {
             if (user.role === 0) {
                 deleteButton.innerHTML = 'Delete';
                 dropdownContent.appendChild(deleteButton);
@@ -164,7 +170,8 @@ const createPosts = (posts) => {
             const fetchOptions = {
                 method: 'DELETE',
                 headers: {
-                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                    Authorization: 'Bearer ' +
+                    sessionStorage.getItem('token'),
                 },
             };
             try {
@@ -292,7 +299,8 @@ const createPosts = (posts) => {
         const getVote = async () => {
             const fetchOptions = {
                 headers: {
-                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                    Authorization: 'Bearer ' +
+                    sessionStorage.getItem('token'),
                     'Content-Type': 'application/json',
                 },
             };
@@ -360,7 +368,8 @@ const createPosts = (posts) => {
             const fetchOptions = {
                 method: reqMethod,
                 headers: {
-                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                    Authorization: 'Bearer ' +
+                    sessionStorage.getItem('token'),
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
@@ -379,7 +388,9 @@ const createPosts = (posts) => {
             }
             getPost();
         };
-    });
+    },
+    )
+    ;
 };
 
 // Close the dropdown if the user clicks outside of it
@@ -404,7 +415,8 @@ const getPost = async () => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
+        if (sessionStorage.getItem('token') ||
+        sessionStorage.getItem('user')) {
             const res = await fetch(url + '/post', fetchOptions);
             const posts = await res.json();
             createPosts(posts);
