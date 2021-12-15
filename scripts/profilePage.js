@@ -16,8 +16,8 @@ const getUserInfo = async () => {
             },
         };
         const res = await fetch(
-            url + '/user/' + sessionStorage.getItem('poster_id'),
-            fetchOptions
+        url + '/user/' + sessionStorage.getItem('poster_id'),
+        fetchOptions,
         );
         const resLog = await fetch(url + '/user/' + user.user_id, fetchOptions);
         users = await res.json();
@@ -40,8 +40,8 @@ const getPostInfo = async () => {
             },
         };
         const res = await fetch(
-            url + '/post/user/' + sessionStorage.getItem('poster_id'),
-            fetchOptions
+        url + '/post/user/' + sessionStorage.getItem('poster_id'),
+        fetchOptions,
         );
         const posts = await res.json();
         createPosts(posts);
@@ -61,39 +61,41 @@ const postList = document.querySelector('.postList');
 // Function for users info in login window (dropdown)
 const loggedUser = (usersLog) => {
     bio.innerHTML = '';
+    // if the image is null place default image
     if (!usersLog.profile_picture) {
         profileImg.src =
-            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+        'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
         console.log(1);
     } else {
-        //getting the default profile pic if not yet set
+        //sets the image to profile
         console.log(url + '/' + usersLog.profile_picture);
         profileImg.src = url + '/' + usersLog.profile_picture;
     }
     name.innerHTML = usersLog.username;
-
-    //Also should add inner for avatar
 };
 // Function for creating users bio in header
 const createBio = (users) => {
     bio.innerHTML = '';
     console.log('jojo', users);
+    //creates place for username
     const userNickname = document.createElement('h1');
     userNickname.innerHTML = `${users.username}`;
-    //name.innerHTML = users.username;
+
+    //create image for profile
     const userAvatar = document.createElement('img');
 
-    // if poster null but default
+    // if poster null but default image
     if (!users.profile_picture) {
         userAvatar.src =
-            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+        'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
         console.log(1);
     } else {
-        //getting the default profile pic if not yet set
+        //if the image is existence set the image
         console.log(url + '/' + users.profile_picture);
         userAvatar.src = url + '/' + users.profile_picture;
     }
 
+    //make description
     const userDescription = document.createElement('p');
     userDescription.innerHTML = `${users.description}`;
 
@@ -105,12 +107,16 @@ const createBio = (users) => {
     // Setting attributes for repeating elements
     userAvatar.setAttribute('id', 'avatar');
     userDescription.setAttribute('id', 'textBio');
+
     let currentUser = usersLog;
     let visitingUser = sessionStorage.getItem('poster_id');
+
+    //if the current user
     if (!(currentUser.user_id == visitingUser) && currentUser.role == 1) {
         console.log('cur', currentUser.user_id);
         console.log('vis', visitingUser);
         console.log(currentUser.user_id == visitingUser);
+        //remove if the user is not admin or not the right user
         document.getElementById('add-edit-btn').remove();
         settingbtn.remove();
     }
@@ -135,7 +141,7 @@ const createPosts = (posts) => {
         // if poster null but default
         if (!post.userpfp) {
             posterPfp.src =
-                'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
             posterPfp.width = '45';
             posterPfp.height = '45';
         } else {
@@ -148,8 +154,6 @@ const createPosts = (posts) => {
         //for the upper piece of the postcard
         const posterDiv = document.createElement('div');
         posterDiv.className = 'posterDiv';
-
-        //for the dropdown button setting it up
 
         //setting the division
         const dropdown = document.createElement('div');
@@ -213,8 +217,8 @@ const createPosts = (posts) => {
             };
             try {
                 const response = await fetch(
-                    url + '/post/' + post.post_id,
-                    fetchOptions
+                url + '/post/' + post.post_id,
+                fetchOptions,
                 );
                 const json = await response.json();
                 console.log('delete response', json);
@@ -243,10 +247,10 @@ const createPosts = (posts) => {
             let postImg;
             //if image on se pistää create element
             if (
-                post.file_type === 'image/png' ||
-                post.file_type === 'image/jpg' ||
-                post.file_type === 'image/webp' ||
-                post.file_type === 'image/jpeg'
+            post.file_type === 'image/png' ||
+            post.file_type === 'image/jpg' ||
+            post.file_type === 'image/webp' ||
+            post.file_type === 'image/jpeg'
             ) {
                 //create img elements
                 postImg = document.createElement('img');
@@ -290,15 +294,15 @@ const createPosts = (posts) => {
         const date = new Date(post.date);
         // Format date
         const formattedDate =
-            date.getDate() +
-            '-' +
-            (date.getMonth() + 1) +
-            '-' +
-            date.getFullYear() +
-            ' ' +
-            date.getHours() +
-            ':' +
-            date.getMinutes();
+        date.getDate() +
+        '-' +
+        (date.getMonth() + 1) +
+        '-' +
+        date.getFullYear() +
+        ' ' +
+        date.getHours() +
+        ':' +
+        date.getMinutes();
         // Create element for the date
         const dateText = document.createElement('p');
         dateText.innerHTML = 'Uploaded: ' + formattedDate;
@@ -326,8 +330,8 @@ const createPosts = (posts) => {
             };
 
             const res = await fetch(
-                url + '/vote/' + user.user_id + '/' + post.post_id,
-                fetchOptions
+            url + '/vote/' + user.user_id + '/' + post.post_id,
+            fetchOptions,
             );
             const vote = await res.json();
             console.log('vote:', vote.vote_count);
@@ -344,7 +348,7 @@ const createPosts = (posts) => {
 
         // Send a request for upvoting
         upVote.addEventListener('click', async () => {
-            const data = { user_id: user.user_id, vote_count: 1 };
+            const data = {user_id: user.user_id, vote_count: 1};
             console.log('upvoted post with id', post.post_id);
             console.log('variable test upvote:', voteInfo.vote_count);
 
@@ -356,7 +360,7 @@ const createPosts = (posts) => {
 
         // Send a request for downvoting
         downVote.addEventListener('click', async () => {
-            const data = { user_id: user.user_id, vote_count: 0 };
+            const data = {user_id: user.user_id, vote_count: 0};
             console.log('downvoted post with id', post.post_id);
 
             // If vote already exist, delete it
@@ -377,8 +381,8 @@ const createPosts = (posts) => {
 
             try {
                 const res = await fetch(
-                    url + '/vote/' + post.post_id,
-                    fetchOptions
+                url + '/vote/' + post.post_id,
+                fetchOptions,
                 );
                 const vote = await res.json();
                 console.log(vote);
@@ -391,10 +395,10 @@ const createPosts = (posts) => {
 };
 
 // Close the dropdown if the user clicks outside of it
-postList.onclick = function (ev) {
+postList.onclick = function(ev) {
     if (!ev.target.matches('.dropImgBtn')) {
         const dropdowns = document.getElementsByClassName(
-            'dropdown-content-verticalmenu'
+        'dropdown-content-verticalmenu',
         );
         for (let i = 0; i < dropdowns.length; i++) {
             let openDrown = dropdowns[i];
