@@ -196,7 +196,9 @@ const createPosts = (posts) => {
 
         reportButton.innerHTML = 'Report';
         const informer = () => {
-            let answer = confirm('You are being send to email is this ok?');
+            //question if the user wants to be redirected
+            let answer = confirm('You are being redirected to a mail application for sending a report. Is it ok?');
+            //if the answer is yes
             if (answer) {
                 document.location = reportButton.href = `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
                 'Reported post information:%0d%0a' +
