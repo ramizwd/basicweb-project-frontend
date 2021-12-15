@@ -4,7 +4,6 @@ const feed = document.querySelector('#postFeed');
 const nickname = document.querySelector('#nickname');
 const profileImg = document.querySelector('.dropbtn');
 const name = document.querySelector('#name');
-//profileImg.innerHTML = getUserInfo().user.image;  // image not implemented yet
 const user = JSON.parse(sessionStorage.getItem('user'));
 let usersLog
 // Function to fetch data for users
@@ -20,7 +19,7 @@ const getUserInfo = async () => {
         console.log('user', usersLog);
         if (!usersLog.profile_picture) {
             profileImg.src =
-            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+                'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
             console.log(1);
         } else {
             //getting the default profile pic if not yet set
@@ -34,6 +33,16 @@ const getUserInfo = async () => {
 };
 getUserInfo();
 
+const userInfo = document.querySelector('.dropdown');
+const anonUserInfo = document.querySelector('.dropdown-anon');
+
+if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
+    userInfo.style.display = 'none';
+    anonUserInfo.style.display = 'block';
+} else {
+    userInfo.style.display = 'block';
+    anonUserInfo.style.display = 'none';
+}
 // Function for creating post containers
 const createPosts = (posts) => {
     // clear ul
@@ -48,6 +57,13 @@ const createPosts = (posts) => {
         const poster = document.createElement('a');
         poster.innerHTML = `${post.postername}`;
         poster.addEventListener('click', () => {
+            if (
+                !sessionStorage.getItem('token') ||
+                !sessionStorage.getItem('user')
+            ) {
+                alert('Login/register to view profiles');
+                return;
+            }
             // Saving id of the poster into session storage
 
             sessionStorage.setItem('poster_id', post.poster);
@@ -59,11 +75,10 @@ const createPosts = (posts) => {
 
         // Poster profile picture
         const posterPfp = document.createElement('img');
-
         // if poster null but default
         if (!post.userpfp) {
             posterPfp.src =
-            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+                'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
             posterPfp.width = '45';
             posterPfp.height = '45';
         } else {
@@ -123,12 +138,14 @@ const createPosts = (posts) => {
 
         // Check if user is a moderator if not append delete button to drop list only for
         // logged in user's post
-        if (user.role === 0) {
-            deleteButton.innerHTML = 'Delete';
-            dropdownContent.appendChild(deleteButton);
-        } else if (user.user_id === post.poster) {
-            deleteButton.innerHTML = 'Delete';
-            dropdownContent.appendChild(deleteButton);
+        if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
+            if (user.role === 0) {
+                deleteButton.innerHTML = 'Delete';
+                dropdownContent.appendChild(deleteButton);
+            } else if (user.user_id === post.poster) {
+                deleteButton.innerHTML = 'Delete';
+                dropdownContent.appendChild(deleteButton);
+            }
         }
         //delete the post when you click the delete button
         deleteButton.addEventListener('click', async () => {
@@ -141,8 +158,8 @@ const createPosts = (posts) => {
             };
             try {
                 const response = await fetch(
-                url + '/post/' + post.post_id,
-                fetchOptions,
+                    url + '/post/' + post.post_id,
+                    fetchOptions
                 );
                 const json = await response.json();
                 console.log('delete response', json);
@@ -170,10 +187,10 @@ const createPosts = (posts) => {
             let postImg;
             //if image on se pistää create element
             if (
-            post.file_type === 'image/png' ||
-            post.file_type === 'image/jpg' ||
-            post.file_type === 'image/webp' ||
-            post.file_type === 'image/jpeg'
+                post.file_type === 'image/png' ||
+                post.file_type === 'image/jpg' ||
+                post.file_type === 'image/webp' ||
+                post.file_type === 'image/jpeg'
             ) {
                 //create img elements
                 postImg = document.createElement('img');
@@ -211,42 +228,51 @@ const createPosts = (posts) => {
             console.log('get postId', post.post_id);
         });
 
-        // Upvote button
-        const upVote = document.createElement('button');
-        upVote.innerHTML = 'Upvote';
         // Downvote button
-        const downVote = document.createElement('button');
+        const downVote = document.createElement('img');
+        downVote.src = './placeholder/down-arrow.png';
         downVote.innerHTML = 'Dowvote';
+        downVote.setAttribute('id', 'downVote');
+
         // Total votes button
         const votes = document.createElement('p');
+        votes.setAttribute('id', 'voteCount');
         votes.innerHTML = `${post.votes}`;
+
+        // Upvote button
+        const upVote = document.createElement('img');
+        upVote.src = './placeholder/up-arrow.png';
+        upVote.innerHTML = 'Upvote';
+        upVote.setAttribute('id', 'upVote');
 
         // Get date from db and format it
         const date = new Date(post.date);
         // Format date
         const formattedDate =
-        date.getDate() +
-        '-' +
-        (date.getMonth() + 1) +
-        '-' +
-        date.getFullYear() +
-        ' ' +
-        date.getHours() +
-        ':' +
-        date.getMinutes();
+            date.getDate() +
+            '-' +
+            (date.getMonth() + 1) +
+            '-' +
+            date.getFullYear() +
+            ' ' +
+            date.getHours() +
+            ':' +
+            date.getMinutes();
         // Create element for the date
         const dateText = document.createElement('p');
         dateText.innerHTML = 'Uploaded: ' + formattedDate;
-
+        dateText.setAttribute('id', 'postDate');
+        const postTextContent = document.createElement('div');
+        postTextContent.className = 'postTextContent';
+        userPost.appendChild(postTextContent);
         // Placing the hierarchy in the post object
         feed.appendChild(userPost);
-        userPost.appendChild(postTitle);
-        userPost.appendChild(buildText);
-        userPost.appendChild(upVote);
-        userPost.appendChild(downVote);
-        userPost.appendChild(votes);
-        userPost.appendChild(dateText);
-
+        postTextContent.appendChild(postTitle);
+        postTextContent.appendChild(buildText);
+        postTextContent.appendChild(downVote);
+        postTextContent.appendChild(votes);
+        postTextContent.appendChild(upVote);
+        postTextContent.appendChild(dateText);
         // Default request method is POST
         let reqMethod = 'POST';
         let voteInfo = 0;
@@ -259,10 +285,9 @@ const createPosts = (posts) => {
                     'Content-Type': 'application/json',
                 },
             };
-
             const res = await fetch(
-            url + '/vote/' + user.user_id + '/' + post.post_id,
-            fetchOptions,
+                url + '/vote/' + user.user_id + '/' + post.post_id,
+                fetchOptions
             );
             const vote = await res.json();
             console.log('vote:', vote.vote_count);
@@ -270,6 +295,13 @@ const createPosts = (posts) => {
             if (vote.vote_count == 1 || vote.vote_count == 0) {
                 reqMethod = 'PUT';
                 console.log('Change req method', reqMethod);
+                if (vote.vote_count == 1) {
+                    upVote.style.backgroundColor = 'rgb(255, 145, 0)';
+                    upVote.style.borderRadius = '50%';
+                } else {
+                    downVote.style.backgroundColor = 'rgb(67, 70, 201)';
+                    downVote.style.borderRadius = '50%';
+                }
             }
 
             voteInfo = vote;
@@ -279,7 +311,14 @@ const createPosts = (posts) => {
 
         // Send a request for upvoting
         upVote.addEventListener('click', async () => {
-            const data = {user_id: user.user_id, vote_count: 1};
+            if (
+                !sessionStorage.getItem('token') ||
+                !sessionStorage.getItem('user')
+            ) {
+                alert('Login/register to give feedback');
+                return;
+            }
+            const data = { user_id: user.user_id, vote_count: 1 };
             console.log('upvoted post with id', post.post_id);
             console.log('variable test upvote:', voteInfo.vote_count);
 
@@ -291,7 +330,14 @@ const createPosts = (posts) => {
 
         // Send a request for downvoting
         downVote.addEventListener('click', async () => {
-            const data = {user_id: user.user_id, vote_count: 0};
+            if (
+                !sessionStorage.getItem('token') ||
+                !sessionStorage.getItem('user')
+            ) {
+                alert('Login/register to give feedback');
+                return;
+            }
+            const data = { user_id: user.user_id, vote_count: 0 };
             console.log('downvoted post with id', post.post_id);
 
             // If vote already exist, delete it
@@ -312,8 +358,8 @@ const createPosts = (posts) => {
 
             try {
                 const res = await fetch(
-                url + '/vote/' + post.post_id,
-                fetchOptions,
+                    url + '/vote/' + post.post_id,
+                    fetchOptions
                 );
                 const vote = await res.json();
                 console.log(vote);
@@ -326,10 +372,10 @@ const createPosts = (posts) => {
 };
 
 // Close the dropdown if the user clicks outside of it
-feed.onclick = function(ev) {
+feed.onclick = function (ev) {
     if (!ev.target.matches('.dropImgBtn')) {
         const dropdowns = document.getElementsByClassName(
-        'dropdown-content-verticalmenu',
+            'dropdown-content-verticalmenu'
         );
         for (let i = 0; i < dropdowns.length; i++) {
             let openDrown = dropdowns[i];
@@ -347,9 +393,17 @@ const getPost = async () => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        const res = await fetch(url + '/post', fetchOptions);
-        const posts = await res.json();
-        createPosts(posts);
+        if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
+            const res = await fetch(url + '/post', fetchOptions);
+            const posts = await res.json();
+            createPosts(posts);
+            console.log('USING LOGGED IN ROUTE FOR POSTS');
+        } else {
+            const res = await fetch(url + '/post/anon', fetchOptions);
+            console.log('USING ANONYMOUS ROUTE FOR POSTS');
+            const posts = await res.json();
+            createPosts(posts);
+        }
     } catch (e) {
         console.log(e.message);
     }
@@ -378,7 +432,10 @@ const searchPosts = async (word) => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        const res = await fetch(url + '/post/search/' + word, fetchOptions);
+        const res = await fetch(
+            url + '/post/anon/search/' + word,
+            fetchOptions
+        );
         const posts = await res.json();
         createPosts(posts);
     } catch (e) {
