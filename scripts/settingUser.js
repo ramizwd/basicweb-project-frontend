@@ -10,10 +10,11 @@ let locationpl
 setting.onclick = () => {
     //set the current log in info
     current = usersLog;
+    //where it will relocate after delete
     locationpl = "loginPage.html";
+
     settingFun();
     deleteFun();
-
     modalSetting.style.display = 'block';
 };
 
@@ -69,6 +70,7 @@ const settingFun = () => {
         if (current.role === 0) {
             data.role = current.role;
         }
+
         console.log('user id', current.user_id);
         console.log(data);
 
@@ -84,7 +86,6 @@ const settingFun = () => {
         // get a json response and display it as successfully added post message as an alert
 
         // get user data for admin check
-        //const user = JSON.parse(sessionStorage.getItem('user'));
         const response = await fetch(
         url + '/user',
         fetchOptions,

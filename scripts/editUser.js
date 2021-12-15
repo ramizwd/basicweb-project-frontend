@@ -25,6 +25,7 @@ const editUser = document.querySelector('#editUser');
 // Edit user info
 editUser.addEventListener('submit', async (evt) => {
     evt.preventDefault(); // stop default action if event is not handled
+    //set form data to edit with image
     const data = new FormData(editUser);
     data.append('id', users.user_id);
     console.log(data.entries());
