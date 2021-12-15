@@ -4,15 +4,21 @@ const url = 'https://localhost:8000';
 const main = document.querySelector('.container');
 // get user and post data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
+const commentContainer = document.createElement('div');
+commentContainer.setAttribute('id', 'commentContainer');
+commentContainer.setAttribute('class', 'item');
+const containerTitle = document.createElement('h3');
+commentContainer.innerHTML = 'Write a comment';
 
+const votes = document.createElement('p');
+votes.setAttribute('id', 'CommentVoteCount');
 // Create comments list
 const createComments = (comments) => {
+    commentContainer.innerHTML = '';
+    votes.innerHTML = '';
+
     //Creating html elements for comments
-    const commentContainer = document.createElement('div');
-    commentContainer.setAttribute('id', 'commentContainer');
-    commentContainer.setAttribute('class', 'item');
-    const containerTitle = document.createElement('h3');
-    commentContainer.innerHTML = 'Write a comment';
+
     // Form for comment input
     const commentField = document.createElement('input');
     commentField.required = true;
@@ -57,11 +63,29 @@ const createComments = (comments) => {
         const commentDelete = document.createElement('button');
         const editBtn = document.createElement('button');
 
+        // Downvote button
+        const downVote = document.createElement('img');
+        downVote.src = './placeholder/down-arrow.png';
+        downVote.innerHTML = 'Dowvote';
+        downVote.setAttribute('id', 'downVote');
+        // Total votes
+        const votes = document.createElement('p');
+        votes.setAttribute('id', 'CommentVoteCount');
+        votes.innerHTML = `${commentInfo.votes}`;
+        // Upvote button
+        const upVote = document.createElement('img');
+        upVote.src = './placeholder/up-arrow.png';
+        upVote.innerHTML = 'Upvote';
+        upVote.setAttribute('id', 'upVote');
+
         // Placing the hierarchy in the post comment part
         commentContainer.appendChild(commentList);
         commentList.appendChild(comment);
         comment.appendChild(commentNickname);
         comment.appendChild(commentText);
+        comment.appendChild(downVote);
+        comment.appendChild(votes);
+        comment.appendChild(upVote);
 
         if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
             // Show delete button only for comment's author or user with admin role
@@ -153,6 +177,109 @@ const createComments = (comments) => {
             }
         };
         getUser();
+
+        let reqMethodVoting = 'POST';
+        let voteInfo = 0;
+
+        // Get comment vote info
+        const getCommentVote = async () => {
+            const fetchOptions = {
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                },
+            };
+            const res = await fetch(
+                url +
+                    '/commentvote/' +
+                    user.user_id +
+                    '/' +
+                    commentInfo.comments_id,
+                fetchOptions
+            );
+            const vote = await res.json();
+            console.log('vote:', vote.vote_count);
+            // If vote exist change request method to PUT
+            if (vote.vote_count == 1 || vote.vote_count == 0) {
+                reqMethodVoting = 'PUT';
+                console.log('Change req method:', reqMethodVoting);
+                // Change img color depending on the vote type
+                if (vote.vote_count == 1) {
+                    upVote.style.backgroundColor = 'rgb(255, 145, 0)';
+                    upVote.style.borderRadius = '50%';
+                } else {
+                    downVote.style.backgroundColor = 'rgb(67, 70, 201)';
+                    downVote.style.borderRadius = '50%';
+                }
+            }
+
+            voteInfo = vote;
+            console.log('variable test vote count:', vote.vote_count);
+        };
+        getCommentVote();
+
+        // check if user logged in if not give alert message lese send a request for upvoting
+        upVote.addEventListener('click', async () => {
+            if (
+                !sessionStorage.getItem('token') ||
+                !sessionStorage.getItem('user')
+            ) {
+                alert('Login/register to give feedback');
+                return;
+            }
+            const votingData = { user_id: user.user_id, vote_count: 1 };
+            // console.log('upvoted post with id', post.post_id);
+            console.log('variable test upvote:', voteInfo.vote_count);
+
+            // If vote already exist, delete it
+            if (voteInfo.vote_count == 1) reqMethodVoting = 'DELETE';
+            // Send the req body to reqFunction
+            reqFunctionVoting(votingData);
+        });
+
+        // check if user logged in if not give alert message lese send a request for downvoting
+        downVote.addEventListener('click', async () => {
+            if (
+                !sessionStorage.getItem('token') ||
+                !sessionStorage.getItem('user')
+            ) {
+                alert('Login/register to give feedback');
+                return;
+            }
+            const votingData = { user_id: user.user_id, vote_count: 0 };
+            // console.log('downvoted post with id', post.post_id);
+            console.log('downvote data', votingData);
+            console.log(reqMethodVoting);
+            // If vote already exist, delete it
+            if (voteInfo.vote_count == 0) reqMethodVoting = 'DELETE';
+            reqFunctionVoting(votingData);
+        });
+
+        // async function for deleting, posting or updating comment votes
+        const reqFunctionVoting = async (votingData) => {
+            console.log(reqMethodVoting);
+
+            const fetchOptions = {
+                method: reqMethodVoting,
+                headers: {
+                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(votingData),
+            };
+
+            try {
+                const res = await fetch(
+                    url + '/commentvote/' + commentInfo.comments_id,
+                    fetchOptions
+                );
+                const vote = await res.json();
+                console.log(vote);
+            } catch (e) {
+                console.error('error', e.message);
+            }
+            getComments();
+        };
     });
 };
 
