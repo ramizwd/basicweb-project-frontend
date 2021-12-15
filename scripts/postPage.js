@@ -4,6 +4,21 @@ const url = 'https://localhost:8000';
 const main = document.querySelector('.container');
 // get user and post data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
+let usersLog;
+
+const profileImg = document.querySelector('.dropbtn');
+const name = document.querySelector('#name');
+
+const userInfo = document.querySelector('.dropdown');
+const anonUserInfo = document.querySelector('.dropdown-anon');
+
+if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
+    userInfo.style.display = 'none';
+    anonUserInfo.style.display = 'block';
+} else {
+    userInfo.style.display = 'block';
+    anonUserInfo.style.display = 'none';
+}
 
 // Create comments list
 const createComments = (comments) => {
@@ -190,10 +205,18 @@ const createPost = (posts) => {
     const userAvatar = document.createElement('img');
     userAvatar.setAttribute('id', 'avatar');
     //getting the default profile pic if not yet set
-    userAvatar.src =
+    if (!posts.userpfp) {
+        userAvatar.src =
         'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
-    userAvatar.width = '45';
-    userAvatar.height = '45';
+        userAvatar.width = '45';
+        userAvatar.height = '45';
+    } else {
+        //getting the default profile pic if not yet set
+        userAvatar.src = url + '/' + posts.userpfp;
+        userAvatar.width = '45';
+        userAvatar.height = '45';
+    }
+
     // Username of poster
     const userNickname = document.createElement('h2');
     userNickname.innerHTML = `${posts.postername}`;
@@ -343,3 +366,30 @@ const getComments = async () => {
     }
 };
 getComments();
+
+// Function to fetch data for users
+const getUserInfo = async () => {
+    try {
+        const fetchOptions = {
+            headers: {
+                Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+            },
+        };
+        const res = await fetch(url + '/user/' + user.user_id, fetchOptions);
+        usersLog = await res.json();
+        console.log('user', usersLog);
+        if (!usersLog.profile_picture) {
+            profileImg.src =
+            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            console.log(1);
+        } else {
+            //getting the default profile pic if not yet set
+            console.log(url + '/' + usersLog.profile_picture);
+            profileImg.src = url + '/' + usersLog.profile_picture;
+        }
+        name.innerHTML = usersLog.username;
+    } catch (e) {
+        console.log(e.message);
+    }
+};
+getUserInfo();
