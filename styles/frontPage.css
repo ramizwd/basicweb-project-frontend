@@ -196,7 +196,8 @@ figure {
     transition-duration: 0.2s;
 }
 #voteCount {
-    font-size: 19px;
+    font-size: 18px;
+
     margin-top: 5px;
 }
 
@@ -210,7 +211,12 @@ figure {
     border-radius: 50%;
     cursor: pointer;
 }
-
+#commentCount {
+    font-size: 15px;
+    margin-top: 12px;
+    float: right;
+    padding-right: 10px;
+}
 .forms {
     display: flex;
     flex-wrap: wrap;
