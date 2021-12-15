@@ -37,7 +37,7 @@ const createComments = (comments) => {
     // Click event listener for posting comments that sends the user id and comment to reqFunction
     // alone with a request method
     btnPost.addEventListener('click', async () => {
-        const data = { user_id: user.user_id, comment: commentField.value };
+        const data = {user_id: user.user_id, comment: commentField.value};
         console.log('data to be send', data);
         if (commentField.value == '') return;
         reqFunction(data, 'POST');
@@ -125,12 +125,12 @@ const createComments = (comments) => {
                 const fetchOptions = {
                     headers: {
                         Authorization:
-                            'Bearer ' + sessionStorage.getItem('token'),
+                        'Bearer ' + sessionStorage.getItem('token'),
                     },
                 };
                 const res = await fetch(
-                    url + '/user/' + commentInfo.user_id,
-                    fetchOptions
+                url + '/user/' + commentInfo.user_id,
+                fetchOptions,
                 );
                 const users = await res.json();
                 commentNickname.innerHTML = users.username;
@@ -155,8 +155,8 @@ const reqFunction = async (data, reqMethod) => {
 
     try {
         const res = await fetch(
-            url + '/comment/' + sessionStorage.getItem('id'),
-            fetchOptions
+        url + '/comment/' + sessionStorage.getItem('id'),
+        fetchOptions,
         );
         const vote = await res.json();
         console.log(vote);
@@ -177,7 +177,7 @@ const createPost = (posts) => {
     userAvatar.setAttribute('id', 'avatar');
     //getting the default profile pic if not yet set
     userAvatar.src =
-        'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+    'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
     userAvatar.width = '45';
     userAvatar.height = '45';
     // Username of poster
@@ -230,10 +230,10 @@ const createPost = (posts) => {
         let postImg;
         //if image on se pistää create element
         if (
-            posts.file_type === 'image/png' ||
-            posts.file_type === 'image/jpg' ||
-            posts.file_type === 'image/webp' ||
-            posts.file_type === 'image/jpeg'
+        posts.file_type === 'image/png' ||
+        posts.file_type === 'image/jpg' ||
+        posts.file_type === 'image/webp' ||
+        posts.file_type === 'image/jpeg'
         ) {
             //create img elements
             postImg = document.createElement('img');
@@ -285,8 +285,8 @@ const getPost = async () => {
         console.log(sessionStorage.getItem('id'));
         // Getting post id from session storage and placing it into route
         const res = await fetch(
-            url + '/post/' + sessionStorage.getItem('id'),
-            fetchOptions
+        url + '/post/' + sessionStorage.getItem('id'),
+        fetchOptions,
         );
         const posts = await res.json();
         createPost(posts);
@@ -307,8 +307,8 @@ const getComments = async () => {
         console.log(sessionStorage.getItem('id'));
         // Getting post id from session storage and placing it into route
         const res = await fetch(
-            url + '/comment/' + sessionStorage.getItem('id'),
-            fetchOptions
+        url + '/comment/' + sessionStorage.getItem('id'),
+        fetchOptions,
         );
         const comments = await res.json();
         console.log(comments);
