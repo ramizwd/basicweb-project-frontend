@@ -108,9 +108,11 @@ const createPosts = (posts) => {
         verticalMenu.height = '25';
         verticalMenu.className = 'dropImgBtn';
         //when the vertical button press it will show the dropdown content
-        verticalMenu.addEventListener('click', () => {
-            dropdownContent.classList.toggle('show');
-        });
+            verticalMenu.addEventListener('click', () => {
+                dropdownContent.classList.toggle('show');
+            });
+
+
         //for the content inside of dropdown
 
         //setting up div
@@ -133,15 +135,17 @@ const createPosts = (posts) => {
         const deleteButton = document.createElement('p');
         const reportButton = document.createElement('a');
         //sets the link to send report
-        reportButton.href = `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
-        'Reported post information:%0d%0a' +
-        `Post ID: ${post.post_id}%0d%0a` +
-        `Post title: ${post.title}%0d%0a` +
-        `Poster ID: ${post.poster}%0d%0a` +
-        `Poster username: ${post.postername}`;
-        reportButton.innerHTML = 'Report';
+        if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
+            reportButton.href = `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
+            'Reported post information:%0d%0a' +
+            `Post ID: ${post.post_id}%0d%0a` +
+            `Post title: ${post.title}%0d%0a` +
+            `Poster ID: ${post.poster}%0d%0a` +
+            `Poster username: ${post.postername}`;
+            reportButton.innerHTML = 'Report';
 
-        dropdownContent.appendChild(reportButton);
+            dropdownContent.appendChild(reportButton);
+        }
 
         // Check if user is a moderator if not append delete button to drop list only for
         // logged in user's post
