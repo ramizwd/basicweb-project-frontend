@@ -5,7 +5,7 @@ const nickname = document.querySelector('#nickname');
 const profileImg = document.querySelector('.dropbtn');
 const name = document.querySelector('#name');
 const user = JSON.parse(sessionStorage.getItem('user'));
-let usersLog
+let usersLog;
 // Function to fetch data for users
 const getUserInfo = async () => {
     try {
@@ -19,7 +19,7 @@ const getUserInfo = async () => {
         console.log('user', usersLog);
         if (!usersLog.profile_picture) {
             profileImg.src =
-                'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
             console.log(1);
         } else {
             //getting the default profile pic if not yet set
@@ -58,8 +58,8 @@ const createPosts = (posts) => {
         poster.innerHTML = `${post.postername}`;
         poster.addEventListener('click', () => {
             if (
-                !sessionStorage.getItem('token') ||
-                !sessionStorage.getItem('user')
+            !sessionStorage.getItem('token') ||
+            !sessionStorage.getItem('user')
             ) {
                 alert('Login/register to view profiles');
                 return;
@@ -78,7 +78,7 @@ const createPosts = (posts) => {
         // if poster null but default
         if (!post.userpfp) {
             posterPfp.src =
-                'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
             posterPfp.width = '45';
             posterPfp.height = '45';
         } else {
@@ -131,9 +131,16 @@ const createPosts = (posts) => {
 
         //setting the word delete and report
         const deleteButton = document.createElement('p');
-        const reportButton = document.createElement('p');
-
+        const reportButton = document.createElement('a');
+        //sets the link to send report
+        reportButton.href = `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
+        'Reported post information:%0d%0a' +
+        `Post ID: ${post.post_id}%0d%0a` +
+        `Post title: ${post.title}%0d%0a` +
+        `Poster ID: ${post.poster}%0d%0a` +
+        `Poster username: ${post.postername}`;
         reportButton.innerHTML = 'Report';
+
         dropdownContent.appendChild(reportButton);
 
         // Check if user is a moderator if not append delete button to drop list only for
@@ -158,8 +165,8 @@ const createPosts = (posts) => {
             };
             try {
                 const response = await fetch(
-                    url + '/post/' + post.post_id,
-                    fetchOptions
+                url + '/post/' + post.post_id,
+                fetchOptions,
                 );
                 const json = await response.json();
                 console.log('delete response', json);
@@ -187,10 +194,10 @@ const createPosts = (posts) => {
             let postImg;
             //if image on se pistää create element
             if (
-                post.file_type === 'image/png' ||
-                post.file_type === 'image/jpg' ||
-                post.file_type === 'image/webp' ||
-                post.file_type === 'image/jpeg'
+            post.file_type === 'image/png' ||
+            post.file_type === 'image/jpg' ||
+            post.file_type === 'image/webp' ||
+            post.file_type === 'image/jpeg'
             ) {
                 //create img elements
                 postImg = document.createElement('img');
@@ -249,15 +256,15 @@ const createPosts = (posts) => {
         const date = new Date(post.date);
         // Format date
         const formattedDate =
-            date.getDate() +
-            '-' +
-            (date.getMonth() + 1) +
-            '-' +
-            date.getFullYear() +
-            ' ' +
-            date.getHours() +
-            ':' +
-            date.getMinutes();
+        date.getDate() +
+        '-' +
+        (date.getMonth() + 1) +
+        '-' +
+        date.getFullYear() +
+        ' ' +
+        date.getHours() +
+        ':' +
+        date.getMinutes();
         // Create element for the date
         const dateText = document.createElement('p');
         dateText.innerHTML = 'Uploaded: ' + formattedDate;
@@ -286,8 +293,8 @@ const createPosts = (posts) => {
                 },
             };
             const res = await fetch(
-                url + '/vote/' + user.user_id + '/' + post.post_id,
-                fetchOptions
+            url + '/vote/' + user.user_id + '/' + post.post_id,
+            fetchOptions,
             );
             const vote = await res.json();
             console.log('vote:', vote.vote_count);
@@ -312,13 +319,13 @@ const createPosts = (posts) => {
         // Send a request for upvoting
         upVote.addEventListener('click', async () => {
             if (
-                !sessionStorage.getItem('token') ||
-                !sessionStorage.getItem('user')
+            !sessionStorage.getItem('token') ||
+            !sessionStorage.getItem('user')
             ) {
                 alert('Login/register to give feedback');
                 return;
             }
-            const data = { user_id: user.user_id, vote_count: 1 };
+            const data = {user_id: user.user_id, vote_count: 1};
             console.log('upvoted post with id', post.post_id);
             console.log('variable test upvote:', voteInfo.vote_count);
 
@@ -331,13 +338,13 @@ const createPosts = (posts) => {
         // Send a request for downvoting
         downVote.addEventListener('click', async () => {
             if (
-                !sessionStorage.getItem('token') ||
-                !sessionStorage.getItem('user')
+            !sessionStorage.getItem('token') ||
+            !sessionStorage.getItem('user')
             ) {
                 alert('Login/register to give feedback');
                 return;
             }
-            const data = { user_id: user.user_id, vote_count: 0 };
+            const data = {user_id: user.user_id, vote_count: 0};
             console.log('downvoted post with id', post.post_id);
 
             // If vote already exist, delete it
@@ -358,8 +365,8 @@ const createPosts = (posts) => {
 
             try {
                 const res = await fetch(
-                    url + '/vote/' + post.post_id,
-                    fetchOptions
+                url + '/vote/' + post.post_id,
+                fetchOptions,
                 );
                 const vote = await res.json();
                 console.log(vote);
@@ -372,10 +379,10 @@ const createPosts = (posts) => {
 };
 
 // Close the dropdown if the user clicks outside of it
-feed.onclick = function (ev) {
+feed.onclick = function(ev) {
     if (!ev.target.matches('.dropImgBtn')) {
         const dropdowns = document.getElementsByClassName(
-            'dropdown-content-verticalmenu'
+        'dropdown-content-verticalmenu',
         );
         for (let i = 0; i < dropdowns.length; i++) {
             let openDrown = dropdowns[i];
@@ -433,8 +440,8 @@ const searchPosts = async (word) => {
             },
         };
         const res = await fetch(
-            url + '/post/anon/search/' + word,
-            fetchOptions
+        url + '/post/anon/search/' + word,
+        fetchOptions,
         );
         const posts = await res.json();
         createPosts(posts);
