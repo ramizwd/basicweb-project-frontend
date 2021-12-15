@@ -1,8 +1,5 @@
-* {
-    font-family: 'Open Sans', sans-serif;
-}
 /* modal box */
-#modalEdit {
+#modalSetting {
     display: none;
     position: fixed;
     z-index: 1;
@@ -15,7 +12,7 @@
 }
 
 /* Modal Content */
-#modal-content-edit {
+#modal-content-setting {
     background-color: #fefefe;
     margin: auto;
     padding: 20px;
@@ -25,7 +22,7 @@
 }
 
 /* The Close Button */
-.close-modal-edit {
+.close-modal-setting {
     color: #aaaaaa;
     float: right;
     font-size: 28px;

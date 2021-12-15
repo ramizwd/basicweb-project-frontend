@@ -15,8 +15,14 @@ span.onclick = () => {
 };
 // Hide modal when the user click outside of it
 window.onclick = (evt) => {
-    if (evt.target == modal) {
+    if (evt.target === modal) {
         modal.style.display = 'none';
+    }
+    if (evt.target === modalSetting) {
+        modalSetting.style.display = 'none';
+    }
+    if (evt.target === modalEdit) {
+        modalEdit.style.display = 'none';
     }
 };
 
@@ -39,7 +45,8 @@ addPost.addEventListener('submit', async (evt) => {
     const res = await fetch(url + '/post', fetchOptions);
     const json = await res.json();
     alert(json.message);
-    location.href = 'frontPage.html';
+    location.href = window.location.href;
+
 });
 
 // BUG - snackbar shows when post is not added

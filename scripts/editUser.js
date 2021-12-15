@@ -1,23 +1,22 @@
 'use strict';
 
 // Get html elements
-const modal = document.querySelector('#modal');
+const modalEdit = document.querySelector('#modalEdit');
 const editBtn = document.querySelector('#add-edit-btn');
-const span = document.getElementsByClassName('close-modal')[0];
+const spanEdit = document.getElementsByClassName('close-modal-edit')[0];
 
 // display modal when the add new post button clicked
 editBtn.onclick = () => {
-    modal.style.display = 'block';
+    document.getElementById('editUser').
+    getElementsByClassName('form-input')[0].value = users.username;
+    document.getElementById('editUser').
+    getElementsByClassName('form-input')[1].value = users.description;
+
+    modalEdit.style.display = 'block';
 };
 // Hide modal when the span is clicked
-span.onclick = () => {
-    modal.style.display = 'none';
-};
-// Hide modal when the user click outside of it
-window.onclick = (evt) => {
-    if (evt.target == modal) {
-        modal.style.display = 'none';
-    }
+spanEdit.onclick = () => {
+    modalEdit.style.display = 'none';
 };
 
 // Get html elements
@@ -27,8 +26,7 @@ const editUser = document.querySelector('#editUser');
 editUser.addEventListener('submit', async (evt) => {
     evt.preventDefault(); // stop default action if event is not handled
     const data = new FormData(editUser);
-    console.log('user id', user.user_id);
-    data.append('id', user.user_id);
+    data.append('id', users.user_id);
     console.log(data.entries());
 
     console.log(data);
@@ -45,15 +43,15 @@ editUser.addEventListener('submit', async (evt) => {
     // get user data for admin check
     //const user = JSON.parse(sessionStorage.getItem('user'));
     const response = await fetch(
-        url + '/user/profile/' + user.user_id,
-        fetchOptions
+    url + '/user/profile/' + users.user_id,
+    fetchOptions,
     );
     const json = await response.json();
     if (json.error) {
         alert(json.error.message);
     } else {
         alert(json.message);
-        getUserInfo();
+
     }
     location.href = 'profilePage.html';
 });
