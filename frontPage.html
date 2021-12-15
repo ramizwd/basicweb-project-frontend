@@ -17,53 +17,55 @@
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="frontPage.html">Home</a>
-            <a>Filter</a>
-            <form id="search-field">
-                <input  id="key-word" type="text" required name="search" />
-                <button id="go" type="submit" value="Search" >SEARCH</button>
-            </form>
-            <img id="add-post-btn" src="placeholder/icons8-plus-+-48.png" width="40" height="40" />
-            <div class="user-info">
+<nav class="navbar">
+    <a href="frontPage.html">Home</a>
+    <a>Filter</a>
+    <form id="search-field">
+        <input id="key-word" type="text" required name="search"/>
+        <button id="go" type="submit" value="Search">SEARCH</button>
+    </form>
+    <img id="add-post-btn" src="placeholder/icons8-plus-+-48.png" width="40" height="40"/>
+    <div class="user-info">
 
-                <div class="dropdown" >
-                    <a id="name"></a>
-                    <img class="dropbtn" width="40" height="45">
+        <div class="dropdown">
+            <a id="name"></a>
+            <img class="dropbtn" width="40" height="45">
 
-                    <div class="dropdown-content">
-                        <a id="profileBtn" href="profilePage.html">Profile</a>
-                        <a id="setting">Setting</a>
-                        <a href="logout.html">Log out</a>
-                    </div>
-                </div>
-
-                <div class="dropdown-anon">
-                    <a href="loginPage.html" >LOG IN</a>
-                    <img class="dropbtn" src="placeholder/no-pfp.jpg" width="45" height="45">
-                </div>
-
-
+            <div class="dropdown-content">
+                <a id="profileBtn" href="profilePage.html">Profile</a>
+                <a id="setting">Setting</a>
+                <a href="logout.html">Log out</a>
             </div>
-        </nav>
+        </div>
 
-        <div id="modal">
-            <div id="modal-content">
-                <span class="close-modal">&times;</span>
-                <div class="form">
-                    <div class="form-wrapper">
-                        <form action="https://localhost:8000/post" method="post" class="form-input" enctype="multipart/form-data"
-                        id="addPost">
-                            <input class="form-input-post" type="text" required name="title" placeHolder="Tittle"/>
-                            <input class="form-input-post" type="text" required name="description" placeHolder="Description"/>
-                            <input class="form-input-post-file" type="file"  name="filename" accept="image/*|video/*" placeHolder="Upload file"/>
-                            <input id="submit-post-btn" type="submit"></input>
-                        </form>
-                    </div>
-                </div>
+        <div class="dropdown-anon">
+            <a href="loginPage.html">LOG IN</a>
+            <img class="dropbtn" src="placeholder/no-pfp.jpg" width="45" height="45">
+        </div>
+
+
+    </div>
+</nav>
+
+<div id="modal">
+    <div id="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="form">
+            <div class="form-wrapper">
+                <form action="https://localhost:8000/post" method="post" class="form-input"
+                      enctype="multipart/form-data"
+                      id="addPost">
+                    <input class="form-input-post" type="text" required name="title" placeHolder="Tittle"/>
+                    <input class="form-input-post" type="text" required name="description" placeHolder="Description"/>
+                    <input class="form-input-post-file" type="file" name="filename" accept="image/*|video/*"
+                           placeHolder="Upload file"/>
+                    <input id="submit-post-btn" type="submit"></input>
+                </form>
             </div>
         </div>
     </div>
+</div>
+</div>
 </div>
 <div id="modalSetting">
     <div id="modal-content-setting">
@@ -77,11 +79,14 @@
                     <div id="role"><input class="form-input" required type="number" min="0" max="1" placeholder="Role"
                                           name="role"></div>
                     <button id="submit-btn" type="submit">Submit</button>
+
                 </form>
+                <button id="delete-btn">DELETE</button>
             </div>
         </div>
     </div>
 </div>
+
 <div id="snackbar">Post added successfully</div>
 <div class="main">
     <ul id="postFeed">
@@ -94,6 +99,7 @@
 <script src="scripts/frontPage.js"></script>
 <script src="scripts/addPost.js"></script>
 <script src="scripts/settingUser.js"></script>
+<script src="scripts/deleteUser.js"></script>
 <script src="scripts/serialize.js"></script>
 
 
