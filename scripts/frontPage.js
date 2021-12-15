@@ -6,7 +6,7 @@ const profileImg = document.querySelector('.dropbtn');
 const name = document.querySelector('#name');
 //profileImg.innerHTML = getUserInfo().user.image;  // image not implemented yet
 const user = JSON.parse(sessionStorage.getItem('user'));
-
+let usersLog
 // Function to fetch data for users
 const getUserInfo = async () => {
     try {
@@ -16,18 +16,18 @@ const getUserInfo = async () => {
             },
         };
         const res = await fetch(url + '/user/' + user.user_id, fetchOptions);
-        const users = await res.json();
-        console.log('user', users);
-        if (!users.profile_picture) {
+        usersLog = await res.json();
+        console.log('user', usersLog);
+        if (!usersLog.profile_picture) {
             profileImg.src =
             'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
             console.log(1);
         } else {
             //getting the default profile pic if not yet set
-            console.log(url + '/' + users.profile_picture);
-            profileImg.src = url + '/' + users.profile_picture;
+            console.log(url + '/' + usersLog.profile_picture);
+            profileImg.src = url + '/' + usersLog.profile_picture;
         }
-        name.innerHTML = users.username;
+        name.innerHTML = usersLog.username;
     } catch (e) {
         console.log(e.message);
     }

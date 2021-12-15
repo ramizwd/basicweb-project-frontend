@@ -3,27 +3,22 @@
 // Get html elements
 const modalSetting = document.querySelector('#modalSetting');
 const setting = document.querySelector('#setting');
-const settingbtn = document.querySelector('#setting-btn');
 const spanSetting = document.getElementsByClassName('close-modal-setting')[0];
-let pro;
+let current;
 
 // display modal when the add new post button clicked
 setting.onclick = () => {
-    pro = usersLog;
-    x();
+    current = usersLog;
+    settingFun();
     modalSetting.style.display = 'block';
 };
-settingbtn.onclick = () => {
-    pro = users;
-    x();
-    modalSetting.style.display = 'block';
-};
+
 
 // Hide modal when the span is clicked
 spanSetting.onclick = () => {
     modalSetting.style.display = 'none';
 };
-const x = () => {
+const settingFun = () => {
 
     if (usersLog.role === 1) {
         if (!!document.getElementById('settingUser').
@@ -46,12 +41,12 @@ const x = () => {
 
         }
         document.getElementById('settingUser').
-        getElementsByClassName('form-input')[3].value = pro.role;
+        getElementsByClassName('form-input')[3].value = current.role;
     }
     document.getElementById('settingUser').
-    getElementsByClassName('form-input')[0].value = pro.username;
+    getElementsByClassName('form-input')[0].value = current.username;
     document.getElementById('settingUser').
-    getElementsByClassName('form-input')[1].value = pro.email;
+    getElementsByClassName('form-input')[1].value = current.email;
 
 // Get html elements
     const setting = document.querySelector('#settingUser');
@@ -59,9 +54,9 @@ const x = () => {
     setting.addEventListener('submit', async (evt) => {
         evt.preventDefault(); // stop default action if event is not handled
         const data = serializeJson(setting);
-        console.log(pro);
-        data.id = pro.user_id;
-        console.log('user id', pro.user_id);
+        console.log(current);
+        data.id = current.user_id;
+        console.log('user id', current.user_id);
         console.log(data);
 
         const fetchOptions = {
@@ -87,6 +82,6 @@ const x = () => {
         } else {
             alert(json.message);
         }
-        location.href = 'profilePage.html';
+        location.href = window.location.href;
     });
 };
