@@ -30,12 +30,11 @@ const getfilter = async (filter) => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        if (sessionStorage.getItem('token') ||
-        sessionStorage.getItem('user')) {
+
             const res = await fetch(url + '/filter/' + filter, fetchOptions);
             const posts = await res.json();
             createPosts(posts);
-        }
+
     } catch (e) {
         console.log(e.message);
     }
