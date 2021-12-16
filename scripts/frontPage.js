@@ -136,15 +136,15 @@ const createPosts = (posts) => {
         if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
             reportButton.innerHTML = 'Report';
             const informer = () => {
-                let answer = confirm('You are being redirected to a mail application for sending a report. Is it ok?');
+                let answer = confirm('You are being redirected to a mail application for sending a report.');
                 if (answer) {
                     document.location = reportButton.href =
-                        `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
-                        'Reported post information:%0d%0a' +
-                        `Post ID: ${post.post_id}%0d%0a` +
-                        `Post title: ${post.title}%0d%0a` +
-                        `Poster ID: ${post.poster}%0d%0a` +
-                        `Poster username: ${post.postername}`;
+                    `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
+                    'Reported post information:%0d%0a' +
+                    `Post ID: ${post.post_id}%0d%0a` +
+                    `Post title: ${post.title}%0d%0a` +
+                    `Poster ID: ${post.poster}%0d%0a` +
+                    `Poster username: ${post.postername}`;
                 }
             };
             reportButton.onclick = informer;
@@ -165,20 +165,27 @@ const createPosts = (posts) => {
         }
         //delete the post when you click the delete button
         deleteButton.addEventListener('click', async () => {
-            console.log('delete');
-            const fetchOptions = {
-                method: 'DELETE',
-                headers: {
-                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-                },
-            };
-            try {
-                const response = await fetch(url + '/post/' + post.post_id, fetchOptions);
-                const json = await response.json();
-                console.log('delete response', json);
-                getPost();
-            } catch (e) {
-                console.log(e.message);
+            //confirm if ok
+            let answer = confirm('Delete post?');
+            //if the answer is yes
+            if (answer) {
+                console.log('delete');
+                const fetchOptions = {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: 'Bearer ' +
+                        sessionStorage.getItem('token'),
+                    },
+                };
+                try {
+                    const response = await fetch(url + '/post/' + post.post_id,
+                    fetchOptions);
+                    const json = await response.json();
+                    console.log('delete response', json);
+                    getPost();
+                } catch (e) {
+                    console.log(e.message);
+                }
             }
         });
 
@@ -200,10 +207,10 @@ const createPosts = (posts) => {
             let postImg;
             //if image on se pistää create element
             if (
-                post.file_type === 'image/png' ||
-                post.file_type === 'image/jpg' ||
-                post.file_type === 'image/webp' ||
-                post.file_type === 'image/jpeg'
+            post.file_type === 'image/png' ||
+            post.file_type === 'image/jpg' ||
+            post.file_type === 'image/webp' ||
+            post.file_type === 'image/jpeg'
             ) {
                 //create img elements
                 postImg = document.createElement('img');
@@ -247,12 +254,14 @@ const createPosts = (posts) => {
             try {
                 const fetchOptions = {
                     headers: {
-                        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                        Authorization: 'Bearer ' +
+                        sessionStorage.getItem('token'),
                     },
                 };
                 console.log(sessionStorage.getItem('id'));
                 // Getting post id from session storage and placing it into route
-                const res = await fetch(url + '/comment/count/' + post.post_id, fetchOptions);
+                const res = await fetch(url + '/comment/count/' + post.post_id,
+                fetchOptions);
                 const commentsCount = await res.json();
                 commentCount.innerHTML = `${commentsCount.commentCount} Comments`;
                 commentCount.setAttribute('id', 'commentCount');
@@ -283,15 +292,15 @@ const createPosts = (posts) => {
         const date = new Date(post.date);
         // Format date
         const formattedDate =
-            date.getDate() +
-            '-' +
-            (date.getMonth() + 1) +
-            '-' +
-            date.getFullYear() +
-            ' ' +
-            date.getHours() +
-            ':' +
-            date.getMinutes();
+        date.getDate() +
+        '-' +
+        (date.getMonth() + 1) +
+        '-' +
+        date.getFullYear() +
+        ' ' +
+        date.getHours() +
+        ':' +
+        date.getMinutes();
         // Create element for the date
         const dateText = document.createElement('p');
         dateText.innerHTML = 'Uploaded: ' + formattedDate;
@@ -323,7 +332,8 @@ const createPosts = (posts) => {
                     'Content-Type': 'application/json',
                 },
             };
-            const res = await fetch(url + '/vote/' + user.user_id + '/' + post.post_id, fetchOptions);
+            const res = await fetch(
+            url + '/vote/' + user.user_id + '/' + post.post_id, fetchOptions);
             const vote = await res.json();
             console.log('vote:', vote.vote_count);
             // If vote exist change request method to PUT
@@ -347,11 +357,12 @@ const createPosts = (posts) => {
 
         // check if user logged in if not give alert message else send a request for upvoting
         upVote.addEventListener('click', async () => {
-            if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
+            if (!sessionStorage.getItem('token') ||
+            !sessionStorage.getItem('user')) {
                 alert('Login/register to give feedback');
                 return;
             }
-            const data = { user_id: user.user_id, vote_count: 1 };
+            const data = {user_id: user.user_id, vote_count: 1};
             console.log('upvoted post with id', post.post_id);
             console.log('variable test upvote:', voteInfo.vote_count);
 
@@ -363,11 +374,12 @@ const createPosts = (posts) => {
 
         // check if user logged in if not give alert message else send a request for downvoting
         downVote.addEventListener('click', async () => {
-            if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
+            if (!sessionStorage.getItem('token') ||
+            !sessionStorage.getItem('user')) {
                 alert('Login/register to give feedback');
                 return;
             }
-            const data = { user_id: user.user_id, vote_count: 0 };
+            const data = {user_id: user.user_id, vote_count: 0};
             console.log('downvoted post with id', post.post_id);
 
             // If vote already exist, delete it
@@ -388,7 +400,8 @@ const createPosts = (posts) => {
             console.log('req method:', reqMethod);
 
             try {
-                const res = await fetch(url + '/vote/' + post.post_id, fetchOptions);
+                const res = await fetch(url + '/vote/' + post.post_id,
+                fetchOptions);
                 const vote = await res.json();
                 console.log(vote);
             } catch (e) {
@@ -400,9 +413,10 @@ const createPosts = (posts) => {
 };
 
 // Close the dropdown if the user clicks outside of it
-feed.onclick = function (ev) {
+feed.onclick = function(ev) {
     if (!ev.target.matches('.dropImgBtn')) {
-        const dropdowns = document.getElementsByClassName('dropdown-content-verticalmenu');
+        const dropdowns = document.getElementsByClassName(
+        'dropdown-content-verticalmenu');
         for (let i = 0; i < dropdowns.length; i++) {
             let openDrown = dropdowns[i];
             if (openDrown.classList.contains('show')) {
@@ -458,7 +472,8 @@ const searchPosts = async (word) => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        const res = await fetch(url + '/post/anon/search/' + word, fetchOptions);
+        const res = await fetch(url + '/post/anon/search/' + word,
+        fetchOptions);
         const posts = await res.json();
         createPosts(posts);
     } catch (e) {
