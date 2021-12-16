@@ -69,6 +69,11 @@ const createComments = (comments) => {
     // Click event listener for posting comments that sends the user id and comment to reqFunction
     // alone with a request method
     btnPost.addEventListener('click', async () => {
+        if (!sessionStorage.getItem('token') ||
+        !sessionStorage.getItem('user')) {
+            alert('Login/register to give feedback');
+            return;
+        }
         const data = { user_id: user.user_id, comment: commentField.value };
         console.log('data to be send', data);
         if (commentField.value == '') return;
