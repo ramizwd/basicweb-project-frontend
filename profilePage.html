@@ -46,8 +46,8 @@
                 <form action="https://localhost:8000/post" method="post" class="form-input"
                       enctype="multipart/form-data"
                       id="addPost">
-                    <input class="form-input" type="text" required name="title" placeHolder="Post tittle"/>
-                    <input class="form-input" type="text" required name="description" placeHolder="Description"/>
+                    <input class="form-input" type="text" required minlength="2" maxlength="20" name="title" placeHolder="Post tittle"/>
+                    <input class="form-input" type="text" required minlength="5" maxlength="100" name="description" placeHolder="Description"/>
                     <input class="form-input" type="file" name="filename" accept="image/*|video/*"
                            placeHolder="Upload file"/>
                     <button id="submit-post-btn" type="submit">Add</button>
@@ -63,8 +63,8 @@
         <div class="form">
             <div class="form-wrapper">
                 <form id="editUser">
-                    <input class="form-input" required type="text" placeholder="Username" name="username">
-                    <input class="form-input" required type="text" placeholder="Description" name="description">
+                    <input class="form-input" required minlength="2" maxlength="18" type="text" placeholder="Username" name="username">
+                    <input class="form-input" required minlength="5" maxlength="100" type="text" placeholder="Description" name="description">
                     <input class="form-input" required type="file" name="profile_picture" accept="image/*"
                            placeHolder="Upload file"/>
 
@@ -80,9 +80,9 @@
         <div class="form">
             <div class="form-wrapper">
                 <form id="settingUser">
-                    <input class="form-input" required type="text" placeholder="Username" name="username">
+                    <input class="form-input" required minlength="2" maxlength="18" type="text" placeholder="Username" name="username">
                     <input class="form-input" required type="email" placeholder="Email" name="email">
-                    <input class="form-input" required type="password" placeholder="Password" name="password">
+                    <input class="form-input" required pattern="(?=.*[A-Z]).{8,}" type="password" placeholder="Password" name="password">
                     <div id="role"><input class="form-input" required type="number" min="0" max="1" placeholder="Role"
                                           name="role"></div>
                     <button id="submit-btn" type="submit">Submit</button>
