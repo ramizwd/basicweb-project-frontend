@@ -94,7 +94,10 @@ const createComments = (comments) => {
         const downVote = document.createElement('img');
         downVote.src = './placeholder/down-arrow.png';
         downVote.innerHTML = 'Dowvote';
-        downVote.setAttribute('id', 'downVote');
+        downVote.setAttribute('id', 'downVoteComment');
+        downVote.classList.add('voteComment');
+
+
         // Total votes
         const votes = document.createElement('p');
         votes.setAttribute('id', 'CommentVoteCount');
@@ -103,34 +106,45 @@ const createComments = (comments) => {
         const upVote = document.createElement('img');
         upVote.src = './placeholder/up-arrow.png';
         upVote.innerHTML = 'Upvote';
-        upVote.setAttribute('id', 'upVote');
+        upVote.setAttribute('id', 'upVoteComment');
+        upVote.classList.add('voteComment');
+
+
+        const commVoteCon = document.createElement('div');
+        commVoteCon.classList.add('commVoteCon');
+
+        const buttonContainer = document.createElement('div');
+        buttonContainer.classList.add('buttonContainer');
 
         // Placing the hierarchy in the post comment part
         backContainer.appendChild(commentList);
         commentList.appendChild(comment);
         comment.appendChild(commentNickname);
         comment.appendChild(commentText);
-        comment.appendChild(downVote);
-        comment.appendChild(votes);
-        comment.appendChild(upVote);
+        comment.appendChild(buttonContainer);
+
 
         if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
             // Show delete button only for comment's author or user with admin role
             if (user.role === 0) {
                 commentDelete.className = 'btn-icon btn-delete';
-                comment.appendChild(commentDelete);
+                buttonContainer.appendChild(commentDelete);
 
                 editBtn.className = 'btn-icon btn-edit';
-                comment.appendChild(editBtn);
+                buttonContainer.appendChild(editBtn);
             } else if (user.user_id === commentInfo.user_id) {
                 commentDelete.className = 'btn-icon btn-delete';
-                comment.appendChild(commentDelete);
+                buttonContainer.appendChild(commentDelete);
 
                 // editBtn.innerHTML = 'Edit';
                 editBtn.className = 'btn-icon btn-edit';
-                comment.appendChild(editBtn);
+                buttonContainer.appendChild(editBtn);
             }
         }
+        buttonContainer.appendChild(commVoteCon);
+        commVoteCon.appendChild(downVote);
+        commVoteCon.appendChild(votes);
+        commVoteCon.appendChild(upVote);
 
         // Edit comment, on click editBtn new input field and button appears for editing the post.
         // then on post edited comment if the field is not empty then send a PUT request
