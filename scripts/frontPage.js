@@ -18,8 +18,7 @@ const getUserInfo = async () => {
         usersLog = await res.json();
         console.log('user', usersLog);
         if (!usersLog.profile_picture) {
-            profileImg.src =
-            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            profileImg.src = 'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
             console.log(1);
         } else {
             //getting the default profile pic if not yet set
@@ -57,10 +56,7 @@ const createPosts = (posts) => {
         const poster = document.createElement('a');
         poster.innerHTML = `${post.postername}`;
         poster.addEventListener('click', () => {
-            if (
-            !sessionStorage.getItem('token') ||
-            !sessionStorage.getItem('user')
-            ) {
+            if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
                 alert('Login/register to view profiles');
                 return;
             }
@@ -77,8 +73,7 @@ const createPosts = (posts) => {
         const posterPfp = document.createElement('img');
         // if poster null but default
         if (!post.userpfp) {
-            posterPfp.src =
-            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            posterPfp.src = 'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
             posterPfp.width = '45';
             posterPfp.height = '45';
         } else {
@@ -139,23 +134,23 @@ const createPosts = (posts) => {
             const informer = () => {
                 let answer = confirm('You are being redirected to a mail application for sending a report. Is it ok?');
                 if (answer) {
-                    document.location = reportButton.href = `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
-                    'Reported post information:%0d%0a' +
-                    `Post ID: ${post.post_id}%0d%0a` +
-                    `Post title: ${post.title}%0d%0a` +
-                    `Poster ID: ${post.poster}%0d%0a` +
-                    `Poster username: ${post.postername}`;
+                    document.location = reportButton.href =
+                        `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
+                        'Reported post information:%0d%0a' +
+                        `Post ID: ${post.post_id}%0d%0a` +
+                        `Post title: ${post.title}%0d%0a` +
+                        `Poster ID: ${post.poster}%0d%0a` +
+                        `Poster username: ${post.postername}`;
                 }
             };
             reportButton.onclick = informer;
 
             dropdownContent.appendChild(reportButton);
-        };
+        }
 
         // Check if user is a moderator if not append delete button to drop list only for
         // logged in user's post
-        if (sessionStorage.getItem('token') ||
-        sessionStorage.getItem('user')) {
+        if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
             if (user.role === 0) {
                 deleteButton.innerHTML = 'Delete';
                 dropdownContent.appendChild(deleteButton);
@@ -170,15 +165,11 @@ const createPosts = (posts) => {
             const fetchOptions = {
                 method: 'DELETE',
                 headers: {
-                    Authorization: 'Bearer ' +
-                    sessionStorage.getItem('token'),
+                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
                 },
             };
             try {
-                const response = await fetch(
-                url + '/post/' + post.post_id,
-                fetchOptions,
-                );
+                const response = await fetch(url + '/post/' + post.post_id, fetchOptions);
                 const json = await response.json();
                 console.log('delete response', json);
                 getPost();
@@ -196,19 +187,19 @@ const createPosts = (posts) => {
         posterDiv.appendChild(dropdown);
 
         //set the description
-        const buildText = document.createElement('p');
-        buildText.setAttribute('id', 'buildText');
-        buildText.innerHTML = `${post.description}`;
+        const descriptionText = document.createElement('p');
+        descriptionText.setAttribute('id', 'descriptionText');
+        descriptionText.innerHTML = `${post.description}`;
 
         //if not null do the layout like this
         if (post.filename != null) {
             let postImg;
             //if image on se pistää create element
             if (
-            post.file_type === 'image/png' ||
-            post.file_type === 'image/jpg' ||
-            post.file_type === 'image/webp' ||
-            post.file_type === 'image/jpeg'
+                post.file_type === 'image/png' ||
+                post.file_type === 'image/jpg' ||
+                post.file_type === 'image/webp' ||
+                post.file_type === 'image/jpeg'
             ) {
                 //create img elements
                 postImg = document.createElement('img');
@@ -235,16 +226,37 @@ const createPosts = (posts) => {
             }
         }
         //const postNickname = document.createElement('h5');
-        const postTitle = document.createElement('a');
+        const postTitle = document.createElement('h2');
         postTitle.innerHTML = `${post.title}`;
         postTitle.addEventListener('click', () => {
             // Saving id of the post into session storage
             sessionStorage.setItem('id', post.post_id);
             // Hyperlink to postPage
-            postTitle.setAttribute('href', 'postPage.html');
             postTitle.setAttribute('id', 'postTitle');
             console.log('get postId', post.post_id);
+            location.href = 'postPage.html';
         });
+        // Total comment
+        const commentCount = document.createElement('p');
+        // Get comments from DB
+        const getCommentsCount = async () => {
+            try {
+                const fetchOptions = {
+                    headers: {
+                        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                    },
+                };
+                console.log(sessionStorage.getItem('id'));
+                // Getting post id from session storage and placing it into route
+                const res = await fetch(url + '/comment/count/' + post.post_id, fetchOptions);
+                const commentsCount = await res.json();
+                commentCount.innerHTML = `${commentsCount.commentCount} Comments`;
+                commentCount.setAttribute('id', 'commentCount');
+                console.log(commentsCount);
+            } catch (e) {
+                console.log(e.message);
+            }
+        };
 
         // Downvote button
         const downVote = document.createElement('img');
@@ -267,15 +279,15 @@ const createPosts = (posts) => {
         const date = new Date(post.date);
         // Format date
         const formattedDate =
-        date.getDate() +
-        '-' +
-        (date.getMonth() + 1) +
-        '-' +
-        date.getFullYear() +
-        ' ' +
-        date.getHours() +
-        ':' +
-        date.getMinutes();
+            date.getDate() +
+            '-' +
+            (date.getMonth() + 1) +
+            '-' +
+            date.getFullYear() +
+            ' ' +
+            date.getHours() +
+            ':' +
+            date.getMinutes();
         // Create element for the date
         const dateText = document.createElement('p');
         dateText.innerHTML = 'Uploaded: ' + formattedDate;
@@ -286,11 +298,15 @@ const createPosts = (posts) => {
         // Placing the hierarchy in the post object
         feed.appendChild(userPost);
         postTextContent.appendChild(postTitle);
-        postTextContent.appendChild(buildText);
+        postTextContent.appendChild(descriptionText);
+        postTextContent.appendChild(dateText);
         postTextContent.appendChild(downVote);
         postTextContent.appendChild(votes);
         postTextContent.appendChild(upVote);
-        postTextContent.appendChild(dateText);
+        postTextContent.appendChild(commentCount);
+
+        getCommentsCount();
+
         // Default request method is POST
         let reqMethod = 'POST';
         let voteInfo = 0;
@@ -299,21 +315,18 @@ const createPosts = (posts) => {
         const getVote = async () => {
             const fetchOptions = {
                 headers: {
-                    Authorization: 'Bearer ' +
-                    sessionStorage.getItem('token'),
+                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
                     'Content-Type': 'application/json',
                 },
             };
-            const res = await fetch(
-            url + '/vote/' + user.user_id + '/' + post.post_id,
-            fetchOptions,
-            );
+            const res = await fetch(url + '/vote/' + user.user_id + '/' + post.post_id, fetchOptions);
             const vote = await res.json();
             console.log('vote:', vote.vote_count);
-
+            // If vote exist change request method to PUT
             if (vote.vote_count == 1 || vote.vote_count == 0) {
                 reqMethod = 'PUT';
                 console.log('Change req method', reqMethod);
+                // Change img color depending on the vote type
                 if (vote.vote_count == 1) {
                     upVote.style.backgroundColor = 'rgb(255, 145, 0)';
                     upVote.style.borderRadius = '50%';
@@ -328,16 +341,13 @@ const createPosts = (posts) => {
         };
         getVote();
 
-        // Send a request for upvoting
+        // check if user logged in if not give alert message else send a request for upvoting
         upVote.addEventListener('click', async () => {
-            if (
-            !sessionStorage.getItem('token') ||
-            !sessionStorage.getItem('user')
-            ) {
+            if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
                 alert('Login/register to give feedback');
                 return;
             }
-            const data = {user_id: user.user_id, vote_count: 1};
+            const data = { user_id: user.user_id, vote_count: 1 };
             console.log('upvoted post with id', post.post_id);
             console.log('variable test upvote:', voteInfo.vote_count);
 
@@ -347,29 +357,26 @@ const createPosts = (posts) => {
             reqFunction(data);
         });
 
-        // Send a request for downvoting
+        // check if user logged in if not give alert message else send a request for downvoting
         downVote.addEventListener('click', async () => {
-            if (
-            !sessionStorage.getItem('token') ||
-            !sessionStorage.getItem('user')
-            ) {
+            if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
                 alert('Login/register to give feedback');
                 return;
             }
-            const data = {user_id: user.user_id, vote_count: 0};
+            const data = { user_id: user.user_id, vote_count: 0 };
             console.log('downvoted post with id', post.post_id);
 
             // If vote already exist, delete it
             if (voteInfo.vote_count == 0) reqMethod = 'DELETE';
             reqFunction(data);
         });
-        // Request function
+
+        // async function for deleting, posting or updating post votes
         const reqFunction = async (data) => {
             const fetchOptions = {
                 method: reqMethod,
                 headers: {
-                    Authorization: 'Bearer ' +
-                    sessionStorage.getItem('token'),
+                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify(data),
@@ -377,10 +384,7 @@ const createPosts = (posts) => {
             console.log('req method:', reqMethod);
 
             try {
-                const res = await fetch(
-                url + '/vote/' + post.post_id,
-                fetchOptions,
-                );
+                const res = await fetch(url + '/vote/' + post.post_id, fetchOptions);
                 const vote = await res.json();
                 console.log(vote);
             } catch (e) {
@@ -388,17 +392,13 @@ const createPosts = (posts) => {
             }
             getPost();
         };
-    },
-    )
-    ;
+    });
 };
 
 // Close the dropdown if the user clicks outside of it
-feed.onclick = function(ev) {
+feed.onclick = function (ev) {
     if (!ev.target.matches('.dropImgBtn')) {
-        const dropdowns = document.getElementsByClassName(
-        'dropdown-content-verticalmenu',
-        );
+        const dropdowns = document.getElementsByClassName('dropdown-content-verticalmenu');
         for (let i = 0; i < dropdowns.length; i++) {
             let openDrown = dropdowns[i];
             if (openDrown.classList.contains('show')) {
@@ -415,8 +415,7 @@ const getPost = async () => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        if (sessionStorage.getItem('token') ||
-        sessionStorage.getItem('user')) {
+        if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
             const res = await fetch(url + '/post', fetchOptions);
             const posts = await res.json();
             createPosts(posts);
@@ -455,10 +454,7 @@ const searchPosts = async (word) => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        const res = await fetch(
-        url + '/post/anon/search/' + word,
-        fetchOptions,
-        );
+        const res = await fetch(url + '/post/anon/search/' + word, fetchOptions);
         const posts = await res.json();
         createPosts(posts);
     } catch (e) {

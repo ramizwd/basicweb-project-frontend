@@ -18,6 +18,18 @@ body {
 #name {
     pointer-events: none;
 }
+#add-post-btn:hover {
+    opacity: 30%;
+    cursor: pointer;
+}
+#add-post-btn {
+    margin-top: 12px;
+    margin-left: 3em;
+    filter: brightness(0) invert(1);
+    width: 35px;
+    height: 35px;
+}
+
 #search-field {
     padding: 15px;
     text-align: center;
@@ -91,7 +103,7 @@ a {
     font-family: inherit;
     margin: 0;
 }
-.filterDropdown{
+.filterDropdown {
     float: left;
     overflow: hidden;
 }
@@ -104,21 +116,21 @@ a {
     z-index: 1;
     margin-top: 55px;
 }
-.dropdown-content-filter a{
+.dropdown-content-filter a {
     float: none;
     color: black;
     padding: 12px 16px;
     display: block;
     text-align: left;
 }
-.dropdown-content-filter a:hover{
+.dropdown-content-filter a:hover {
     background-color: #ddd;
 }
 
 #plus:hover {
     opacity: 30%;
 }
-.filterDropdown:hover .dropdown-content-filter{
+.filterDropdown:hover .dropdown-content-filter {
     display: block;
 }
 
@@ -224,7 +236,8 @@ figure {
     transition-duration: 0.2s;
 }
 #voteCount {
-    font-size: 19px;
+    font-size: 18px;
+
     margin-top: 5px;
 }
 
@@ -238,7 +251,12 @@ figure {
     border-radius: 50%;
     cursor: pointer;
 }
-
+#commentCount {
+    font-size: 15px;
+    margin-top: 12px;
+    float: right;
+    padding-right: 10px;
+}
 .forms {
     display: flex;
     flex-wrap: wrap;
@@ -247,6 +265,12 @@ figure {
 .form-wrapper {
     width: 33%;
 }
+
+/* .posterDiv a {
+    margin-bottom: 100px;
+    padding: 300px;
+    margin-top: 0;
+} */
 
 h1 {
     margin-top: 0px;
@@ -273,16 +297,3 @@ h1 {
 .show {
     display: block;
 }
-
-#add-post-btn:hover {
-    opacity: 30%;
-    cursor: pointer;
-}
-#add-post-btn {
-    margin-top: 12px;
-    margin-left: 3em;
-    filter: brightness(0) invert(1);
-    width: 35px;
-    height: 35px;
-}
-

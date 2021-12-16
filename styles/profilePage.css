@@ -10,6 +10,8 @@ main {
     margin-top: 40px;
 }
 /*adding a fixed navbar so when it scroll down it comes with you*/
+
+/* navigation bar */
 .navbar {
     background-color: #333;
     position: fixed;
@@ -21,7 +23,19 @@ main {
 #name {
     pointer-events: none;
 }
+#add-post-btn:hover {
+    opacity: 30%;
+    cursor: pointer;
+}
+#add-post-btn {
+    margin-top: 12px;
+    margin-left: 7.5em;
+    filter: brightness(0) invert(1);
+    width: 35px;
+    height: 35px;
+}
 #search-field {
+    padding: 15px;
     text-align: center;
     position: fixed;
     overflow: hidden;
@@ -29,59 +43,82 @@ main {
     margin: 0 auto;
     z-index: -2;
 }
+
 /*layout of the navbar*/
-.navbar a,
-#search-field {
+.navbar a {
     float: left;
     font-size: 16px;
     color: white;
     text-align: center;
-    padding: 14px 16px;
+    padding: 19px 18px 18px;
     text-decoration: none;
+}
+a {
+    cursor: pointer;
+}
+.navbar a:hover {
+    background-color: #3b5c88;
 }
 #search-field input {
     padding: 5px;
     font-size: 18px;
     background-color: rgba(151, 151, 151, 0.658);
-    color: white;
+    color: rgb(0, 0, 0);
     border: none;
+    width: 20em;
+    box-shadow: 0px 7px 7px -5px;
+
+    font-weight: bold;
 }
-.navcenter {
-    float: none;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+#search-field button {
+    padding: 5px;
+    font-size: 18px;
+    background-color: rgba(151, 151, 151, 0.658);
+    color: rgb(0, 0, 0);
+    border: none;
+    width: 10em;
+    box-shadow: 0px 7px 7px -5px;
+    border: none;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    font-weight: bold;
+}
+#search-field button:hover {
+    background-color: rgb(255, 255, 255);
 }
 
 .user-info {
     float: right;
 }
 
+.dropdown-anon .dropbtn {
+    padding: 8px;
+    margin-right: 10px;
+}
 .dropdown .dropbtn {
     height: 42px;
     font-size: 16px;
-    border: none;
-    outline: none;
     color: white;
-    padding-left: 16px;
-    padding-right: 16px;
+    padding-left: 30px;
+    padding-right: 30px;
     padding-top: 8px;
     background-color: inherit;
     font-family: inherit;
     margin: 0;
+    border-radius: 50%;
 }
 
 #plus:hover {
     opacity: 30%;
 }
 
-.dropbtn {
-    border-radius: 50%;
-}
-
-.navbar a:hover {
-    background-color: rgb(0, 69, 134);
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    right: 0;
+    width: 180px;
 }
 
 .dropdown-content {
@@ -115,7 +152,6 @@ main {
 .dropdown-content a:hover {
     background-color: #ddd;
 }
-
 
 .dropdown:hover .dropdown-content {
     display: block;
@@ -212,17 +248,10 @@ h1 {
     cursor: pointer;
 }
 
-#add-post-btn:hover {
-    opacity: 30%;
-    cursor: pointer;
-}
-#add-post-btn {
-    margin-top: 4px;
-}
 .dropdown-content-verticalmenu:hover .dropdown-content-verticalmenu {
     display: block;
 }
-#add-edit-btn:hover{
+#add-edit-btn:hover {
     opacity: 30%;
     cursor: pointer;
 }

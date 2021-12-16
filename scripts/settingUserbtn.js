@@ -8,15 +8,16 @@ settingbtn.onclick = () => {
     //set the redirection
     if (user.role === 0) {
         if (user.user_id === users.user_id) {
-            locationpl = 'loginPage.html';
+            locationpl = 'logout.html';
         } else {
             locationpl = 'frontPage.html';
         }
+    } else {
+        locationpl = 'logout.html';
     }
 
     //for setting function
     settingFun();
     deleteFun();
     modalSetting.style.display = 'block';
-
 };

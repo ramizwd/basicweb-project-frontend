@@ -51,24 +51,23 @@
             <img class="dropbtn" src="placeholder/no-pfp.jpg" width="45" height="45">
         </div>
 
+            </div>
+        </nav>
 
-    </div>
-</nav>
-
-<div id="modal">
-    <div id="modal-content">
-        <span class="close-modal">&times;</span>
-        <div class="form">
-            <div class="form-wrapper">
-                <form action="https://localhost:8000/post" method="post" class="form-input"
-                      enctype="multipart/form-data"
-                      id="addPost">
-                    <input class="form-input-post" type="text" required name="title" placeHolder="Tittle"/>
-                    <input class="form-input-post" type="text" required name="description" placeHolder="Description"/>
-                    <input class="form-input-post-file" type="file" name="filename" accept="image/*|video/*"
-                           placeHolder="Upload file"/>
-                    <input id="submit-post-btn" type="submit"></input>
-                </form>
+        <div id="modal">
+            <div id="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="form">
+                    <div class="form-wrapper">
+                        <form action="https://localhost:8000/post" method="post" class="form-input" enctype="multipart/form-data"
+                        id="addPost">
+                            <input class="form-input-post" type="text" required minlength="2" maxlength="20" required name="title" placeHolder="Tittle"/>
+                            <input class="form-input-post" type="text" required minlength="5" maxlength="100" name="description" placeHolder="Description"/>
+                            <input class="form-input-post-file" type="file" name="filename" accept="image/*|video/*" placeHolder="Upload file"/>
+                            <input id="submit-post-btn" type="submit"></input>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -80,10 +79,10 @@
         <div class="form">
             <div class="form-wrapper">
                 <form id="settingUser">
-                    <input class="form-input" required type="text" placeholder="Username" name="username">
+                    <input class="form-input" required minlength="2" maxlength="18" type="text" placeholder="Username" name="username">
                     <input class="form-input" required type="email" placeholder="Email" name="email">
-                    <input class="form-input" required type="password" placeholder="Password" name="password">
-                    <div id="role"><input class="form-input" required type="number" min="0" max="1" placeholder="Role"
+                    <input class="form-input" required pattern="(?=.*[A-Z]).{8,}" type="password" placeholder="Password" name="password">
+                    <div id="role"><input class="form-input" required type="number"  min="0" max="1" placeholder="Role"
                                           name="role"></div>
                     <button id="submit-btn" type="submit">Submit</button>
 

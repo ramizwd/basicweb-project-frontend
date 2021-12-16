@@ -11,7 +11,7 @@ setting.onclick = () => {
     //set the current log in info
     current = usersLog;
     //where it will relocate after delete
-    locationpl = 'loginPage.html';
+    locationpl = 'logout.html';
 
     settingFun();
     deleteFun();
@@ -23,19 +23,15 @@ spanSetting.onclick = () => {
     modalSetting.style.display = 'none';
 };
 const settingFun = () => {
-//if the role is 1 it removes the role form
+    //if the role is 1 it removes the role form
     console.log(current);
     if (current.role === 0 || usersLog.role === 1) {
-        if (!!document.getElementById('settingUser').
-        getElementsByClassName('form-input')[3]) {
-            document.getElementById('settingUser').
-            getElementsByClassName('form-input')[3].remove();
+        if (!!document.getElementById('settingUser').getElementsByClassName('form-input')[3]) {
+            document.getElementById('settingUser').getElementsByClassName('form-input')[3].remove();
         }
-
     } else {
         //if the form is not existed remove make a new one
-        if (!!document.getElementById('settingUser').
-        getElementsByClassName('form-input')[3] === false) {
+        if (!!document.getElementById('settingUser').getElementsByClassName('form-input')[3] === false) {
             const role = document.getElementById('role');
             const roleBar = document.createElement('input');
             roleBar.className = 'form-input';
@@ -44,19 +40,15 @@ const settingFun = () => {
             roleBar.max = '1';
             roleBar.required = true;
             role.append(roleBar);
-
         }
         //set the value
-        document.getElementById('settingUser').
-        getElementsByClassName('form-input')[3].value = current.role;
+        document.getElementById('settingUser').getElementsByClassName('form-input')[3].value = current.role;
     }
     //set the value
-    document.getElementById('settingUser').
-    getElementsByClassName('form-input')[0].value = current.username;
-    document.getElementById('settingUser').
-    getElementsByClassName('form-input')[1].value = current.email;
+    document.getElementById('settingUser').getElementsByClassName('form-input')[0].value = current.username;
+    document.getElementById('settingUser').getElementsByClassName('form-input')[1].value = current.email;
 
-// Get html elements
+    // Get html elements
     const setting = document.querySelector('#settingUser');
 
     setting.addEventListener('submit', async (evt) => {
@@ -86,10 +78,8 @@ const settingFun = () => {
         // get a json response and display it as successfully added post message as an alert
 
         // get user data for admin check
-        const response = await fetch(
-        url + '/user',
-        fetchOptions,
-        );
+        //const user = JSON.parse(sessionStorage.getItem('user'));
+        const response = await fetch(url + '/user', fetchOptions);
         const json = await response.json();
         if (json.error) {
             alert(json.error.message);

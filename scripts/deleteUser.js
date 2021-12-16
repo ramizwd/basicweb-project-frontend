@@ -5,8 +5,7 @@ const deleteFun = () => {
     //when button click
     deletebtn.addEventListener('click', async () => {
         //question if the user wants to be redirected
-        let answer = confirm(
-        'Your account will be deleted. Is this ok?');
+        let answer = confirm('Your account will be deleted. Is this ok?');
         //if the answer is yes
         if (answer) {
             const fetchOptions = {
@@ -18,10 +17,7 @@ const deleteFun = () => {
             // send delete method
             // get a json response and then redirect to login-page
             try {
-                const response = await fetch(
-                url + '/user/' + current.user_id,
-                fetchOptions,
-                );
+                const response = await fetch(url + '/user/' + current.user_id, fetchOptions);
                 const json = await response.json();
                 console.log('delete response', json);
                 location.href = locationpl;
