@@ -44,14 +44,14 @@
         <span class="close-modal">&times;</span>
         <div class="form">
             <div class="form-wrapper">
-                <form action="https://localhost:8000/post" method="post" class="form-input"
+                <form action="https://localhost:8000/post" method="post" class="form-input-post"
                       enctype="multipart/form-data"
                       id="addPost">
-                    <input class="form-input" type="text" required minlength="2" maxlength="20" name="title"
+                    <input class="form-input-post" type="text" required minlength="2" maxlength="20" name="title"
                            placeHolder="Post title"/>
-                    <input class="form-input" type="text" required minlength="5" maxlength="1000" name="description"
+                    <input class="form-input-post" type="text" required minlength="5" maxlength="1000" name="description"
                            placeHolder="Description"/>
-                    <input class="form-input" type="file" name="filename" accept="image/*|video/*"
+                    <input class="form-input-post-file" type="file" name="filename" accept="image/*|video/*"
                            placeHolder="Upload file"/>
                     <button id="submit-post-btn" type="submit">Add</button>
                 </form>
@@ -103,9 +103,9 @@
 <main>
     <div class="bio"></div>
     <div class="btn-Container">
-        <img id="add-edit-btn" src="placeholder/edit.png" width="30" height="30"/>
-        <img id="setting-btn" src="placeholder/icons8-settings-48.png" width="30" height="30"/>
-        <img id="report-btn" src="placeholder/reportImg.png" width="30" height="30"/></div>
+        <img id="add-edit-btn" src="placeholder/edit.png" width="23" height="23"/>
+        <img id="setting-btn" src="placeholder/icons8-settings-48.png" width="23" height="23"/>
+        <img id="report-btn" src="placeholder/reportImg.png" width="23" height="23"/></div>
 
     <div id="feed">
         <ul class="postList"></ul>
