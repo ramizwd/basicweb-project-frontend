@@ -18,7 +18,7 @@ const getUserInfo = async () => {
         usersLog = await res.json();
         console.log('user', usersLog);
         if (!usersLog.profile_picture) {
-            profileImg.src = 'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            profileImg.src = 'placeholder/no-pfp.jpg';
             console.log(1);
         } else {
             //getting the default profile pic if not yet set
@@ -73,7 +73,7 @@ const createPosts = (posts) => {
         const posterPfp = document.createElement('img');
         // if poster null but default
         if (!post.userpfp) {
-            posterPfp.src = 'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            posterPfp.src = 'placeholder/no-pfp.jpg';
             posterPfp.width = '45';
             posterPfp.height = '45';
         } else {

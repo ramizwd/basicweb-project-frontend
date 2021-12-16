@@ -324,7 +324,7 @@ const createPost = (posts) => {
     userAvatar.setAttribute('id', 'avatar');
     //getting the default profile pic if not yet set
     if (!posts.userpfp) {
-        userAvatar.src = 'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+        userAvatar.src = 'placeholder/no-pfp.jpg';
         userAvatar.width = '45';
         userAvatar.height = '45';
     } else {
@@ -585,7 +585,7 @@ const getUserInfo = async () => {
         usersLog = await res.json();
         console.log('user', usersLog);
         if (!usersLog.profile_picture) {
-            profileImg.src = 'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            profileImg.src = 'placeholder/no-pfp.jpg';
             console.log(1);
         } else {
             //getting the default profile pic if not yet set
