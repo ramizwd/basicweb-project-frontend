@@ -33,6 +33,7 @@ const getfilter = async (filter) => {
 
             const res = await fetch(url + '/filter/' + filter, fetchOptions);
             const posts = await res.json();
+            //and creates them
             createPosts(posts);
 
     } catch (e) {

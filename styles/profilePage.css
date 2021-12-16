@@ -7,8 +7,9 @@ body {
     background-color: rgb(240, 240, 240);
 }
 main {
-    margin-top: 40px;
+    height: 100vh;
 }
+
 /*adding a fixed navbar so when it scroll down it comes with you*/
 
 /* navigation bar */
@@ -187,8 +188,8 @@ ul {
 li {
     padding: 5px;
     border: 5px;
-    width: 35%;
-    margin: 0.5em;
+    width: 25%;
+    margin: 5em;
     border-radius: 0.5em;
     background-color: rgb(255, 255, 255);
 }
@@ -251,14 +252,65 @@ h1 {
 .dropdown-content-verticalmenu:hover .dropdown-content-verticalmenu {
     display: block;
 }
-#add-edit-btn:hover {
-    opacity: 30%;
-    cursor: pointer;
-}
 
 h1:hover {
     text-decoration: underline;
 }
 h3:hover {
     text-decoration: underline;
+}
+
+#avatar {
+    position: relative;
+
+    border-radius: 50%;
+    height: 170px;
+    width: 170px;
+    float: left;
+    margin-top: 7em;
+    margin-left: 14em;
+}
+
+#textBio {
+    position: relative;
+    max-width: 70em;
+    float: left;
+    margin-top: 7em;
+    margin-left: 2em;
+}
+
+.bio h1 {
+    margin-top: 3em;
+    float: none;
+}
+.bio {
+    position: absolute;
+    width: 100%;
+    height: 35em;
+    z-index: -1;
+}
+
+#add-edit-btn {
+    margin-top: 10em;
+    margin-right: 20em;
+    float: right;
+}
+#setting-btn {
+    margin-top: 10em;
+    margin-right: 2em;
+    float: right;
+}
+#report-btn {
+    margin-top: 10em;
+}
+#add-edit-btn:hover,
+#setting-btn:hover,
+#report-btn:hover {
+    opacity: 30%;
+    cursor: pointer;
+}
+
+.postList {
+    margin-top: 30em;
+    background-color: rgba(43, 43, 43, 0.253);
 }
