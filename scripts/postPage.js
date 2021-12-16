@@ -69,7 +69,7 @@ const createComments = (comments) => {
     // Click event listener for posting comments that sends the user id and comment to reqFunction
     // alone with a request method
     btnPost.addEventListener('click', async () => {
-        const data = {user_id: user.user_id, comment: commentField.value};
+        const data = { user_id: user.user_id, comment: commentField.value };
         console.log('data to be send', data);
         if (commentField.value == '') return;
         reqFunction(data, 'POST');
@@ -96,7 +96,6 @@ const createComments = (comments) => {
         comment.appendChild(commentText);
 
         if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
-
             // Show delete button only for comment's author or user with admin role
             if (user.role === 0) {
                 commentDelete.className = 'btn-icon btn-delete';
@@ -118,11 +117,11 @@ const createComments = (comments) => {
         // then on post edited comment if the field is not empty then send a PUT request
         editBtn.addEventListener('click', async () => {
             //Entering comment by key Enter
-            comment.onkeydown = function(e) {
+            comment.onkeydown = function (e) {
                 if (e.key === 'Enter') {
                     postEdit.click();
                 }
-            }
+            };
             // Form for comment input
             editComment.setAttribute('type', 'text');
             editComment.setAttribute('name', 'comment');
@@ -166,25 +165,15 @@ const createComments = (comments) => {
             try {
                 const fetchOptions = {
                     headers: {
-                        Authorization:
-                        'Bearer ' + sessionStorage.getItem('token'),
+                        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
                     },
                 };
-                if (
-                sessionStorage.getItem('token') ||
-                sessionStorage.getItem('user')
-                ) {
-                    const res = await fetch(
-                    url + '/user/' + commentInfo.user_id,
-                    fetchOptions,
-                    );
+                if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
+                    const res = await fetch(url + '/user/' + commentInfo.user_id, fetchOptions);
                     const users = await res.json();
                     commentNickname.innerHTML = users.username;
                 } else {
-                    const res = await fetch(
-                    url + '/user/anon/' + commentInfo.user_id,
-                    fetchOptions,
-                    );
+                    const res = await fetch(url + '/user/anon/' + commentInfo.user_id, fetchOptions);
                     const users = await res.json();
                     commentNickname.innerHTML = users.username;
                 }
@@ -208,10 +197,7 @@ const reqFunction = async (data, reqMethod) => {
     };
 
     try {
-        const res = await fetch(
-        url + '/comment/' + sessionStorage.getItem('id'),
-        fetchOptions,
-        );
+        const res = await fetch(url + '/comment/' + sessionStorage.getItem('id'), fetchOptions);
         const vote = await res.json();
         console.log(vote);
     } catch (e) {
@@ -221,7 +207,7 @@ const reqFunction = async (data, reqMethod) => {
 
 const createPost = (posts) => {
     //Creating html elements for post
-    const  postContainer = document.querySelector('#postContainer');
+    const postContainer = document.querySelector('#postContainer');
     postContainer.innerHTML = '';
 
     const backContainer = document.createElement('div');
@@ -232,8 +218,7 @@ const createPost = (posts) => {
     userAvatar.setAttribute('id', 'avatar');
     //getting the default profile pic if not yet set
     if (!posts.userpfp) {
-        userAvatar.src =
-        'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+        userAvatar.src = 'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
         userAvatar.width = '45';
         userAvatar.height = '45';
     } else {
@@ -280,7 +265,7 @@ const createPost = (posts) => {
     downVote.setAttribute('id', 'downVote');
     downVote.innerHTML = 'Downvote';
 
-    // Total votes button
+    // Total votes
     const votes = document.createElement('p');
     votes.setAttribute('id', 'voteCount');
     votes.innerHTML = `${posts.votes}`;
@@ -302,10 +287,10 @@ const createPost = (posts) => {
         let postImg;
         //if image on se pistää create element
         if (
-        posts.file_type === 'image/png' ||
-        posts.file_type === 'image/jpg' ||
-        posts.file_type === 'image/webp' ||
-        posts.file_type === 'image/jpeg'
+            posts.file_type === 'image/png' ||
+            posts.file_type === 'image/jpg' ||
+            posts.file_type === 'image/webp' ||
+            posts.file_type === 'image/jpeg'
         ) {
             //create img elements
             postImg = document.createElement('img');
@@ -341,7 +326,7 @@ const createPost = (posts) => {
     votesContainer.appendChild(votes);
     votesContainer.appendChild(downVote);
     backContainer.appendChild(postBuild);
-    backContainer.appendChild(builtListTitle);
+    // backContainer.appendChild(builtListTitle);
 
     // Default request method is POST
     let reqMethod = 'POST';
@@ -356,10 +341,7 @@ const createPost = (posts) => {
             },
         };
 
-        const res = await fetch(
-        url + '/vote/' + user.user_id + '/' + posts.post_id,
-        fetchOptions,
-        );
+        const res = await fetch(url + '/vote/' + user.user_id + '/' + posts.post_id, fetchOptions);
         const vote = await res.json();
         console.log('vote:', vote.vote_count);
 
@@ -375,10 +357,7 @@ const createPost = (posts) => {
 
     // Send a request for upvoting
     upVote.addEventListener('click', async () => {
-        if (
-        !sessionStorage.getItem('token') ||
-        !sessionStorage.getItem('user')
-        ) {
+        if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
             alert('Login/register to give feedback');
             return;
         }
@@ -395,10 +374,7 @@ const createPost = (posts) => {
     // Send a request for downvoting
     downVote.addEventListener('click', async () => {
         console.log('Test for Johnkai');
-        if (
-        !sessionStorage.getItem('token') ||
-        !sessionStorage.getItem('user')
-        ) {
+        if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
             alert('Login/register to give feedback');
             return;
         }
@@ -423,10 +399,7 @@ const createPost = (posts) => {
         console.log('req method:', reqMethod);
 
         try {
-            const res = await fetch(
-            url + '/vote/' + posts.post_id,
-            fetchOptions,
-            );
+            const res = await fetch(url + '/vote/' + posts.post_id, fetchOptions);
             const vote = await res.json();
             console.log(vote);
         } catch (e) {
@@ -434,7 +407,6 @@ const createPost = (posts) => {
         }
         getPost();
     };
-
 };
 
 console.log('session id ', sessionStorage.getItem('id'));
@@ -449,19 +421,13 @@ const getPost = async () => {
         if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
             console.log(sessionStorage.getItem('id'));
             // Getting post id from session storage and placing it into route
-            const res = await fetch(
-            url + '/post/' + sessionStorage.getItem('id'),
-            fetchOptions,
-            );
+            const res = await fetch(url + '/post/' + sessionStorage.getItem('id'), fetchOptions);
             const posts = await res.json();
             createPost(posts);
         } else {
             console.log(sessionStorage.getItem('id'));
             // Getting post id from session storage and placing it into route
-            const res = await fetch(
-            url + '/post/anon/' + sessionStorage.getItem('id'),
-            fetchOptions,
-            );
+            const res = await fetch(url + '/post/anon/' + sessionStorage.getItem('id'), fetchOptions);
             const posts = await res.json();
             createPost(posts);
         }
@@ -480,10 +446,7 @@ const getComments = async () => {
         };
         console.log(sessionStorage.getItem('id'));
         // Getting post id from session storage and placing it into route
-        const res = await fetch(
-        url + '/comment/' + sessionStorage.getItem('id'),
-        fetchOptions,
-        );
+        const res = await fetch(url + '/comment/' + sessionStorage.getItem('id'), fetchOptions);
         const comments = await res.json();
         console.log(comments);
         createComments(comments);
@@ -504,8 +467,7 @@ const getUserInfo = async () => {
         usersLog = await res.json();
         console.log('user', usersLog);
         if (!usersLog.profile_picture) {
-            profileImg.src =
-            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            profileImg.src = 'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
             console.log(1);
         } else {
             //getting the default profile pic if not yet set
