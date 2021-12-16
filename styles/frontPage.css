@@ -212,6 +212,7 @@ figure {
     cursor: pointer;
 }
 .dropdownImg {
+    margin-left: auto;
     float: right;
 }
 .dropdown-content-verticalmenu:hover .dropdown-content-verticalmenu {
@@ -297,3 +298,7 @@ h1 {
 .show {
     display: block;
 }
+.posterDiv{
+    display: flex;
+}
+

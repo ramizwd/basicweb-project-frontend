@@ -14,11 +14,11 @@ high.onclick = () => {
 low.onclick = () => {
     getfilter('votes ASC');
 };
-//send the oldest
+ //send the newest
 newest.onclick = () => {
     getfilter('`pjr_post`.`date` DESC');
 };
-//send the newest
+//send the oldest
 oldest.onclick = () => {
     getfilter('`pjr_post`.`date`  ASC');
 };
