@@ -353,6 +353,13 @@ const createPost = (posts) => {
         if (vote.vote_count == 1 || vote.vote_count == 0) {
             reqMethod = 'PUT';
             console.log('Change req method', reqMethod);
+            if (vote.vote_count == 1) {
+                upVote.style.backgroundColor = 'rgb(255, 145, 0)';
+                upVote.style.borderRadius = '50%';
+            } else {
+                downVote.style.backgroundColor = 'rgb(67, 70, 201)';
+                downVote.style.borderRadius = '50%';
+            }
         }
 
         voteInfo = vote;
