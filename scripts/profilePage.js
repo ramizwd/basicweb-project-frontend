@@ -64,7 +64,7 @@ const loggedUser = (usersLog) => {
     // if the image is null place default image
     if (!usersLog.profile_picture) {
         profileImg.src =
-        'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+        'placeholder/no-pfp.jpg';
         console.log(1);
     } else {
         //sets the image to profile
@@ -87,7 +87,7 @@ const createBio = (users) => {
     // if poster null but default image
     if (!users.profile_picture) {
         userAvatar.src =
-        'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+        'placeholder/no-pfp.jpg';
         console.log(1);
     } else {
         //if the image is existence set the image
@@ -97,7 +97,9 @@ const createBio = (users) => {
 
     //make description
     const userDescription = document.createElement('p');
-    userDescription.innerHTML = `${users.description}`;
+    if(users.description){
+        userDescription.innerHTML = `${users.description}`;
+    }
 
     // Placing the hierarchy in the bio header
     bio.appendChild(userAvatar);
@@ -146,7 +148,7 @@ const createPosts = (posts) => {
         // if poster null but default
         if (!post.userpfp) {
             posterPfp.src =
-            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
+            'placeholder/no-pfp.jpg';
             posterPfp.width = '45';
             posterPfp.height = '45';
         } else {
