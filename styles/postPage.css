@@ -112,6 +112,10 @@ h2 {
     margin-left: 10px;
     flex-grow: 4;
 }
+
+ul {
+    hyphens: auto;
+}
 figure {
     width: 98%;
     margin: 5px;
@@ -259,7 +263,6 @@ a {
     font-family: inherit;
     margin: 0;
 }
-
 #plus:hover {
     opacity: 30%;
 }
@@ -348,6 +351,8 @@ p#voteCount {
     padding: 5px;
     text-align: center;
     transition-duration: 0.2s;
+    font-weight: 1000;
+
 }
 
 .dropdown-content a {
@@ -365,6 +370,10 @@ p#voteCount {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+.dropdown {
+    display: block;
+    padding-right: 1rem;
 }
 
 .show {
@@ -384,4 +393,42 @@ p#voteCount {
 }
 h2:hover {
     text-decoration: underline;
+}
+
+.commVoteCon {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-left: auto;
+}
+#CommentVoteCount {
+    float: right;
+    width: 2rem;
+    height: 2rem;
+    padding: 5px;
+    text-align: center;
+    transition-duration: 0.2s;
+    font-weight: 800;
+
+}
+img#downVoteComment {
+    float: right;
+    padding: 9px;
+    text-align: center;
+    transition-duration: 0.2s;
+}
+
+img#upVoteComment {
+    float: right;
+    padding: 9px;
+    text-align: center;
+    transition-duration: 0.2s;
+}
+.voteComment {
+    width: 36px;
+    height: 36px;
+}
+.buttonContainer {
+    display: flex;
+    align-items: center;
 }
