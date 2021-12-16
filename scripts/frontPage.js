@@ -104,14 +104,13 @@ const createPosts = (posts) => {
         verticalMenu.className = 'dropImgBtn';
         //when the vertical button press it will show the dropdown content
         verticalMenu.addEventListener('click', () => {
+            //if the user not sign he cannot get the show function
             if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
                 alert('Login/register to report profiles');
                 return;
             }
             dropdownContent.classList.toggle('show');
         });
-
-        //for the content inside of dropdown
 
         //setting up div
         const dropdownContent = document.createElement('div');
@@ -136,6 +135,7 @@ const createPosts = (posts) => {
         if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
             reportButton.innerHTML = 'Report';
             const informer = () => {
+                //want you to confirm that you want redirected
                 let answer = confirm('You are being redirected to a mail application for sending a report.');
                 if (answer) {
                     document.location = reportButton.href =
@@ -165,7 +165,7 @@ const createPosts = (posts) => {
         }
         //delete the post when you click the delete button
         deleteButton.addEventListener('click', async () => {
-            //confirm if ok
+            //confirm is it ok to delete
             let answer = confirm('Delete post?');
             //if the answer is yes
             if (answer) {
