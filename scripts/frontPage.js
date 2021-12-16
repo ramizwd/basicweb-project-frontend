@@ -104,6 +104,10 @@ const createPosts = (posts) => {
         verticalMenu.className = 'dropImgBtn';
         //when the vertical button press it will show the dropdown content
         verticalMenu.addEventListener('click', () => {
+            if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
+                alert('Login/register to report profiles');
+                return;
+            }
             dropdownContent.classList.toggle('show');
         });
 
