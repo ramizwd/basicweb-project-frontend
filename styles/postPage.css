@@ -331,7 +331,16 @@ img#downVote {
     text-align: center;
     transition-duration: 0.2s;
 }
-
+#upVote:hover {
+    background-color: rgb(255, 145, 0);
+    border-radius: 50%;
+    cursor: pointer;
+}
+#downVote:hover {
+    background-color: rgb(67, 70, 201);
+    border-radius: 50%;
+    cursor: pointer;
+}
 p#voteCount {
     float: right;
     width: 2rem;
@@ -372,4 +381,7 @@ p#voteCount {
     filter: brightness(0) invert(1);
     width: 35px;
     height: 35px;
+}
+h2:hover {
+    text-decoration: underline;
 }
