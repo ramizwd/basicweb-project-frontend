@@ -135,6 +135,11 @@ const createPosts = (posts) => {
         // Poster nickname
         const poster = document.createElement('h1');
         poster.innerHTML = `${post.postername}`;
+        poster.addEventListener('click', () => {
+            // Saving id of the post into session storage
+            sessionStorage.setItem('id', post.poster);
+            location.href = 'profilePage.html';
+        });
 
         // Poster profile picture
         const posterPfp = document.createElement('img');
@@ -294,6 +299,11 @@ const createPosts = (posts) => {
         //const postNickname = document.createElement('h5');
         const postTitle = document.createElement('h3');
         postTitle.innerHTML = `${post.title}`;
+        postTitle.addEventListener('click', () => {
+            // Saving id of the post into session storage
+            sessionStorage.setItem('id', post.post_id);
+            location.href = 'postPage.html';
+        });
 
         // Upvote button
         const upVote = document.createElement('button');

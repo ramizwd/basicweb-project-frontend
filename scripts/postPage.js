@@ -231,6 +231,11 @@ const createPost = (posts) => {
     // Username of poster
     const userNickname = document.createElement('h2');
     userNickname.innerHTML = `${posts.postername}`;
+    userNickname.addEventListener('click', () => {
+        // Saving id of the post into session storage
+        sessionStorage.setItem('id', posts.poster);
+        location.href = 'profilePage.html';
+    });
 
     //Title
     const postTitle = document.createElement('h1');
