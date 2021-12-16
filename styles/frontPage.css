@@ -91,9 +91,35 @@ a {
     font-family: inherit;
     margin: 0;
 }
+.filterDropdown{
+    float: left;
+    overflow: hidden;
+}
+.dropdown-content-filter {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    width: 180px;
+    z-index: 1;
+    margin-top: 55px;
+}
+.dropdown-content-filter a{
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    display: block;
+    text-align: left;
+}
+.dropdown-content-filter a:hover{
+    background-color: #ddd;
+}
 
 #plus:hover {
     opacity: 30%;
+}
+.filterDropdown:hover .dropdown-content-filter{
+    display: block;
 }
 
 .dropbtn {
@@ -259,6 +285,4 @@ h1 {
     width: 35px;
     height: 35px;
 }
-a:hover {
-    text-decoration: underline;
-}
+
