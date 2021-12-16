@@ -14,10 +14,10 @@
         <div class="card">
             <h1>Register account</h1>
             <form id="register" method="post" action="https://localhost:8000/auth/register"> <!-- CHECK ADDRESS-->
-                <input id="username" type="text" placeholder="Username" name="username">
+                <input id="username" type="text" required maxlength="18" minlength="2" placeholder="Username" name="username">
                 <input id="email" type="email" placeholder="Email" name="email">
-                <input id="password" type="password" placeholder="Password" name="password">
-                <input id="passwordAgain" type="password" placeholder="Confirm password" name="secondPasswd">
+                <input id="password" type="password" pattern="(?=.*[A-Z]).{8,}" placeholder="Password" name="password">
+                <input id="passwordAgain" type="password" pattern="(?=.*[A-Z]).{8,}" placeholder="Confirm password" name="secondPasswd">
                 <button id="buttonRegister" type="submit">Register</button>
             </form>
             <a id="link" href="loginPage.html">Login</a>
