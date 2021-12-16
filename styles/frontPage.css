@@ -298,7 +298,6 @@ h1 {
 .show {
     display: block;
 }
-.posterDiv{
+.posterDiv {
     display: flex;
 }
-

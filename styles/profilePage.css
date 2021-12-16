@@ -193,28 +193,29 @@ ul {
     list-style-type: none;
     display: flex;
     flex-wrap: wrap;
-
-    justify-content: center;
+    flex-direction: row;
+    align-content: center;
+    align-items: center;
+    justify-content: space-evenly;
 }
-
 li {
-    padding: 5px;
-    border: 5px;
-    width: 25%;
-    margin: 5em;
+    width: 35%;
+    margin: 0.5em;
     border-radius: 0.5em;
     background-color: rgb(255, 255, 255);
 }
-
-h3 {
-    border-bottom: 2px solid gray;
+li img:first-child {
+    border-radius: 50%;
+    padding: 5px;
 }
 
 figure {
     margin: 0;
     padding: 0;
 }
-
+.postTextContent {
+    padding: 12px;
+}
 .resp {
     width: 100%;
 }
@@ -232,7 +233,7 @@ figure {
     display: flex;
 }
 
-h1 {
+.posterDiv p {
     margin-top: 0px;
     margin-bottom: 0px;
     margin-left: 10px;
@@ -291,7 +292,39 @@ h3:hover {
     margin-top: 7em;
     margin-left: 2em;
 }
+/* voting system */
+#downVote,
+#upVote,
+#voteCount {
+    float: right;
+    width: 2rem;
+    height: 2rem;
+    padding: 5px;
+    text-align: center;
+    transition-duration: 0.2s;
+}
+#voteCount {
+    font-size: 18px;
 
+    margin-top: 5px;
+}
+
+#upVote:hover {
+    background-color: rgb(255, 145, 0);
+    border-radius: 50%;
+    cursor: pointer;
+}
+#downVote:hover {
+    background-color: rgb(67, 70, 201);
+    border-radius: 50%;
+    cursor: pointer;
+}
+#commentCount {
+    font-size: 15px;
+    margin-top: 12px;
+    float: right;
+    padding-right: 10px;
+}
 .bio h1 {
     margin-top: 3em;
     float: none;
@@ -316,7 +349,7 @@ h3:hover {
 
 #report-btn {
     margin-top: 10em;
-    margin-right: 2em;
+    margin-right: 7em;
 }
 
 #add-edit-btn:hover,

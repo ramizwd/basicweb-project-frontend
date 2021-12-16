@@ -15,10 +15,7 @@ const getUserInfo = async () => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        const res = await fetch(
-        url + '/user/' + sessionStorage.getItem('poster_id'),
-        fetchOptions,
-        );
+        const res = await fetch(url + '/user/' + sessionStorage.getItem('poster_id'), fetchOptions);
         const resLog = await fetch(url + '/user/' + user.user_id, fetchOptions);
         users = await res.json();
         usersLog = await resLog.json();
@@ -39,10 +36,7 @@ const getPostInfo = async () => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        const res = await fetch(
-        url + '/post/user/' + sessionStorage.getItem('poster_id'),
-        fetchOptions,
-        );
+        const res = await fetch(url + '/post/user/' + sessionStorage.getItem('poster_id'), fetchOptions);
         const posts = await res.json();
         createPosts(posts);
     } catch (e) {
@@ -63,8 +57,7 @@ const loggedUser = (usersLog) => {
     bio.innerHTML = '';
     // if the image is null place default image
     if (!usersLog.profile_picture) {
-        profileImg.src =
-        'placeholder/no-pfp.jpg';
+        profileImg.src = 'placeholder/no-pfp.jpg';
         console.log(1);
     } else {
         //sets the image to profile
@@ -86,8 +79,7 @@ const createBio = (users) => {
 
     // if poster null but default image
     if (!users.profile_picture) {
-        userAvatar.src =
-        'placeholder/no-pfp.jpg';
+        userAvatar.src = 'placeholder/no-pfp.jpg';
         console.log(1);
     } else {
         //if the image is existence set the image
@@ -135,7 +127,7 @@ const createPosts = (posts) => {
         const userPost = document.createElement('li');
 
         // Poster nickname
-        const poster = document.createElement('h1');
+        const poster = document.createElement('p');
         poster.innerHTML = `${post.postername}`;
         poster.addEventListener('click', () => {
             // Saving id of the post into session storage
@@ -147,8 +139,7 @@ const createPosts = (posts) => {
         const posterPfp = document.createElement('img');
         // if poster null but default
         if (!post.userpfp) {
-            posterPfp.src =
-            'placeholder/no-pfp.jpg';
+            posterPfp.src = 'placeholder/no-pfp.jpg';
             posterPfp.width = '45';
             posterPfp.height = '45';
         } else {
@@ -207,12 +198,13 @@ const createPosts = (posts) => {
             let answer = confirm('You are being redirected to a mail application for sending a report.');
             //if the answer is yes
             if (answer) {
-                document.location = reportButton.href = `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
-                'Reported post information:%0d%0a' +
-                `Post ID: ${post.post_id}%0d%0a` +
-                `Post title: ${post.title}%0d%0a` +
-                `Poster ID: ${post.poster}%0d%0a` +
-                `Poster username: ${post.postername}`;
+                document.location = reportButton.href =
+                    `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
+                    'Reported post information:%0d%0a' +
+                    `Post ID: ${post.post_id}%0d%0a` +
+                    `Post title: ${post.title}%0d%0a` +
+                    `Poster ID: ${post.poster}%0d%0a` +
+                    `Poster username: ${post.postername}`;
             }
         };
         reportButton.onclick = informer;
@@ -238,15 +230,11 @@ const createPosts = (posts) => {
                 const fetchOptions = {
                     method: 'DELETE',
                     headers: {
-                        Authorization: 'Bearer ' +
-                        sessionStorage.getItem('token'),
+                        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
                     },
                 };
                 try {
-                    const response = await fetch(
-                    url + '/post/' + post.post_id,
-                    fetchOptions,
-                    );
+                    const response = await fetch(url + '/post/' + post.post_id, fetchOptions);
                     const json = await response.json();
                     console.log('delete response', json);
                     getPostInfo();
@@ -275,10 +263,10 @@ const createPosts = (posts) => {
             let postImg;
             //if image on se pistää create element
             if (
-            post.file_type === 'image/png' ||
-            post.file_type === 'image/jpg' ||
-            post.file_type === 'image/webp' ||
-            post.file_type === 'image/jpeg'
+                post.file_type === 'image/png' ||
+                post.file_type === 'image/jpg' ||
+                post.file_type === 'image/webp' ||
+                post.file_type === 'image/jpeg'
             ) {
                 //create img elements
                 postImg = document.createElement('img');
@@ -314,40 +302,48 @@ const createPosts = (posts) => {
         });
 
         // Upvote button
-        const upVote = document.createElement('button');
+        const upVote = document.createElement('img');
+        upVote.src = './placeholder/up-arrow.png';
         upVote.innerHTML = 'Upvote';
+        upVote.setAttribute('id', 'upVote');
+
         // Downvote button
-        const downVote = document.createElement('button');
-        downVote.innerHTML = 'Downvote';
+        const downVote = document.createElement('img');
+        downVote.src = './placeholder/down-arrow.png';
+        downVote.innerHTML = 'Dowvote';
+        downVote.setAttribute('id', 'downVote');
         // Total votes button
         const votes = document.createElement('p');
+        votes.setAttribute('id', 'voteCount');
         votes.innerHTML = `${post.votes}`;
 
         // Get date from db and format it
         const date = new Date(post.date);
         // Format date
         const formattedDate =
-        date.getDate() +
-        '-' +
-        (date.getMonth() + 1) +
-        '-' +
-        date.getFullYear() +
-        ' ' +
-        date.getHours() +
-        ':' +
-        date.getMinutes();
+            date.getDate() +
+            '-' +
+            (date.getMonth() + 1) +
+            '-' +
+            date.getFullYear() +
+            ' ' +
+            date.getHours() +
+            ':' +
+            date.getMinutes();
         // Create element for the date
         const dateText = document.createElement('p');
         dateText.innerHTML = 'Uploaded: ' + formattedDate;
-
+        const postTextContent = document.createElement('div');
+        postTextContent.className = 'postTextContent';
+        userPost.appendChild(postTextContent);
         // Placing the hierarchy in the post object
         postList.appendChild(userPost);
-        userPost.appendChild(postTitle);
-        userPost.appendChild(buildText);
-        userPost.appendChild(upVote);
-        userPost.appendChild(downVote);
-        userPost.appendChild(votes);
-        userPost.appendChild(dateText);
+        postTextContent.appendChild(postTitle);
+        postTextContent.appendChild(buildText);
+        postTextContent.appendChild(downVote);
+        postTextContent.appendChild(votes);
+        postTextContent.appendChild(upVote);
+        postTextContent.appendChild(dateText);
 
         // Default request method is POST
         let reqMethod = 'POST';
@@ -362,10 +358,7 @@ const createPosts = (posts) => {
                 },
             };
 
-            const res = await fetch(
-            url + '/vote/' + user.user_id + '/' + post.post_id,
-            fetchOptions,
-            );
+            const res = await fetch(url + '/vote/' + user.user_id + '/' + post.post_id, fetchOptions);
             const vote = await res.json();
             console.log('vote:', vote.vote_count);
 
@@ -381,7 +374,7 @@ const createPosts = (posts) => {
 
         // Send a request for upvoting
         upVote.addEventListener('click', async () => {
-            const data = {user_id: user.user_id, vote_count: 1};
+            const data = { user_id: user.user_id, vote_count: 1 };
             console.log('upvoted post with id', post.post_id);
             console.log('variable test upvote:', voteInfo.vote_count);
 
@@ -393,7 +386,7 @@ const createPosts = (posts) => {
 
         // Send a request for downvoting
         downVote.addEventListener('click', async () => {
-            const data = {user_id: user.user_id, vote_count: 0};
+            const data = { user_id: user.user_id, vote_count: 0 };
             console.log('downvoted post with id', post.post_id);
 
             // If vote already exist, delete it
@@ -413,10 +406,7 @@ const createPosts = (posts) => {
             console.log('req method:', reqMethod);
 
             try {
-                const res = await fetch(
-                url + '/vote/' + post.post_id,
-                fetchOptions,
-                );
+                const res = await fetch(url + '/vote/' + post.post_id, fetchOptions);
                 const vote = await res.json();
                 console.log(vote);
             } catch (e) {
@@ -428,11 +418,9 @@ const createPosts = (posts) => {
 };
 
 // Close the dropdown if the user clicks outside of it
-postList.onclick = function(ev) {
+postList.onclick = function (ev) {
     if (!ev.target.matches('.dropImgBtn')) {
-        const dropdowns = document.getElementsByClassName(
-        'dropdown-content-verticalmenu',
-        );
+        const dropdowns = document.getElementsByClassName('dropdown-content-verticalmenu');
         for (let i = 0; i < dropdowns.length; i++) {
             let openDrown = dropdowns[i];
             if (openDrown.classList.contains('show')) {

@@ -1,4 +1,3 @@
-
 * {
     font-family: 'Open Sans', sans-serif;
     box-sizing: border-box;
@@ -142,7 +141,7 @@ p#commentText {
 }
 
 #comment button {
-    margin-right: .8em;
+    margin-right: 0.8em;
 }
 
 .input-btn {
@@ -179,7 +178,7 @@ p#commentText {
     z-index: -2;
 }
 /*layout of the navbar*/
-.navbar a,
+
 #search-field {
     float: left;
     font-size: 16px;
@@ -208,6 +207,8 @@ p#commentText {
     text-decoration: none;
 }
 a {
+    padding: 12px 13px;
+    text-decoration: none;
     cursor: pointer;
 }
 .navbar a:hover {
@@ -272,7 +273,7 @@ a {
 }
 
 .navbar a:hover {
-    background-color: rgb(0, 69, 134);
+    background-color: #3b5c88;
 }
 
 .dropdown-content {
@@ -306,11 +307,11 @@ a {
 }
 
 .btn-delete {
-    background-image: url("../placeholder/delete.svg");
+    background-image: url('../placeholder/delete.svg');
 }
 
 .btn-edit {
-    background-image: url("../placeholder/edit.svg");
+    background-image: url('../placeholder/edit.svg');
 }
 
 .btn-icon:hover {
@@ -352,7 +353,6 @@ p#voteCount {
     text-align: center;
     transition-duration: 0.2s;
     font-weight: 1000;
-
 }
 
 .dropdown-content a {
@@ -409,7 +409,6 @@ h2:hover {
     text-align: center;
     transition-duration: 0.2s;
     font-weight: 800;
-
 }
 img#downVoteComment {
     float: right;
