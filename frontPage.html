@@ -19,7 +19,15 @@
 
 <nav class="navbar">
     <a href="frontPage.html">Home</a>
+    <div class="filterDropdown">
     <a>Filter</a>
+        <div class="dropdown-content-filter">
+            <a id="highest">Most Popular</a>
+            <a id="new">Newest</a>
+            <a id="old">Oldest</a>
+            <a id="lowest">Most Downvoted</a>
+        </div>
+    </div>
     <form id="search-field">
         <input id="key-word" type="text" required name="search"/>
         <button id="go" type="submit" value="Search">SEARCH</button>
@@ -99,6 +107,7 @@
 <script src="scripts/addPost.js"></script>
 <script src="scripts/settingUser.js"></script>
 <script src="scripts/deleteUser.js"></script>
+<script src="scripts/filter.js"></script>
 <script src="scripts/serialize.js"></script>
 
 
