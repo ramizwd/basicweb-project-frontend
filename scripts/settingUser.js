@@ -13,23 +13,17 @@ setting.onclick = () => {
     modalSetting.style.display = 'block';
 };
 
-
 // Hide modal when the span is clicked
 spanSetting.onclick = () => {
     modalSetting.style.display = 'none';
 };
 const settingFun = () => {
-
     if (usersLog.role === 1) {
-        if (!!document.getElementById('settingUser').
-        getElementsByClassName('form-input')[3]) {
-            document.getElementById('settingUser').
-            getElementsByClassName('form-input')[3].remove();
+        if (!!document.getElementById('settingUser').getElementsByClassName('form-input')[3]) {
+            document.getElementById('settingUser').getElementsByClassName('form-input')[3].remove();
         }
-
     } else {
-        if (!!document.getElementById('settingUser').
-        getElementsByClassName('form-input')[3] === false) {
+        if (!!document.getElementById('settingUser').getElementsByClassName('form-input')[3] === false) {
             const role = document.getElementById('role');
             const roleBar = document.createElement('input');
             roleBar.className = 'form-input';
@@ -38,17 +32,13 @@ const settingFun = () => {
             roleBar.max = '1';
             roleBar.required = true;
             role.append(roleBar);
-
         }
-        document.getElementById('settingUser').
-        getElementsByClassName('form-input')[3].value = current.role;
+        document.getElementById('settingUser').getElementsByClassName('form-input')[3].value = current.role;
     }
-    document.getElementById('settingUser').
-    getElementsByClassName('form-input')[0].value = current.username;
-    document.getElementById('settingUser').
-    getElementsByClassName('form-input')[1].value = current.email;
+    document.getElementById('settingUser').getElementsByClassName('form-input')[0].value = current.username;
+    document.getElementById('settingUser').getElementsByClassName('form-input')[1].value = current.email;
 
-// Get html elements
+    // Get html elements
     const setting = document.querySelector('#settingUser');
 
     setting.addEventListener('submit', async (evt) => {
@@ -72,10 +62,7 @@ const settingFun = () => {
 
         // get user data for admin check
         //const user = JSON.parse(sessionStorage.getItem('user'));
-        const response = await fetch(
-        url + '/user',
-        fetchOptions,
-        );
+        const response = await fetch(url + '/user', fetchOptions);
         const json = await response.json();
         if (json.error) {
             alert(json.error.message);

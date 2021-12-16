@@ -18,22 +18,23 @@
 <body>
 <nav class="navbar">
     <a href="frontPage.html">Home</a>
-    <a>Filter</a>
-    <form id="search-field">
-        <input type="text" id="search" name="search"/>
-        <input type="submit" value="Search"/>
-    </form>
+     <form id="search-field">
+                <input  id="key-word" type="text" required name="search" />
+                <button id="go" type="submit" value="Search" >SEARCH</button>
+            </form>
     <img id="add-post-btn" src="placeholder/icons8-plus-+-48.png" width="40" height="40"/>
     <div class="user-info">
 
         <div class="dropdown">
             <a id="name"></a>
             <img class="dropbtn" src="" width="40" height="45">
+
             <div class="dropdown-content">
                 <a id="profileBtn" href="profilePage.html">Profile</a>
                 <a id="setting">Setting</a>
                 <a href="logout.html">Log out</a>
             </div>
+
         </div>
     </div>
 </nav>
@@ -65,15 +66,14 @@
                 <form id="editUser">
                     <input class="form-input" required minlength="2" maxlength="18" type="text" placeholder="Username" name="username">
                     <input class="form-input" required minlength="5" maxlength="100" type="text" placeholder="Description" name="description">
-                    <input class="form-input" required type="file" name="profile_picture" accept="image/*"
-                           placeHolder="Upload file"/>
-
+                    <input class="form-input" required type="file" name="profile_picture" accept="image/*" placeHolder="Upload file"/>
                     <button id="submit-edit-btn" type="submit">Edit</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
 <div id="modalSetting">
     <div id="modal-content-setting">
         <span class="close-modal-setting">&times;</span>
