@@ -117,14 +117,13 @@ const createComments = (comments) => {
         // Edit comment, on click editBtn new input field and button appears for editing the post.
         // then on post edited comment if the field is not empty then send a PUT request
         editBtn.addEventListener('click', async () => {
-            // Form for comment input
-
+            //Entering comment by key Enter
             comment.onkeydown = function(e) {
                 if (e.key === 'Enter') {
                     postEdit.click();
                 }
             }
-
+            // Form for comment input
             editComment.setAttribute('type', 'text');
             editComment.setAttribute('name', 'comment');
             editComment.setAttribute('placeholder', 'Comment..');
@@ -343,6 +342,99 @@ const createPost = (posts) => {
     votesContainer.appendChild(downVote);
     backContainer.appendChild(postBuild);
     backContainer.appendChild(builtListTitle);
+
+    // Default request method is POST
+    let reqMethod = 'POST';
+    let voteInfo = 0;
+
+    // Get vote info
+    const getVote = async () => {
+        const fetchOptions = {
+            headers: {
+                Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json',
+            },
+        };
+
+        const res = await fetch(
+        url + '/vote/' + user.user_id + '/' + posts.post_id,
+        fetchOptions,
+        );
+        const vote = await res.json();
+        console.log('vote:', vote.vote_count);
+
+        if (vote.vote_count == 1 || vote.vote_count == 0) {
+            reqMethod = 'PUT';
+            console.log('Change req method', reqMethod);
+        }
+
+        voteInfo = vote;
+        console.log('variable test:', vote.vote_count);
+    };
+    getVote();
+
+    // Send a request for upvoting
+    upVote.addEventListener('click', async () => {
+        if (
+        !sessionStorage.getItem('token') ||
+        !sessionStorage.getItem('user')
+        ) {
+            alert('Login/register to give feedback');
+            return;
+        }
+        const data = { user_id: user.user_id, vote_count: 1 };
+        console.log('upvoted post with id', posts.post_id);
+        console.log('variable test upvote:', voteInfo.vote_count);
+
+        // If vote already exist, delete it
+        if (voteInfo.vote_count == 1) reqMethod = 'DELETE';
+        // Send the req body to reqFunction
+        reqFunction(data);
+    });
+
+    // Send a request for downvoting
+    downVote.addEventListener('click', async () => {
+        console.log('Test for Johnkai');
+        if (
+        !sessionStorage.getItem('token') ||
+        !sessionStorage.getItem('user')
+        ) {
+            alert('Login/register to give feedback');
+            return;
+        }
+        const data = { user_id: user.user_id, vote_count: 0 };
+        console.log('downvoted post with id', posts.post_id);
+
+        // If vote already exist, delete it
+        if (voteInfo.vote_count == 0) reqMethod = 'DELETE';
+        reqFunction(data);
+    });
+
+    // Request function
+    const reqFunction = async (data) => {
+        const fetchOptions = {
+            method: reqMethod,
+            headers: {
+                Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        };
+        console.log('req method:', reqMethod);
+
+        try {
+            const res = await fetch(
+            url + '/vote/' + posts.post_id,
+            fetchOptions,
+            );
+            const vote = await res.json();
+            console.log(vote);
+        } catch (e) {
+            console.error('error', e.message);
+        }
+        getPost();
+    };
+
 };
 
 console.log('session id ', sessionStorage.getItem('id'));
