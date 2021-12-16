@@ -1,4 +1,11 @@
-/*setting the body without any margin*/
+
+* {
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
 body {
     margin: 0;
     background-color: rgb(240, 240, 240);
@@ -9,48 +16,94 @@ main {
 }
 
 .container {
-    width: 55%;
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
     align-items: flex-start;
     margin-top: 5em;
+    width: 1280px;
+    max-width: 100%;
+    padding: 0 30px;
 }
 
-.item {
-    flex: 2;
+.row {
+    margin-left: -1.5rem;
+    margin-right: -1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.bg-white {
+    background-color: rgb(255, 255, 255);
+}
+
+.card {
+    padding: 15px;
+    border-radius: 4px;
+}
+
+.mb-3 {
+    margin-bottom: 15px;
 }
 
 #postContainer {
-    order: 1;
-    list-style-type: none;
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    padding: 5px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     border: 5px;
-    margin: 0.5em;
     border-radius: 0.5em;
-    background-color: rgb(255, 255, 255);
+    width: 63%;
+}
+
+.editInput {
+    flex-grow: 1;
+    padding: 5px;
+    font-size: 18px;
+    background-color: rgba(151, 151, 151, 0.658);
+    color: white;
+    border: none;
+    margin-right: 5px;
+}
+
+div#commentContainer h3 {
+    padding: 15px 15px 0;
+}
+
+#comment {
+    border-top: 1px solid gray !important;
+    padding: 10px 15px;
 }
 
 #commentContainer {
-    order: 2;
-    padding: 5px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
     border: 5px;
     border-radius: 0.5em;
-    background-color: rgb(255, 255, 255);
     overflow: scroll;
     max-height: 50em;
     min-height: 50em;
+    width: 37%;
+    position: sticky;
+    top: 70px;
 }
+#avatar {
+    border-radius: 50%;
+}
+
 #comment {
     padding-left: 10px;
     border: 5px;
-    border-radius: 0.5em;
-    background-color: rgba(114, 110, 110, 0.54);
+    list-style-type: none;
+}
+
+#commentHeader {
+    display: flex;
+    width: 100%;
+    border: #333333 1px;
+    padding: 10px 15px;
 }
 #postHeader {
+    margin-bottom: 1em;
     display: flex;
 }
 h2 {
@@ -69,17 +122,36 @@ figure {
     padding-right: 5px;
     align-items: center;
 }
-button {
-    width: 13%;
-    height: 50%;
-    margin-right: 0.5em;
-    align-items: center;
+
+button#btnPost:hover {
+    background-color: rgb(151 151 151 / 75%);
 }
 
-#btnPost {
-    width: 40px;
-    height: 25px;
-    margin-left: 5px;
+button#btnPost:hover {
+    background-color: rgb(151 151 151 / 75%);
+}
+
+p#commentText {
+    display: block;
+    padding: 15px 0;
+    font-size: 1.2em;
+}
+
+#comment button {
+    margin-right: .8em;
+}
+
+.input-btn {
+    flex-shrink: 0;
+    padding: 5px;
+    font-size: 18px;
+    background-color: rgb(151 151 151 / 90%);
+    color: rgb(0, 0, 0);
+    border: none;
+    border: none;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    font-weight: bold;
 }
 
 /*adding a fixed navbar so when it scroll down it comes with you*/
@@ -116,8 +188,53 @@ button {
     padding: 5px;
     font-size: 18px;
     background-color: rgba(151, 151, 151, 0.658);
-    color: white;
+    color: rgb(0, 0, 0);
     border: none;
+    width: 20em;
+    box-shadow: 0px 7px 7px -5px;
+    font-weight: bold;
+}
+/*layout of the navbar*/
+.navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 19px 18px 18px;
+    text-decoration: none;
+}
+a {
+    cursor: pointer;
+}
+.navbar a:hover {
+    background-color: #3b5c88;
+}
+#search-field input {
+    padding: 5px;
+    font-size: 18px;
+    background-color: rgba(151, 151, 151, 0.658);
+    color: rgb(0, 0, 0);
+    border: none;
+    width: 20em;
+    box-shadow: 0px 7px 7px -5px;
+
+    font-weight: bold;
+}
+#search-field button {
+    padding: 5px;
+    font-size: 18px;
+    background-color: rgba(151, 151, 151, 0.658);
+    color: rgb(0, 0, 0);
+    border: none;
+    width: 10em;
+    box-shadow: 0px 7px 7px -5px;
+    border: none;
+    cursor: pointer;
+    transition-duration: 0.4s;
+    font-weight: bold;
+}
+#search-field button:hover {
+    background-color: rgb(255, 255, 255);
 }
 .navcenter {
     float: none;
@@ -137,8 +254,6 @@ button {
     border: none;
     outline: none;
     color: white;
-    padding-left: 16px;
-    padding-right: 16px;
     padding-top: 8px;
     background-color: inherit;
     font-family: inherit;
@@ -176,6 +291,56 @@ button {
     z-index: 1;
 }
 
+.btn-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-size: 64%;
+    background-position: 50%;
+}
+
+.btn-delete {
+    background-image: url("../placeholder/delete.svg");
+}
+
+.btn-edit {
+    background-image: url("../placeholder/edit.svg");
+}
+
+.btn-icon:hover {
+    background-color: #3030305e;
+}
+
+img#upVote {
+    float: right;
+    width: 3rem;
+    height: 3rem;
+    padding: 5px;
+    text-align: center;
+    transition-duration: 0.2s;
+}
+
+img#downVote {
+    float: right;
+    width: 3rem;
+    height: 3rem;
+    padding: 5px;
+    text-align: center;
+    transition-duration: 0.2s;
+}
+
+p#voteCount {
+    float: right;
+    width: 2rem;
+    height: 2rem;
+    padding: 5px;
+    text-align: center;
+    transition-duration: 0.2s;
+}
+
 .dropdown-content a {
     float: none;
     color: black;
@@ -191,4 +356,20 @@ button {
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+.show {
+    display: block;
+}
+
+#add-post-btn:hover {
+    opacity: 30%;
+    cursor: pointer;
+}
+#add-post-btn {
+    margin-top: 12px;
+    margin-left: 3em;
+    filter: brightness(0) invert(1);
+    width: 35px;
+    height: 35px;
 }
