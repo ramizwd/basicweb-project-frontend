@@ -97,7 +97,7 @@ const createBio = (users) => {
 
     //make description
     const userDescription = document.createElement('p');
-    if(users.description){
+    if (users.description) {
         userDescription.innerHTML = `${users.description}`;
     }
 
@@ -204,7 +204,7 @@ const createPosts = (posts) => {
         reportButton.innerHTML = 'Report';
         const informer = () => {
             //question if the user wants to be redirected
-            let answer = confirm('You are being redirected to a mail application for sending a report. Is it ok?');
+            let answer = confirm('You are being redirected to a mail application for sending a report.');
             //if the answer is yes
             if (answer) {
                 document.location = reportButton.href = `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
@@ -230,23 +230,29 @@ const createPosts = (posts) => {
         }
         //delete the post when you click the delete button
         deleteButton.addEventListener('click', async () => {
-            console.log('delete');
-            const fetchOptions = {
-                method: 'DELETE',
-                headers: {
-                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-                },
-            };
-            try {
-                const response = await fetch(
-                url + '/post/' + post.post_id,
-                fetchOptions,
-                );
-                const json = await response.json();
-                console.log('delete response', json);
-                getPostInfo();
-            } catch (e) {
-                console.log(e.message);
+            //confirm if ok
+            let answer = confirm('Delete post?');
+            //if the answer is yes
+            if (answer) {
+                console.log('delete');
+                const fetchOptions = {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: 'Bearer ' +
+                        sessionStorage.getItem('token'),
+                    },
+                };
+                try {
+                    const response = await fetch(
+                    url + '/post/' + post.post_id,
+                    fetchOptions,
+                    );
+                    const json = await response.json();
+                    console.log('delete response', json);
+                    getPostInfo();
+                } catch (e) {
+                    console.log(e.message);
+                }
             }
         });
 

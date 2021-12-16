@@ -5,7 +5,7 @@ const deleteFun = () => {
     //when button click
     deletebtn.addEventListener('click', async () => {
         //question if the user wants to be redirected
-        let answer = confirm('Your account will be deleted. Is this ok?');
+        let answer = confirm('Your account will be deleted.');
         //if the answer is yes
         if (answer) {
             const fetchOptions = {
