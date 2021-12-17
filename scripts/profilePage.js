@@ -1,10 +1,12 @@
 'use strict';
 
-const url = 'https://10.114.32.27/app';
+const url = 'https://localhost:8000';
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
 const name = document.querySelector('#name');
-
+const profileImg = document.querySelector('.dropbtn');
+let users;
+let usersLog;
 // Function to fetch data for users
 const getUserInfo = async () => {
     try {
@@ -13,9 +15,12 @@ const getUserInfo = async () => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        const res = await fetch(url + '/user/' + user.user_id, fetchOptions);
-        const users = await res.json();
+        const res = await fetch(url + '/user/' + sessionStorage.getItem('poster_id'), fetchOptions);
+        const resLog = await fetch(url + '/user/' + user.user_id, fetchOptions);
+        users = await res.json();
+        usersLog = await resLog.json();
         console.log('user', users);
+        loggedUser(usersLog);
         createBio(users);
     } catch (e) {
         console.log(e.message);
@@ -31,10 +36,7 @@ const getPostInfo = async () => {
                 Authorization: 'Bearer ' + sessionStorage.getItem('token'),
             },
         };
-        const res = await fetch(
-            url + '/post/user/' + user.user_id,
-            fetchOptions
-        );
+        const res = await fetch(url + '/post/user/' + sessionStorage.getItem('poster_id'), fetchOptions);
         const posts = await res.json();
         createPosts(posts);
     } catch (e) {
@@ -49,17 +51,47 @@ const bio = document.querySelector('.bio');
 const postList = document.querySelector('.postList');
 
 // Function for creating users bio  in header
+
+// Function for users info in login window (dropdown)
+const loggedUser = (usersLog) => {
+    bio.innerHTML = '';
+    // if the image is null place default image
+    if (!usersLog.profile_picture) {
+        profileImg.src = 'placeholder/no-pfp.jpg';
+        console.log(1);
+    } else {
+        //sets the image to profile
+        console.log(url + '/' + usersLog.profile_picture);
+        profileImg.src = url + '/' + usersLog.profile_picture;
+    }
+    name.innerHTML = usersLog.username;
+};
+// Function for creating users bio in header
 const createBio = (users) => {
     bio.innerHTML = '';
-
+    console.log('jojo', users);
+    //creates place for username
     const userNickname = document.createElement('h1');
     userNickname.innerHTML = `${users.username}`;
-    name.innerHTML = users.username;
-    const userAvatar = document.createElement('img');
-    userAvatar.src = url + '/' + `${users.userpfp}`; // will be changed to filename
 
+    //create image for profile
+    const userAvatar = document.createElement('img');
+
+    // if poster null but default image
+    if (!users.profile_picture) {
+        userAvatar.src = 'placeholder/no-pfp.jpg';
+        console.log(1);
+    } else {
+        //if the image is existence set the image
+        console.log(url + '/' + users.profile_picture);
+        userAvatar.src = url + '/' + users.profile_picture;
+    }
+
+    //make description
     const userDescription = document.createElement('p');
-    userDescription.innerHTML = `${users.description}`;
+    if (users.description) {
+        userDescription.innerHTML = `${users.description}`;
+    }
 
     // Placing the hierarchy in the bio header
     bio.appendChild(userAvatar);
@@ -69,11 +101,24 @@ const createBio = (users) => {
     // Setting attributes for repeating elements
     userAvatar.setAttribute('id', 'avatar');
     userDescription.setAttribute('id', 'textBio');
+
+    let currentUser = usersLog;
+    let visitingUser = sessionStorage.getItem('poster_id');
+
+    //if the current user
+    if (!(currentUser.user_id == visitingUser) && currentUser.role == 1) {
+        console.log('cur', currentUser.user_id);
+        console.log('vis', visitingUser);
+        console.log(currentUser.user_id == visitingUser);
+        //remove if the user is not admin or not the right user
+        document.getElementById('add-edit-btn').remove();
+        settingbtn.remove();
+    }
 };
 
 // Function for creating post containers
 const createPosts = (posts) => {
-    // clear ul
+    // Clear ul
     postList.innerHTML = '';
     // Creating HTML elements
     posts.forEach((post) => {
@@ -82,23 +127,31 @@ const createPosts = (posts) => {
         const userPost = document.createElement('li');
 
         // Poster nickname
-        const poster = document.createElement('h1');
+        const poster = document.createElement('p');
         poster.innerHTML = `${post.postername}`;
+        poster.addEventListener('click', () => {
+            // Saving id of the post into session storage
+            sessionStorage.setItem('id', post.poster);
+            location.href = 'profilePage.html';
+        });
 
         // Poster profile picture
         const posterPfp = document.createElement('img');
         // if poster null but default
-        // posterPfp.src = url + '/' + post.profile_picture;
-        //getting the default profile pic if not yet set
-        posterPfp.src =
-            'placeholder/male-default-placeholder-avatar-profile-260nw-582509551.jpg';
-        posterPfp.width = '45';
-        posterPfp.height = '45';
+        if (!post.userpfp) {
+            posterPfp.src = 'placeholder/no-pfp.jpg';
+            posterPfp.width = '45';
+            posterPfp.height = '45';
+        } else {
+            //getting the default profile pic if not yet set
+            posterPfp.src = url + '/' + post.userpfp;
+            posterPfp.width = '45';
+            posterPfp.height = '45';
+        }
+
         //for the upper piece of the postcard
         const posterDiv = document.createElement('div');
         posterDiv.className = 'posterDiv';
-
-        //for the dropdown button setting it up
 
         //setting the division
         const dropdown = document.createElement('div');
@@ -125,11 +178,37 @@ const createPosts = (posts) => {
         //setting div class name
         dropdownContent.className = 'dropdown-content-verticalmenu';
 
+        // Clear old poster id from session
+        const profileBtn = document.querySelector('#profileBtn');
+        profileBtn.addEventListener('click', () => {
+            // Resetting user id in session storage to get logged user profile
+            sessionStorage.setItem('poster_id', user.user_id);
+            // Hyperlink to profilePage
+            profileBtn.setAttribute('href', 'profilePage.html');
+            console.log('get posterId', post.poster);
+        });
+
         //setting the word delete and report
         const deleteButton = document.createElement('p');
         const reportButton = document.createElement('p');
 
         reportButton.innerHTML = 'Report';
+        const informer = () => {
+            //question if the user wants to be redirected
+            let answer = confirm('You are being redirected to a mail application for sending a report.');
+            //if the answer is yes
+            if (answer) {
+                document.location = reportButton.href =
+                    `mailto:Admin@gmail.com?body=User report from user ID ${user.user_id}%0d%0a` +
+                    'Reported post information:%0d%0a' +
+                    `Post ID: ${post.post_id}%0d%0a` +
+                    `Post title: ${post.title}%0d%0a` +
+                    `Poster ID: ${post.poster}%0d%0a` +
+                    `Poster username: ${post.postername}`;
+            }
+        };
+        reportButton.onclick = informer;
+
         dropdownContent.appendChild(reportButton);
 
         // Check if user is a moderator if not append delete button to drop list only for
@@ -143,23 +222,25 @@ const createPosts = (posts) => {
         }
         //delete the post when you click the delete button
         deleteButton.addEventListener('click', async () => {
-            console.log('delete');
-            const fetchOptions = {
-                method: 'DELETE',
-                headers: {
-                    Authorization: 'Bearer ' + sessionStorage.getItem('token'),
-                },
-            };
-            try {
-                const response = await fetch(
-                    url + '/post/' + post.post_id,
-                    fetchOptions
-                );
-                const json = await response.json();
-                console.log('delete response', json);
-                getPostInfo();
-            } catch (e) {
-                console.log(e.message);
+            //confirm if ok
+            let answer = confirm('Delete post?');
+            //if the answer is yes
+            if (answer) {
+                console.log('delete');
+                const fetchOptions = {
+                    method: 'DELETE',
+                    headers: {
+                        Authorization: 'Bearer ' + sessionStorage.getItem('token'),
+                    },
+                };
+                try {
+                    const response = await fetch(url + '/post/' + post.post_id, fetchOptions);
+                    const json = await response.json();
+                    console.log('delete response', json);
+                    getPostInfo();
+                } catch (e) {
+                    console.log(e.message);
+                }
             }
         });
 
@@ -214,15 +295,26 @@ const createPosts = (posts) => {
         //const postNickname = document.createElement('h5');
         const postTitle = document.createElement('h3');
         postTitle.innerHTML = `${post.title}`;
+        postTitle.addEventListener('click', () => {
+            // Saving id of the post into session storage
+            sessionStorage.setItem('id', post.post_id);
+            location.href = 'postPage.html';
+        });
 
         // Upvote button
-        const upVote = document.createElement('button');
+        const upVote = document.createElement('img');
+        upVote.src = './placeholder/up-arrow.png';
         upVote.innerHTML = 'Upvote';
+        upVote.setAttribute('id', 'upVote');
+
         // Downvote button
-        const downVote = document.createElement('button');
-        downVote.innerHTML = 'Downvote';
+        const downVote = document.createElement('img');
+        downVote.src = './placeholder/down-arrow.png';
+        downVote.innerHTML = 'Dowvote';
+        downVote.setAttribute('id', 'downVote');
         // Total votes button
         const votes = document.createElement('p');
+        votes.setAttribute('id', 'voteCount');
         votes.innerHTML = `${post.votes}`;
 
         // Get date from db and format it
@@ -241,15 +333,17 @@ const createPosts = (posts) => {
         // Create element for the date
         const dateText = document.createElement('p');
         dateText.innerHTML = 'Uploaded: ' + formattedDate;
-
+        const postTextContent = document.createElement('div');
+        postTextContent.className = 'postTextContent';
+        userPost.appendChild(postTextContent);
         // Placing the hierarchy in the post object
         postList.appendChild(userPost);
-        userPost.appendChild(postTitle);
-        userPost.appendChild(buildText);
-        userPost.appendChild(upVote);
-        userPost.appendChild(downVote);
-        userPost.appendChild(votes);
-        userPost.appendChild(dateText);
+        postTextContent.appendChild(postTitle);
+        postTextContent.appendChild(buildText);
+        postTextContent.appendChild(downVote);
+        postTextContent.appendChild(votes);
+        postTextContent.appendChild(upVote);
+        postTextContent.appendChild(dateText);
 
         // Default request method is POST
         let reqMethod = 'POST';
@@ -264,10 +358,7 @@ const createPosts = (posts) => {
                 },
             };
 
-            const res = await fetch(
-                url + '/vote/' + user.user_id + '/' + post.post_id,
-                fetchOptions
-            );
+            const res = await fetch(url + '/vote/' + user.user_id + '/' + post.post_id, fetchOptions);
             const vote = await res.json();
             console.log('vote:', vote.vote_count);
 
@@ -315,10 +406,7 @@ const createPosts = (posts) => {
             console.log('req method:', reqMethod);
 
             try {
-                const res = await fetch(
-                    url + '/vote/' + post.post_id,
-                    fetchOptions
-                );
+                const res = await fetch(url + '/vote/' + post.post_id, fetchOptions);
                 const vote = await res.json();
                 console.log(vote);
             } catch (e) {
@@ -332,9 +420,7 @@ const createPosts = (posts) => {
 // Close the dropdown if the user clicks outside of it
 postList.onclick = function (ev) {
     if (!ev.target.matches('.dropImgBtn')) {
-        const dropdowns = document.getElementsByClassName(
-            'dropdown-content-verticalmenu'
-        );
+        const dropdowns = document.getElementsByClassName('dropdown-content-verticalmenu');
         for (let i = 0; i < dropdowns.length; i++) {
             let openDrown = dropdowns[i];
             if (openDrown.classList.contains('show')) {
