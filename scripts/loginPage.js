@@ -1,7 +1,7 @@
 'use strict';
 console.log('login page');
 
-const url = 'https://localhost:8000';
+const url = 'https://10.114.32.27/app';
 const login = document.querySelector('#login');
 
 // Trigger for button to use POST method

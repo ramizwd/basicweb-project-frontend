@@ -1,6 +1,6 @@
 'use strict';
 
-const url = 'https://localhost:8000';
+const url = 'https://10.114.32.27/app';
 // get user data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
 const name = document.querySelector('#name');
