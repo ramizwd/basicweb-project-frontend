@@ -50,19 +50,4 @@ addPost.addEventListener('submit', async (evt) => {
     const json = await res.json();
     alert(json.message);
     location.href = window.location.href;
-
 });
-
-// BUG - snackbar shows when post is not added
-// Snackbar
-// const snack = document.querySelector('#snackbar');
-// const submitBtn = document.querySelector('#submit-post-btn');
-
-// submitBtn.onclick = () => {
-//     console.log('snack');
-//     snack.className = 'show';
-//     setTimeout(function () {
-//         snack.className.replace('show', '');
-//     }, 10000);
-// };
-

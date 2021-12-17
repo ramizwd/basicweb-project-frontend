@@ -1,6 +1,6 @@
 'use strict';
 
-const url = 'https://localhost:8000';
+const url = 'https://10.114.32.27/app';
 const main = document.getElementById('app');
 // get user and post data for admin check
 const user = JSON.parse(sessionStorage.getItem('user'));
@@ -69,8 +69,7 @@ const createComments = (comments) => {
     // Click event listener for posting comments that sends the user id and comment to reqFunction
     // alone with a request method
     btnPost.addEventListener('click', async () => {
-        if (!sessionStorage.getItem('token') ||
-        !sessionStorage.getItem('user')) {
+        if (!sessionStorage.getItem('token') || !sessionStorage.getItem('user')) {
             alert('Login/register to give feedback');
             return;
         }
@@ -102,7 +101,6 @@ const createComments = (comments) => {
         downVote.setAttribute('id', 'downVoteComment');
         downVote.classList.add('voteComment');
 
-
         // Total votes
         const votes = document.createElement('p');
         votes.setAttribute('id', 'CommentVoteCount');
@@ -113,7 +111,6 @@ const createComments = (comments) => {
         upVote.innerHTML = 'Upvote';
         upVote.setAttribute('id', 'upVoteComment');
         upVote.classList.add('voteComment');
-
 
         const commVoteCon = document.createElement('div');
         commVoteCon.classList.add('commVoteCon');
@@ -127,7 +124,6 @@ const createComments = (comments) => {
         comment.appendChild(commentNickname);
         comment.appendChild(commentText);
         comment.appendChild(buttonContainer);
-
 
         if (sessionStorage.getItem('token') || sessionStorage.getItem('user')) {
             // Show delete button only for comment's author or user with admin role

@@ -1,6 +1,6 @@
 'use strict';
 
-const url = 'https://localhost:8000';
+const url = 'https://10.114.32.27/app';
 const registration = document.querySelector('#register');
 
 // registration
